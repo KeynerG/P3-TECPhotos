@@ -1,0 +1,57 @@
+cmake_minimum_required(VERSION 3.20)
+
+project(P3-TECPhotos VERSION 0.1)
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_PREFIX_PATH $ENV{HOME}/Qt/6.2.0/gcc_64/lib/cmake)
+
+find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
+
+set(PROJECT_SOURCES
+        src/main.cpp
+        src/UI/PhotoTEC.cpp
+        src/UI/PhotoTEC.h
+        src/UI/PhotoTEC.ui
+        src/Communication/DataManager.cpp
+        src/Communication/DataManager.h
+        src/HuffmanCoding/HuffmanAlgorithm.cpp
+        src/HuffmanCoding/HuffmanAlgorithm.h
+        src/RAID5/RAID.cpp
+        src/RAID5/RAID.h)
+
+if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+    qt_add_executable(P3-TECPhotos
+        MANUAL_FINALIZATION
+        ${PROJECT_SOURCES}
+    )
+else()
+    if(ANDROID)
+        add_library(P3-TECPhotos SHARED
+            ${PROJECT_SOURCES}
+        )
+    else()
+        add_executable(P3-TECPhotos
+            ${PROJECT_SOURCES}
+        )
+    endif()
+endif()
+
+target_link_libraries(P3-TECPhotos PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+
+set_target_properties(P3-TECPhotos PROPERTIES
+    MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com
+    MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
+    MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
+)
+
+if(QT_VERSION_MAJOR EQUAL 6)
+    qt_finalize_executable(P3-TECPhotos)
+endif()
