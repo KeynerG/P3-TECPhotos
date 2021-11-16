@@ -22,12 +22,19 @@ private:
 
 public:
     RAID();
+
     bool checkFileExistance(int partition, string fileName);
-    void saveData(string data);
+
     void generateParityPartition(string fileName);
+
     void checkPartitionsIntegrity();
+
     void checkDirectoriesIntegrity();
+
     void restoreFilePartition(string fileName);
+
+    void saveData(string data);
+
     string loadData(string fileName);
 
 };

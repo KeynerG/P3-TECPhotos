@@ -44,70 +44,6 @@ bool RAID::checkFileExistance(int partition, string fileName) {
     }
 }
 
-void RAID::saveData(string data) {
-    cout << "Data to save: " << data << endl << endl;
-
-    checkDirectoriesIntegrity();
-    checkPartitionsIntegrity();
-
-    // Separates the data in 3 parts.
-    string partition1, partition2, partition3;
-
-    while ((data.length() % 3) != 0) {
-        data.push_back('0');
-    }
-
-    int charactersByPartition = data.length() / 3;
-
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < charactersByPartition; ++j) {
-            switch (i) {
-                case 0:
-                    partition1.push_back(data.at(0));
-                    data.erase(0, 1);
-                    break;
-                case 1:
-                    partition2.push_back(data.at(0));
-                    data.erase(0, 1);
-                    break;
-                case 2:
-                    partition3.push_back(data.at(0));
-                    data.erase(0, 1);
-                    break;
-            }
-        }
-    }
-
-    // Determinate the name of the file to write
-    int fileId = 0;
-    for (int i = 0;
-         checkFileExistance(1, to_string(fileId) + ".txt") or
-         checkFileExistance(2, to_string(fileId) + ".txt") or
-         checkFileExistance(3, to_string(fileId) + ".txt"); ++i) {
-        fileId = i;
-    }
-
-    // Writes the content of the .txt files.
-    ofstream fileManager;
-
-    // Write the content of the partition 1
-    fileManager.open(partitions1Directory + to_string(fileId) + ".txt");
-    fileManager << partition1;
-    fileManager.close();
-
-    // Write the content of the partition 2
-    fileManager.open(partitions2Directory + to_string(fileId) + ".txt");
-    fileManager << partition2;
-    fileManager.close();
-
-    // Write the content of the partition 3
-    fileManager.open(partitions3Directory + to_string(fileId) + ".txt");
-    fileManager << partition3;
-    fileManager.close();
-
-    generateParityPartition(to_string(fileId) + ".txt");
-}
-
 void RAID::generateParityPartition(string fileName) {
     ifstream fileManagerR;
     fileManagerR.open(partitions1Directory + fileName);
@@ -169,36 +105,36 @@ void RAID::checkDirectoriesIntegrity() {
 
     cout << "RAIDisks exists: " << RAIDisksDirectory.exists();
 
-    if(!RAIDisksDirectory.exists()){
+    if (!RAIDisksDirectory.exists()) {
         RAIDisksDirectory.mkpath(".");
         RAIDisksDirectory.mkpath("disk-1");
         RAIDisksDirectory.mkpath("disk-2");
         RAIDisksDirectory.mkpath("disk-3");
         RAIDisksDirectory.mkpath("disk-parity");
 
-    }else{
+    } else {
         int missingPartitions = 0;
 
         QDir disk1Directory(QString::fromStdString(partitions1Directory));
-        if(!disk1Directory.exists()){
+        if (!disk1Directory.exists()) {
             disk1Directory.mkpath(".");
             missingPartitions++;
         }
 
         QDir disk2Directory(QString::fromStdString(partitions2Directory));
-        if(!disk2Directory.exists()){
+        if (!disk2Directory.exists()) {
             disk2Directory.mkpath(".");
             missingPartitions++;
         }
 
         QDir disk3Directory(QString::fromStdString(partitions3Directory));
-        if(!disk3Directory.exists()){
+        if (!disk3Directory.exists()) {
             disk3Directory.mkpath(".");
             missingPartitions++;
         }
 
         QDir diskParityDirectory(QString::fromStdString(parityPartitionsDirectory));
-        if(!diskParityDirectory.exists()){
+        if (!diskParityDirectory.exists()) {
             diskParityDirectory.mkpath(".");
             missingPartitions++;
         }
@@ -210,10 +146,12 @@ void RAID::checkDirectoriesIntegrity() {
                 checkPartitionsIntegrity();
                 break;
             default:
-                cerr << endl << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Error ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
+                cerr << endl << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Error ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
+                     << endl;
                 cerr << "There are more than one missing partition for all files. Nothing to do." << endl << endl;
                 cerr << "    Missing files partitions: " << to_string(missingPartitions) << ".";
-                cerr << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+                cerr << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
+                     << endl;
                 break;
         }
     }
@@ -363,6 +301,70 @@ void RAID::restoreFilePartition(string fileName) {
     }
 }
 
+void RAID::saveData(string data) {
+    cout << "Data to save: " << data << endl << endl;
+
+    checkDirectoriesIntegrity();
+    checkPartitionsIntegrity();
+
+    // Separates the data in 3 parts.
+    string partition1, partition2, partition3;
+
+    while ((data.length() % 3) != 0) {
+        data.push_back('0');
+    }
+
+    int charactersByPartition = data.length() / 3;
+
+    for (int i = 0; i < 3; ++i) {
+        for (int j = 0; j < charactersByPartition; ++j) {
+            switch (i) {
+                case 0:
+                    partition1.push_back(data.at(0));
+                    data.erase(0, 1);
+                    break;
+                case 1:
+                    partition2.push_back(data.at(0));
+                    data.erase(0, 1);
+                    break;
+                case 2:
+                    partition3.push_back(data.at(0));
+                    data.erase(0, 1);
+                    break;
+            }
+        }
+    }
+
+    // Determinate the name of the file to write
+    int fileId = 0;
+    for (int i = 0;
+         checkFileExistance(1, to_string(fileId) + ".txt") or
+         checkFileExistance(2, to_string(fileId) + ".txt") or
+         checkFileExistance(3, to_string(fileId) + ".txt"); ++i) {
+        fileId = i;
+    }
+
+    // Writes the content of the .txt files.
+    ofstream fileManager;
+
+    // Write the content of the partition 1
+    fileManager.open(partitions1Directory + to_string(fileId) + ".txt");
+    fileManager << partition1;
+    fileManager.close();
+
+    // Write the content of the partition 2
+    fileManager.open(partitions2Directory + to_string(fileId) + ".txt");
+    fileManager << partition2;
+    fileManager.close();
+
+    // Write the content of the partition 3
+    fileManager.open(partitions3Directory + to_string(fileId) + ".txt");
+    fileManager << partition3;
+    fileManager.close();
+
+    generateParityPartition(to_string(fileId) + ".txt");
+}
+
 string RAID::loadData(string fileName) {
     if (checkFileExistance(1, fileName) and
         checkFileExistance(2, fileName) and
@@ -393,7 +395,7 @@ string RAID::loadData(string fileName) {
         cout << "Data to load: " << filecontent << endl << endl;
 
         return filecontent;
-    }else{
+    } else {
         checkDirectoriesIntegrity();
         checkPartitionsIntegrity();
 
@@ -426,7 +428,7 @@ string RAID::loadData(string fileName) {
             cout << "Data to load: " << filecontent << endl << endl;
 
             return filecontent;
-        }else{
+        } else {
             return "";
         }
     }
