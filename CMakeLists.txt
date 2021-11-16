@@ -22,8 +22,8 @@ set(PROJECT_SOURCES
         src/UI/PhotoTEC.ui
         src/Communication/DataManager.cpp
         src/Communication/DataManager.h
-        src/HuffmanCoding/HuffmanAlgorithm.cpp
-        src/HuffmanCoding/HuffmanAlgorithm.h
+        src/HuffmanCoding/HuffmanCompression.cpp
+        src/HuffmanCoding/HuffmanCompression.h
         src/RAID5/RAID.cpp
         src/RAID5/RAID.h)
 
