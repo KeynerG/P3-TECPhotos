@@ -301,7 +301,7 @@ void RAID::restoreFilePartition(string fileName) {
     }
 }
 
-void RAID::saveData(string data) {
+int RAID::saveData(string data) {
     cout << "Data to save: " << data << "\n" << endl;
 
     checkDirectoriesIntegrity();
@@ -363,6 +363,8 @@ void RAID::saveData(string data) {
     fileManager.close();
 
     generateParityPartition(to_string(fileId) + ".txt");
+
+    return fileId;
 }
 
 string RAID::loadData(string fileName) {

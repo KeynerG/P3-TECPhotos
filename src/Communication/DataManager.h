@@ -7,6 +7,7 @@
 #include <QImage>
 #include <QString>
 #include <iostream>
+#include <QXmlStreamWriter>
 
 using namespace std;
 
@@ -57,6 +58,10 @@ public:
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
     QImage loadImage(QString &id);
+
+    void saveXML(int id, QMap<char, string> dictionary, int ceros);
+
+    QString dictionaryPath = "..src/RAID5/Drives/Dictionary.xml";
 };
 
 #endif //P3_TECPHOTOS_DATAMANAGER_H

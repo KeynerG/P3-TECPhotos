@@ -67,9 +67,10 @@ public:
      * @fn void saveData(string data)
      * @brief
      * @param data
+     * @return int
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
-    void saveData(string data);
+    int saveData(string data);
 
     /**
      * @fn string loadData(string fileName)
