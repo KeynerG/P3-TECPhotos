@@ -1,4 +1,4 @@
-#include "src/UI/PhotoTEC.h"
+#include "UI/TECPhotos.h"
 
 #include <QApplication>
 
@@ -11,7 +11,7 @@
  */
 int main(int argc, char *argv[]) {
     QApplication application(argc, argv);
-    PhotoTEC photoTEC;
-    photoTEC.show();
+    TECPhotos tecPhotos;
+    tecPhotos.show();
     return application.exec();
 }

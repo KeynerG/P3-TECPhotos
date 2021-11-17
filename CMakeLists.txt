@@ -17,9 +17,9 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
         src/main.cpp
-        src/UI/PhotoTEC.cpp
-        src/UI/PhotoTEC.h
-        src/UI/PhotoTEC.ui
+        src/UI/TECPhotos.cpp
+        src/UI/TECPhotos.h
+        src/UI/TECPhotos.ui
         src/Communication/DataManager.cpp
         src/Communication/DataManager.h
         src/HuffmanCoding/HuffmanCompression.cpp

@@ -101,16 +101,16 @@ void RAID::checkPartitionsIntegrity() {
 }
 
 void RAID::checkDirectoriesIntegrity() {
-    QDir RAIDisksDirectory("../src/RAID5/RAIDisks/");
+    QDir DrivesDirectory("../src/RAID5/Drives/");
 
-    cout << "RAIDisks exists: " << RAIDisksDirectory.exists();
+    cout << "Drives directory exists: " << DrivesDirectory.exists() << endl;
 
-    if (!RAIDisksDirectory.exists()) {
-        RAIDisksDirectory.mkpath(".");
-        RAIDisksDirectory.mkpath("disk-1");
-        RAIDisksDirectory.mkpath("disk-2");
-        RAIDisksDirectory.mkpath("disk-3");
-        RAIDisksDirectory.mkpath("disk-parity");
+    if (!DrivesDirectory.exists()) {
+        DrivesDirectory.mkpath(".");
+        DrivesDirectory.mkpath("drive-1");
+        DrivesDirectory.mkpath("drive-2");
+        DrivesDirectory.mkpath("drive-3");
+        DrivesDirectory.mkpath("parity-drive");
 
     } else {
         int missingPartitions = 0;
@@ -302,7 +302,7 @@ void RAID::restoreFilePartition(string fileName) {
 }
 
 void RAID::saveData(string data) {
-    cout << "Data to save: " << data << endl << endl;
+    cout << "Data to save: " << data << "\n" << endl;
 
     checkDirectoriesIntegrity();
     checkPartitionsIntegrity();
@@ -392,7 +392,7 @@ string RAID::loadData(string fileName) {
         string filecontent;
         filecontent += partition1Content + partition2Content + partition3Content;
 
-        cout << "Data to load: " << filecontent << endl << endl;
+        cout << "Data to load: " << filecontent << "\n" << endl;
 
         return filecontent;
     } else {
@@ -425,7 +425,7 @@ string RAID::loadData(string fileName) {
             string filecontent;
             filecontent += partition1Content + partition2Content + partition3Content;
 
-            cout << "Data to load: " << filecontent << endl << endl;
+            cout << "Data to load: " << filecontent << "\n" << endl;
 
             return filecontent;
         } else {

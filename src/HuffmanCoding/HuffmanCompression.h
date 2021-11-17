@@ -11,7 +11,8 @@
 using namespace std;
 
 /**
- * @class Class for compress and decompress strings
+ * @class HuffmanCompression
+ * @brief For compress and decompress strings.
  * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
  */
 class HuffmanCompression {
@@ -19,7 +20,8 @@ class HuffmanCompression {
 public:
 
     /**
-     * @brief Node struct to generate the codes in the huffman tree
+     * @struct Node
+     * @brief Node struct to generate the codes in the huffman tree.
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     struct Node {
@@ -29,7 +31,8 @@ public:
     };
 
     /**
-     * @brief Comparison object to be used to order the heap
+     * @Struct comparison
+     * @brief Comparison object to be used to order the heap.
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     struct comparison {
@@ -40,18 +43,20 @@ public:
     };
 
     /**
-     * @brief Function to allocate a new tree node
+     * @fn static Node *getNode(char character, int freq, Node *left, Node *right)
+     * @brief Function to allocate a new tree node.
      * @param character
      * @param freq
      * @param left
      * @param right
-     * @return
+     * @return Node
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     static Node *getNode(char character, int freq, Node *left, Node *right);
 
     /**
-     * @brief traverse the Huffman Tree and store Huffman Codes in a map.
+     * @fn static void encode(Node *root, const string &str, unordered_map<char, string> &huffmanCode)
+     * @brief Traverse the Huffman Tree and store Huffman Codes in a map.
      * @param root
      * @param str
      * @param huffmanCode
@@ -60,7 +65,8 @@ public:
     static void encode(Node *root, const string &str, unordered_map<char, string> &huffmanCode);
 
     /**
-     * @brief Traverse the Huffman Tree and decode the encoded string
+     * @fn static void decode(Node *root, int &index, string str)
+     * @brief Traverse the Huffman Tree and decode the encoded string.s
      * @param root
      * @param index
      * @param str
@@ -69,36 +75,40 @@ public:
     static void decode(Node *root, int &index, string str);
 
     /**
-     * @brief Builds a Huffman Tree and decode given input text
+     * @fn static pair<string, QMap<char, string>> compress(const string &text)
+     * @brief Builds a Huffman Tree and decode given input text.
      * @param text
-     * @return
+     * @return pair
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     static pair<string, QMap<char, string>> compress(const string &text);
 
     /**
-     * @brief Builds the original text from the code and the map of characters
+     * @fn static string decompress(string str, QMap<char, string> huffmanList)
+     * @brief Builds the original text from the code and the map of characters.
      * @param str
      * @param huffmanList
-     * @return
+     * @return string
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     static string decompress(string str, QMap<char, string> huffmanList);
 
     /**
+     * @fn static bool isChar(vector<string> scripts, string key)
      * @brief
      * @param scripts
      * @param key
-     * @return
+     * @return boolean
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     static bool isChar(vector<string> scripts, string key);
 
     /**
+     * @fn static int getKey(vector<string> scripts, string pos)
      * @brief
      * @param scripts
      * @param pos
-     * @return
+     * @return integer
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     static int getKey(vector<string> scripts, string pos);

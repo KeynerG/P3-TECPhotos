@@ -126,10 +126,12 @@ bool HuffmanCompression::isChar(vector<string> scripts, string key) {
     for (int i = 0; i < scripts.size(); ++i) {
         if (scripts[i] == key) { return true; }
     }
+//    return false;
 }
 
 int HuffmanCompression::getKey(vector<string> scripts, string pos) {
     for (int i = 0; i < scripts.size(); ++i) {
         if (scripts[i] == pos) { return i; }
     }
+//    return 0;
 }

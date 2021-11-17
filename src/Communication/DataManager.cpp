@@ -9,13 +9,14 @@ DataManager *DataManager::getInstance() {
     return instance;
 }
 
-void DataManager::saveImage(QImage image) {
+void DataManager::saveImage(QImage &image) {
     // Comprimir imagen con Huffman
     // Guardar con RAID
 }
 
-QImage DataManager::loadImage(QString id) {
+QImage DataManager::loadImage(QString &id) {
+    QImage image;
     // Cargar con RAID
     // Descomprimir con Huffman
-    return QImage();
-};
+    return image;
+}
