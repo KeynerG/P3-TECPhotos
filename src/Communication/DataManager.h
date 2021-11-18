@@ -4,10 +4,12 @@
 #include "../HuffmanCoding/HuffmanCompression.h"
 #include "../RAID5/RAID.h"
 
+#include <QFile>
 #include <QImage>
 #include <QString>
-#include <iostream>
 #include <QXmlStreamWriter>
+#include <QXmlStreamReader>
+#include <iostream>
 
 using namespace std;
 
@@ -22,6 +24,7 @@ private:
     static DataManager *instance; /**< DataManager class instance. */
     HuffmanCompression huffman; /**< HuffmanCompression class reference. */
     RAID raid; /**< RAID class reference. */
+    QString dictionaryPath = "..src/RAID5/Drives/Dictionary.xml";
 
 protected:
     DataManager() = default; /**< DataManager class constructor. */
@@ -43,10 +46,29 @@ public:
     void operator=(const DataManager &) = delete;
 
     /**
-     * @fn void saveImage(QImage image)
+     * @fn void saveXML(int id, QMap<char, string> dictionary, int ceros);
+     * @brief
+     * @param id
+     * @param dictionary
+     * @param ceros
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void saveXML(int id, QMap<char, string> dictionary, int ceros);
+
+    /**
+     * @fn
+     * @brief
+     * @param id
+     * @return
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    QMap<char, string> loadXML(int id);
+
+    /**
+     * @fn void saveImage(QImage &image)
      * @brief
      * @param image
-     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     void saveImage(QImage &image);
 
@@ -58,10 +80,6 @@ public:
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
     QImage loadImage(QString &id);
-
-    void saveXML(int id, QMap<char, string> dictionary, int ceros);
-
-    QString dictionaryPath = "..src/RAID5/Drives/Dictionary.xml";
 };
 
 #endif //P3_TECPHOTOS_DATAMANAGER_H
