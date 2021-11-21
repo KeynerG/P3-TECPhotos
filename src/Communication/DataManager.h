@@ -24,7 +24,7 @@ private:
     static DataManager *instance; /**< DataManager class instance. */
     HuffmanCompression huffman; /**< HuffmanCompression class reference. */
     RAID raid; /**< RAID class reference. */
-    QString dictionaryPath = "..src/RAID5/Drives/Dictionary.xml";
+    QString dictionaryPath = "../src/RAID5/Drives/Dictionary.xml";
 
 protected:
     DataManager() = default; /**< DataManager class constructor. */

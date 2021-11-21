@@ -1,0 +1,12 @@
+<RCC>
+    <qresource prefix="/">
+        <file>background/albumsBackground.jpg</file>
+        <file>background/imageInformationBackground.jpg</file>
+        <file>background/loginBackground.jpg</file>
+        <file>background/newAlbumBackground.jpg</file>
+        <file>background/newPhotoBackground.jpg</file>
+        <file>background/photoBackground.png</file>
+        <file>background/signInBackground.jpg</file>
+        <file>background/welcomeBackground.png</file>
+    </qresource>
+</RCC>
