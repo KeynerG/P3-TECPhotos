@@ -90,11 +90,11 @@ pair<string, QMap<char, string>> HuffmanCompression::compress(const string &text
     }
     cout << "\nEncoded string is :\n" << str << '\n';
 
-    int index = -1;
-    cout << "\nDecoded string is: \n";
-    while (index < (int) str.size() - 2) {
-        decode(root, index, str);
-    }
+//    int index = -1;
+//    cout << "\nDecoded string is: \n";
+//    while (index < (int) str.size() - 2) {
+//        decode(root, index, str);
+//    }
     pair <string, QMap<char, string>> result;
     result.first = str;
     result.second = huffmanResult;

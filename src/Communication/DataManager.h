@@ -10,6 +10,7 @@
 #include <QXmlStreamWriter>
 #include <QXmlStreamReader>
 #include <iostream>
+#include <sstream>
 
 using namespace std;
 
@@ -24,7 +25,7 @@ private:
     static DataManager *instance; /**< DataManager class instance. */
     HuffmanCompression huffman; /**< HuffmanCompression class reference. */
     RAID raid; /**< RAID class reference. */
-    QString dictionaryPath = "..src/RAID5/Drives/Dictionary.xml";
+    QString dictionaryPath = "../src/RAID5/Drives/dictionaries/";
 
 protected:
     DataManager() = default; /**< DataManager class constructor. */
@@ -62,7 +63,7 @@ public:
      * @return
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
-    QMap<char, string> loadXML(int id);
+    pair<QMap<char, string>, int> loadXML(int id);
 
     /**
      * @fn void saveImage(QImage &image)
@@ -79,7 +80,7 @@ public:
      * @return QImage
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
-    QImage loadImage(QString &id);
+    QImage loadImage(int id);
 };
 
 #endif //P3_TECPHOTOS_DATAMANAGER_H

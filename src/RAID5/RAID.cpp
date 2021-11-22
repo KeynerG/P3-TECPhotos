@@ -111,6 +111,7 @@ void RAID::checkDirectoriesIntegrity() {
         DrivesDirectory.mkpath("drive-2");
         DrivesDirectory.mkpath("drive-3");
         DrivesDirectory.mkpath("parity-drive");
+        DrivesDirectory.mkpath("dictionaries");
 
     } else {
         int missingPartitions = 0;
@@ -134,6 +135,12 @@ void RAID::checkDirectoriesIntegrity() {
         }
 
         QDir diskParityDirectory(QString::fromStdString(parityPartitionsDirectory));
+        if (!diskParityDirectory.exists()) {
+            diskParityDirectory.mkpath(".");
+            missingPartitions++;
+        }
+
+        QDir dictionariesDirectory(QString::fromStdString(imagesDictionariesDirectory));
         if (!diskParityDirectory.exists()) {
             diskParityDirectory.mkpath(".");
             missingPartitions++;
@@ -367,7 +374,10 @@ int RAID::saveData(string data) {
     return fileId;
 }
 
-string RAID::loadData(string fileName) {
+string RAID::loadData(string imageID) {
+
+    string fileName = imageID+".txt";
+
     if (checkFileExistance(1, fileName) and
         checkFileExistance(2, fileName) and
         checkFileExistance(3, fileName) and

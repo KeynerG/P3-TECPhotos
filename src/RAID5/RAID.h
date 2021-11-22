@@ -19,6 +19,7 @@ private:
     string partitions2Directory = "../src/RAID5/Drives/drive-2/"; /**< RAID 's drive 2 path reference. */
     string partitions3Directory = "../src/RAID5/Drives/drive-3/"; /**< RAID 's drive 3 path reference. */
     string parityPartitionsDirectory = "../src/RAID5/Drives/parity-drive/"; /**< RAID 's parity drive path reference. */
+    string imagesDictionariesDirectory = "../src/RAID5/Drives/dictionaries/"; /**< images dictionaries path reference. */
 
 public:
     RAID(); /**< RAID class constructor. */
