@@ -82,9 +82,10 @@ protected:
 
     void querryUserInformation(string username);
 
+public:
     void sendImageMetadata(string imageId, string albumName, string author, string imageName,
                            string creationDate, string size, string widthX, string heightY, string description);
-
+protected:
     void querryImageMetadata(string imageId);
 
     void printInfo();
@@ -159,6 +160,10 @@ public:
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
     QImage loadImage(string id);
+
+    void deleteImageMetadata(string imageId);
+
+    void updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor, string imageDate);
 };
 
 #endif //P3_TECPHOTOS_DATAMANAGER_H

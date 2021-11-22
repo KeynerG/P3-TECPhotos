@@ -27,24 +27,26 @@ void DataManager::login(string username, string password) {
 }
 
 void DataManager::signUp(string username, string password) {
+    bool exists = false;
     mongocxx::cursor cursor = usersCollection.find(make_document(kvp("username", username)));
     for (auto &&doc: cursor) {
-        bsoncxx::document::element usernameBD = doc["username"];
-        if (usernameBD.get_utf8().value.to_string().empty()) {
-            auto builder = bsoncxx::builder::stream::document{};
-            bsoncxx::document::value doc_value = builder
-                    << "username" << username
-                    << "password" << password
-                    << bsoncxx::builder::stream::finalize;
+        exists = true;
+    }
 
-            bsoncxx::document::view document = doc_value.view();
+    if (!exists) {
+        auto builder = bsoncxx::builder::stream::document{};
+        bsoncxx::document::value doc_value = builder
+                << "username" << username
+                << "password" << password
+                << bsoncxx::builder::stream::finalize;
 
-            usersCollection.insert_one(document);
-            this->currentUsername = usernameBD.get_utf8().value.to_string();
-            cout << "DATABASE LOG - " << this->currentUsername << " SIGNED UP." << endl << endl;
-        } else {
-            cerr << "ERROR - UNAVAILABLE USERNAME" << endl << endl;
-        }
+        bsoncxx::document::view document = doc_value.view();
+
+        usersCollection.insert_one(document);
+        this->currentUsername = username;
+        cout << "DATABASE LOG - " << this->currentUsername << " SIGNED UP." << endl << endl;
+    } else {
+        cerr << "ERROR - UNAVAILABLE USERNAME" << endl << endl;
     }
 }
 
@@ -274,4 +276,38 @@ pair<QMap<char, string>, int> DataManager::loadXML(string id) {
                  << " was not successfully read.";
     }
     return result;
+}
+
+void DataManager::deleteImageMetadata(string imageId) {
+    bool exists = false;
+    mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("imageId", imageId)));
+    for (auto &&doc: cursor) {
+        exists = true;
+    }
+    if(exists){
+        imagesCollection.delete_one(document{} << "imageId" << imageId << bsoncxx::builder::stream::finalize);
+    }else{
+        cerr << "Error: cannot delete image metadata." << endl;
+    }
+}
+
+void DataManager::updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor,
+                                      string imageDate) {
+    bool exists = false;
+    mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("imageId", imageId)));
+    for (auto &&doc: cursor) {
+        exists = true;
+    }
+    if(exists){
+        imagesCollection.update_one(document{} << "imageId" << imageId << bsoncxx::builder::stream::finalize,
+                                document{} << "$set" << bsoncxx::builder::stream::open_document <<
+                                "imageName" << imageName <<
+                                "imageDescription" << imageDesc <<
+                                "imageAuthor" << imageAuthor <<
+                                "imageCreationDate" << imageDate
+                                << bsoncxx::builder::stream::close_document << finalize);
+
+    }else{
+        cerr << "Error: cannot update image metadata." << endl;
+    }
 }
