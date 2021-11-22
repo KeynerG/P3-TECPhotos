@@ -15,6 +15,16 @@ set(CMAKE_PREFIX_PATH $ENV{HOME}/Qt/6.2.0/gcc_64/lib/cmake)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
+find_package(libmongocxx REQUIRED)
+find_package(libbsoncxx REQUIRED)
+include_directories(${LIBMONGOCXX_INCLUDE_DIR})
+include_directories(${LIBBSONCXX_INCLUDE_DIR})
+include_directories("/usr/local/include/mongocxx/v_noabi")
+include_directories("/usr/local/include/bsoncxx/v_noabi")
+include_directories("/usr/local/include/libmongoc-1.0")
+include_directories("/usr/local/include/libbson-1.0")
+include_directories("/usr/local/lib")
+
 set(PROJECT_SOURCES
         src/UI/Resources/resources.qrc
         src/main.cpp
@@ -46,6 +56,8 @@ else()
 endif()
 
 target_link_libraries(P3-TECPhotos PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(P3-TECPhotos PRIVATE ${LIBMONGOCXX_LIBRARIES})
+target_link_libraries(P3-TECPhotos PRIVATE ${LIBBSONCXX_LIBRARIES})
 
 set_target_properties(P3-TECPhotos PROPERTIES
     MACOSX_BUNDLE_GUI_IDENTIFIER my.example.com

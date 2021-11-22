@@ -1,4 +1,5 @@
 #include "UI/TECPhotos.h"
+#include "Communication/DataManager.h"
 
 #include <QApplication>
 
