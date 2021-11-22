@@ -16,6 +16,7 @@ find_package(QT NAMES Qt6 Qt5 COMPONENTS Widgets REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Widgets REQUIRED)
 
 set(PROJECT_SOURCES
+        src/UI/Resources/resources.qrc
         src/main.cpp
         src/UI/TECPhotos.cpp
         src/UI/TECPhotos.h
