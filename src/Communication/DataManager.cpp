@@ -19,9 +19,10 @@ void DataManager::login(string username, string password) {
         bsoncxx::document::element usernameBD = doc["username"];
         this->currentUsername = usernameBD.get_utf8().value.to_string();
         querryUserInformation(this->currentUsername);
+        cout << "DATABASE LOG - " << this->currentUsername << " LOGGED IN." << endl << endl;
     }
     if (this->currentUsername.empty()) {
-        cerr << "ERROR: Invalid username or password." << endl;
+        cerr << "ERROR - INVALID USERNAME OR PASSWORD." << endl << endl;
     }
 }
 
@@ -39,8 +40,10 @@ void DataManager::signUp(string username, string password) {
             bsoncxx::document::view document = doc_value.view();
 
             usersCollection.insert_one(document);
+            this->currentUsername = usernameBD.get_utf8().value.to_string();
+            cout << "DATABASE LOG - " << this->currentUsername << " SIGNED UP." << endl << endl;
         } else {
-            cerr << "ERROR: Not available username." << endl;
+            cerr << "ERROR - UNAVAILABLE USERNAME" << endl << endl;
         }
     }
 }
@@ -95,6 +98,8 @@ DataManager::sendImageMetadata(string imageId, string albumName, string author, 
     bsoncxx::document::view document = doc_value.view();
 
     imagesCollection.insert_one(document);
+    cout << "DATABASE LOG - IMAGE SAVED [ID: " << imageId << ", ALBUM: " << albumName << ", IMAGE NAME: " << imageName
+         << "]" << endl << endl;
 }
 
 void DataManager::querryImageMetadata(string imageId) {
@@ -112,7 +117,7 @@ void DataManager::querryImageMetadata(string imageId) {
         if (albumName.type() != bsoncxx::type::k_utf8 or author.type() != bsoncxx::type::k_utf8 or
             imageName.type() != bsoncxx::type::k_utf8 or creationDate.type() != bsoncxx::type::k_utf8 or
             size.type() != bsoncxx::type::k_utf8 or description.type() != bsoncxx::type::k_utf8) {
-            cerr << "ERROR: Corrupted image metadata :(." << endl;
+            cerr << "ERROR: LOST IMAGE METADATA." << endl << endl;
         } else {
             this->currentImageId = imageId;
             this->currentAlbumName = albumName.get_utf8().value.to_string();
@@ -123,6 +128,8 @@ void DataManager::querryImageMetadata(string imageId) {
             this->currentImageWidthX = widthX.get_utf8().value.to_string();
             this->currentImageHeightY = heightY.get_utf8().value.to_string();
             this->currentImageDescription = description.get_utf8().value.to_string();
+            cout << "DATABASE LOG - IMAGE LOADED [ID: " << this->currentImageId << ", ALBUM: " << this->currentAlbumName
+                 << ", IMAGE NAME: " << this->currentImageName << "]" << endl << endl;
         }
     }
 }
@@ -178,12 +185,12 @@ void DataManager::saveImage(QImage &image, string imageName, string imageAlbumNa
                       imageHeightY, imageDescription);
 }
 
-QImage DataManager::loadImage(int id) {
-    QImage image(QString::fromStdString(to_string(id)));
+QImage DataManager::loadImage(string id) {
+    QImage image(QString::fromStdString(id));
     QList<QRgb> imageQList;
 
     pair<QMap<char, string>, int> xmlData = loadXML(id);
-    string raidData = raid.loadData(to_string(id));
+    string raidData = raid.loadData(id);
     if (xmlData.second != 0) {
         for (int i = 0; i < xmlData.second; ++i) {
             raidData.pop_back();
@@ -201,6 +208,8 @@ QImage DataManager::loadImage(int id) {
     }
 
     //QList<QRgb> imageQList to QImage image
+
+    querryImageMetadata(id);
 
     return image;
 }
@@ -241,9 +250,9 @@ void DataManager::saveXML(int id, QMap<char, string> dictionary, int ceros) {
     }
 }
 
-pair<QMap<char, string>, int> DataManager::loadXML(int id) {
+pair<QMap<char, string>, int> DataManager::loadXML(string id) {
     pair<QMap<char, string>, int> result;
-    QFile dictionaryFile(dictionaryPath + QString::fromStdString(to_string(id)) + ".xml");
+    QFile dictionaryFile(dictionaryPath + QString::fromStdString(id) + ".xml");
     QMap<char, string> dictionary;
     if (dictionaryFile.exists()) {
         dictionaryFile.open(QIODevice::ReadOnly);
@@ -251,7 +260,7 @@ pair<QMap<char, string>, int> DataManager::loadXML(int id) {
         xmlReader.setDevice(&dictionaryFile);
         // reading from file
         while (xmlReader.readNextStartElement()) {
-            if (xmlReader.name() == "Image_" + QString(QString::fromStdString(std::to_string(id)))) {
+            if (xmlReader.name() == "Image_" + QString(QString::fromStdString(id))) {
                 // dictionary append
             } else {
                 xmlReader.skipCurrentElement();
@@ -261,7 +270,7 @@ pair<QMap<char, string>, int> DataManager::loadXML(int id) {
             qDebug() << "ERROR: XML " << xmlReader.errorString().data();
         }
     } else {
-        qDebug() << "ERROR: The dictionary of image " << QString(QString::fromStdString(std::to_string(id)))
+        qDebug() << "ERROR: The dictionary of image " << QString(QString::fromStdString(id))
                  << " was not successfully read.";
     }
     return result;

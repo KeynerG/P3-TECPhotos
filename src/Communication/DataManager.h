@@ -106,7 +106,7 @@ protected:
      * @return
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
-    pair<QMap<char, string>, int> loadXML(int id);
+    pair<QMap<char, string>, int> loadXML(string id);
 
 public:
     /**
@@ -158,7 +158,7 @@ public:
      * @return QImage
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
-    QImage loadImage(int id);
+    QImage loadImage(string id);
 };
 
 #endif //P3_TECPHOTOS_DATAMANAGER_H
