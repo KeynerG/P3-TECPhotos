@@ -8,7 +8,6 @@
         <file>background/welcomeBackground.png</file>
         <file>background/signUpBackground.jpg</file>
         <file>icon/TECPhotos.png</file>
-        <file>icon/metadata.png</file>
         <file>icon/albumOn.png</file>
         <file>icon/albumOff.png</file>
         <file>icon/addAlbum.png</file>
@@ -17,8 +16,14 @@
         <file>icon/deleteImage.png</file>
         <file>icon/editAlbum.png</file>
         <file>background/albumOptionsBackground.jpg</file>
-        <file>icon/back.png</file>
         <file>icon/browseImage.png</file>
-        <file>icon/button.png</file>
+        <file>icon/nextOff.png</file>
+        <file>icon/nextOn.png</file>
+        <file>icon/previousOff.png</file>
+        <file>icon/previousOn.png</file>
+        <file>icon/backOff.png</file>
+        <file>icon/backOn.png</file>
+        <file>icon/metadataOff.png</file>
+        <file>icon/metadataOn.png</file>
     </qresource>
 </RCC>
