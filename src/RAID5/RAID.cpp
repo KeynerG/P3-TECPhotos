@@ -15,7 +15,6 @@ bool RAID::checkFileExistance(int partition, string fileName) {
             } else {
                 return false;
             }
-            break;
         case 2:
             ifile.open(partitions2Directory + fileName);
             if (ifile) {
@@ -23,7 +22,6 @@ bool RAID::checkFileExistance(int partition, string fileName) {
             } else {
                 return false;
             }
-            break;
         case 3:
             ifile.open(partitions3Directory + fileName);
             if (ifile) {
@@ -31,7 +29,6 @@ bool RAID::checkFileExistance(int partition, string fileName) {
             } else {
                 return false;
             }
-            break;
         default:
             ifile.open(parityPartitionsDirectory + fileName);
             if (ifile) {
@@ -39,26 +36,21 @@ bool RAID::checkFileExistance(int partition, string fileName) {
             } else {
                 return false;
             }
-            break;
-
     }
 }
 
 void RAID::generateParityPartition(string fileName) {
     ifstream fileManagerR;
     fileManagerR.open(partitions1Directory + fileName);
-    string partition1Content((std::istreambuf_iterator<char>(fileManagerR)),
-                             (std::istreambuf_iterator<char>()));
+    string partition1Content((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
     fileManagerR.close();
 
     fileManagerR.open(partitions2Directory + fileName);
-    string partition2Content((std::istreambuf_iterator<char>(fileManagerR)),
-                             (std::istreambuf_iterator<char>()));
+    string partition2Content((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
     fileManagerR.close();
 
     fileManagerR.open(partitions3Directory + fileName);
-    string partition3Content((std::istreambuf_iterator<char>(fileManagerR)),
-                             (std::istreambuf_iterator<char>()));
+    string partition3Content((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
     fileManagerR.close();
 
     ofstream fileManagerW;
@@ -93,17 +85,13 @@ void RAID::checkPartitionsIntegrity() {
             !checkFileExistance(4, to_string(fileId) + ".txt")) {
 
             restoreFilePartition(to_string(fileId) + ".txt");
-
         }
-
         fileId = i + 1;
     }
 }
 
 void RAID::checkDirectoriesIntegrity() {
     QDir DrivesDirectory("../src/RAID5/Drives/");
-
-    cout << "Drives directory exists: " << DrivesDirectory.exists() << endl;
 
     if (!DrivesDirectory.exists()) {
         DrivesDirectory.mkpath(".");
@@ -112,7 +100,6 @@ void RAID::checkDirectoriesIntegrity() {
         DrivesDirectory.mkpath("drive-3");
         DrivesDirectory.mkpath("parity-drive");
         DrivesDirectory.mkpath("dictionaries");
-
     } else {
         int missingPartitions = 0;
 
@@ -141,9 +128,8 @@ void RAID::checkDirectoriesIntegrity() {
         }
 
         QDir dictionariesDirectory(QString::fromStdString(imagesDictionariesDirectory));
-        if (!diskParityDirectory.exists()) {
-            diskParityDirectory.mkpath(".");
-            missingPartitions++;
+        if (!dictionariesDirectory.exists()) {
+            dictionariesDirectory.mkpath(".");
         }
 
         switch (missingPartitions) {
@@ -153,12 +139,10 @@ void RAID::checkDirectoriesIntegrity() {
                 checkPartitionsIntegrity();
                 break;
             default:
-                cerr << endl << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Error ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~"
-                     << endl;
+                cerr << endl << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Error ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
                 cerr << "There are more than one missing partition for all files. Nothing to do." << endl << endl;
                 cerr << "    Missing files partitions: " << to_string(missingPartitions) << ".";
-                cerr << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl
-                     << endl;
+                cerr << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
                 break;
         }
     }
@@ -190,18 +174,15 @@ void RAID::restoreFilePartition(string fileName) {
             case 1: {
                 ifstream fileManagerR;
                 fileManagerR.open(partitions2Directory + fileName);
-                string partition2Content((std::istreambuf_iterator<char>(fileManagerR)),
-                                         (std::istreambuf_iterator<char>()));
+                string partition2Content((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
                 fileManagerR.close();
 
                 fileManagerR.open(partitions3Directory + fileName);
-                string partition3Content((std::istreambuf_iterator<char>(fileManagerR)),
-                                         (std::istreambuf_iterator<char>()));
+                string partition3Content((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
                 fileManagerR.close();
 
                 fileManagerR.open(parityPartitionsDirectory + fileName);
-                string parityPartitionContent((std::istreambuf_iterator<char>(fileManagerR)),
-                                              (std::istreambuf_iterator<char>()));
+                string parityPartitionContent((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
                 fileManagerR.close();
 
                 ofstream fileManagerW;
@@ -226,27 +207,22 @@ void RAID::restoreFilePartition(string fileName) {
             case 2: {
                 ifstream fileManagerR;
                 fileManagerR.open(partitions1Directory + fileName);
-                string partition1Content((std::istreambuf_iterator<char>(fileManagerR)),
-                                         (std::istreambuf_iterator<char>()));
+                string partition1Content((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
                 fileManagerR.close();
 
                 fileManagerR.open(partitions3Directory + fileName);
-                string partition3Content((std::istreambuf_iterator<char>(fileManagerR)),
-                                         (std::istreambuf_iterator<char>()));
+                string partition3Content((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
                 fileManagerR.close();
 
                 fileManagerR.open(parityPartitionsDirectory + fileName);
-                string parityPartitionContent((std::istreambuf_iterator<char>(fileManagerR)),
-                                              (std::istreambuf_iterator<char>()));
+                string parityPartitionContent((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
                 fileManagerR.close();
 
                 ofstream fileManagerW;
 
                 string partition2Content;
                 for (int i = 0; i < partition1Content.length(); ++i) {
-                    int addition =
-                            (partition1Content.at(i) - '0') + (partition3Content.at(i) - '0') +
-                            (parityPartitionContent.at(i) - '0');
+                    int addition = (partition1Content.at(i) - '0') + (partition3Content.at(i) - '0') + (parityPartitionContent.at(i) - '0');
                     if (addition == 0 or addition == 2) {
                         partition2Content.push_back('0');
                     } else {
@@ -262,27 +238,22 @@ void RAID::restoreFilePartition(string fileName) {
             case 3: {
                 ifstream fileManagerR;
                 fileManagerR.open(partitions1Directory + fileName);
-                string partition1Content((std::istreambuf_iterator<char>(fileManagerR)),
-                                         (std::istreambuf_iterator<char>()));
+                string partition1Content((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
                 fileManagerR.close();
 
                 fileManagerR.open(partitions2Directory + fileName);
-                string partition2Content((std::istreambuf_iterator<char>(fileManagerR)),
-                                         (std::istreambuf_iterator<char>()));
+                string partition2Content((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
                 fileManagerR.close();
 
                 fileManagerR.open(parityPartitionsDirectory + fileName);
-                string parityPartitionContent((std::istreambuf_iterator<char>(fileManagerR)),
-                                              (std::istreambuf_iterator<char>()));
+                string parityPartitionContent((std::istreambuf_iterator<char>(fileManagerR)),(std::istreambuf_iterator<char>()));
                 fileManagerR.close();
 
                 ofstream fileManagerW;
 
                 string partition3Content;
                 for (int i = 0; i < partition1Content.length(); ++i) {
-                    int addition =
-                            (partition1Content.at(i) - '0') + (partition2Content.at(i) - '0') +
-                            (parityPartitionContent.at(i) - '0');
+                    int addition = (partition1Content.at(i) - '0') + (partition2Content.at(i) - '0') + (parityPartitionContent.at(i) - '0');
                     if (addition == 0 or addition == 2) {
                         partition3Content.push_back('0');
                     } else {
@@ -374,9 +345,9 @@ int RAID::saveData(string data) {
     return fileId;
 }
 
-string RAID::loadData(string imageID) {
+string RAID::loadData(string &imageID) {
 
-    string fileName = imageID+".txt";
+    string fileName = imageID + ".txt";
 
     if (checkFileExistance(1, fileName) and
         checkFileExistance(2, fileName) and
@@ -446,16 +417,16 @@ string RAID::loadData(string imageID) {
     }
 }
 
-void RAID::deleteData(string fileId) {
+void RAID::deleteData(string &fileId) {
     QDir partition1(QString::fromStdString(partitions1Directory));
     QDir partition2(QString::fromStdString(partitions2Directory));
     QDir partition3(QString::fromStdString(partitions3Directory));
     QDir parityDrive(QString::fromStdString(parityPartitionsDirectory));
-    QDir dictionaries("../src/RAID5/Drives/dictionaries/");
-
     partition1.remove(QString::fromStdString(fileId + ".txt"));
     partition2.remove(QString::fromStdString(fileId + ".txt"));
     partition3.remove(QString::fromStdString(fileId + ".txt"));
     parityDrive.remove(QString::fromStdString(fileId + ".txt"));
+
+    QDir dictionaries(QString::fromStdString(imagesDictionariesDirectory));
     dictionaries.remove(QString::fromStdString(fileId + ".xml"));
 }

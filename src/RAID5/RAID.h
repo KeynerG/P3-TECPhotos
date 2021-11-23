@@ -19,7 +19,7 @@ private:
     string partitions2Directory = "../src/RAID5/Drives/drive-2/"; /**< RAID 's drive 2 path reference. */
     string partitions3Directory = "../src/RAID5/Drives/drive-3/"; /**< RAID 's drive 3 path reference. */
     string parityPartitionsDirectory = "../src/RAID5/Drives/parity-drive/"; /**< RAID 's parity drive path reference. */
-    string imagesDictionariesDirectory = "../src/RAID5/Drives/dictionaries/"; /**< images dictionaries path reference. */
+    string imagesDictionariesDirectory = "../src/RAID5/Drives/dictionaries/"; /**< Images Huffman Tree path reference. */
 
 public:
     RAID(); /**< RAID class constructor. */
@@ -74,22 +74,21 @@ public:
     int saveData(string data);
 
     /**
-     * @fn string loadData(string fileName)
+     * @fn string loadData(string &fileName)
      * @brief
      * @param fileName
      * @return string
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
-    string loadData(string fileName);
+    string loadData(string &fileName);
 
     /**
-     * @fn void deleteData(string fileId)
+     * @fn void deleteData(string &fileId)
      * @brief
      * @param fileId
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
-    void deleteData(string fileId);
-
+    void deleteData(string &fileId);
 };
 
 #endif //P3_TECPHOTOS_RAID_H

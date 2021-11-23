@@ -155,8 +155,7 @@ void DataManager::printInfo() {
     cout << "]." << endl;
 }
 
-void DataManager::saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription,
-                            string imageAuthor,
+void DataManager::saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
                             string imageSize, string imageWidthX, string imageHeightY, string imageDate) {
     int extraCeros = 0;
     int imageId = 0;
@@ -310,7 +309,7 @@ void DataManager::deleteAlbum(string albumName) {
     QMapIterator<string, QVector<string>> j(currentUserMap);
     while (j.hasNext()) {
         j.next();
-        if(j.key() == albumName){
+        if (j.key() == albumName) {
             QVector<string> v = j.value();
             for (int i = 0; i < v.size(); ++i) {
                 deleteImageMetadata(v[i]);

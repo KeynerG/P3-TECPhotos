@@ -3,10 +3,22 @@
         <file>background/albumsBackground.jpg</file>
         <file>background/imageInformationBackground.jpg</file>
         <file>background/loginBackground.jpg</file>
-        <file>background/newAlbumBackground.jpg</file>
         <file>background/newPhotoBackground.jpg</file>
         <file>background/photoBackground.png</file>
-        <file>background/signInBackground.jpg</file>
         <file>background/welcomeBackground.png</file>
+        <file>background/signUpBackground.jpg</file>
+        <file>icon/TECPhotos.png</file>
+        <file>icon/metadata.png</file>
+        <file>icon/albumOn.png</file>
+        <file>icon/albumOff.png</file>
+        <file>icon/addAlbum.png</file>
+        <file>icon/addImage.png</file>
+        <file>icon/deleteAlbum.png</file>
+        <file>icon/deleteImage.png</file>
+        <file>icon/editAlbum.png</file>
+        <file>background/albumOptionsBackground.jpg</file>
+        <file>icon/back.png</file>
+        <file>icon/browseImage.png</file>
+        <file>icon/button.png</file>
     </qresource>
 </RCC>
