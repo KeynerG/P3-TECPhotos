@@ -18,7 +18,7 @@ void DataManager::login(string username, string password) {
     for (auto &&doc: cursor) {
         bsoncxx::document::element usernameBD = doc["username"];
         this->currentUsername = usernameBD.get_utf8().value.to_string();
-        querryUserInformation(this->currentUsername);
+        querryUserInformation();
         cout << "DATABASE LOG - " << this->currentUsername << " LOGGED IN." << endl << endl;
     }
     if (this->currentUsername.empty()) {
@@ -50,8 +50,9 @@ void DataManager::signUp(string username, string password) {
     }
 }
 
-void DataManager::querryUserInformation(string username) {
-    mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("username", username)));
+void DataManager::querryUserInformation() {
+    currentUserMap.clear();
+    mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("username", this->currentUsername)));
     for (auto &&doc: cursor) {
         bsoncxx::document::element albumName = doc["albumName"];
         bsoncxx::document::element imageId = doc["imageId"];
@@ -67,16 +68,7 @@ void DataManager::querryUserInformation(string username) {
         }
     }
 
-    QMapIterator<string, QVector<string>> j(currentUserMap);
-    while (j.hasNext()) {
-        j.next();
-        cout << j.key() << ":" << endl;
-        QVector<string> v = j.value();
-        for (int i = 0; i < v.size(); ++i) {
-            cout << "     " << v[i] << endl;
-        }
-        cout << endl;
-    }
+    cout << "DATABASE LOG - LOADED " << this->currentUsername << "'S INFORMATION." << endl << endl;
 }
 
 void
@@ -100,8 +92,9 @@ DataManager::sendImageMetadata(string imageId, string albumName, string author, 
     bsoncxx::document::view document = doc_value.view();
 
     imagesCollection.insert_one(document);
+    querryUserInformation();
     cout << "DATABASE LOG - IMAGE SAVED [ID: " << imageId << ", ALBUM: " << albumName << ", IMAGE NAME: " << imageName
-         << "]" << endl << endl;
+         << "]." << endl << endl;
 }
 
 void DataManager::querryImageMetadata(string imageId) {
@@ -131,7 +124,7 @@ void DataManager::querryImageMetadata(string imageId) {
             this->currentImageHeightY = heightY.get_utf8().value.to_string();
             this->currentImageDescription = description.get_utf8().value.to_string();
             cout << "DATABASE LOG - IMAGE LOADED [ID: " << this->currentImageId << ", ALBUM: " << this->currentAlbumName
-                 << ", IMAGE NAME: " << this->currentImageName << "]" << endl << endl;
+                 << ", IMAGE NAME: " << this->currentImageName << "]." << endl << endl;
         }
     }
 }
@@ -148,6 +141,18 @@ void DataManager::printInfo() {
     cout << "imageWidthX: " << currentImageWidthX << endl;
     cout << "imageHeightY: " << currentImageHeightY << endl;
     cout << "imageDescription: " << currentImageDescription << endl;
+    cout << "Albums: [";
+    QMapIterator<string, QVector<string>> j(currentUserMap);
+    while (j.hasNext()) {
+        j.next();
+        cout << j.key() << ": ";
+        QVector<string> v = j.value();
+        for (int i = 0; i < v.size(); ++i) {
+            cout << v[i] << ", ";
+        }
+        cout << " - ";
+    }
+    cout << "]." << endl;
 }
 
 void DataManager::saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription,
@@ -280,34 +285,64 @@ pair<QMap<char, string>, int> DataManager::loadXML(string id) {
 
 void DataManager::deleteImageMetadata(string imageId) {
     bool exists = false;
+    bsoncxx::document::element albumName;
+    bsoncxx::document::element imageName;
+
     mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("imageId", imageId)));
     for (auto &&doc: cursor) {
+        albumName = doc["albumName"];
+        imageName = doc["imageName"];
         exists = true;
     }
-    if(exists){
+    if (exists) {
         imagesCollection.delete_one(document{} << "imageId" << imageId << bsoncxx::builder::stream::finalize);
-    }else{
-        cerr << "Error: cannot delete image metadata." << endl;
+        querryUserInformation();
+        raid.deleteData(imageId);
+        cout << "DATABASE LOG - IMAGE DELETED [ID: " << imageId << ", ALBUM: " << albumName.get_utf8().value.to_string()
+             << ", IMAGE NAME: " << imageName.get_utf8().value.to_string() << "]." << endl << endl;
+    } else {
+        cerr << "ERROR - COULD NOT DELETE THE IMAGE." << endl << endl;
     }
+}
+
+void DataManager::deleteAlbum(string albumName) {
+    querryUserInformation();
+    QMapIterator<string, QVector<string>> j(currentUserMap);
+    while (j.hasNext()) {
+        j.next();
+        if(j.key() == albumName){
+            QVector<string> v = j.value();
+            for (int i = 0; i < v.size(); ++i) {
+                deleteImageMetadata(v[i]);
+            }
+            cout << "DATABASE LOG - ALBUM DELETED [ALBUM NAME: " << albumName << "]." << endl << endl;
+        }
+    }
+    querryUserInformation();
 }
 
 void DataManager::updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor,
                                       string imageDate) {
     bool exists = false;
+    bsoncxx::document::element albumName;
+
     mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("imageId", imageId)));
     for (auto &&doc: cursor) {
+        albumName = doc["albumName"];
         exists = true;
     }
-    if(exists){
+    if (exists) {
         imagesCollection.update_one(document{} << "imageId" << imageId << bsoncxx::builder::stream::finalize,
-                                document{} << "$set" << bsoncxx::builder::stream::open_document <<
-                                "imageName" << imageName <<
-                                "imageDescription" << imageDesc <<
-                                "imageAuthor" << imageAuthor <<
-                                "imageCreationDate" << imageDate
-                                << bsoncxx::builder::stream::close_document << finalize);
+                                    document{} << "$set" << bsoncxx::builder::stream::open_document <<
+                                               "imageName" << imageName <<
+                                               "imageDescription" << imageDesc <<
+                                               "imageAuthor" << imageAuthor <<
+                                               "imageCreationDate" << imageDate
+                                               << bsoncxx::builder::stream::close_document << finalize);
+        cout << "DATABASE LOG - IMAGE UPDATED [ID: " << imageId << ", ALBUM: " << albumName.get_utf8().value.to_string()
+             << ", IMAGE NAME: " << imageName << "]." << endl << endl;
 
-    }else{
-        cerr << "Error: cannot update image metadata." << endl;
+    } else {
+        cerr << "ERROR - COULD NOT UPDATE THE IMAGE." << endl << endl;
     }
 }

@@ -445,3 +445,17 @@ string RAID::loadData(string imageID) {
         }
     }
 }
+
+void RAID::deleteData(string fileId) {
+    QDir partition1(QString::fromStdString(partitions1Directory));
+    QDir partition2(QString::fromStdString(partitions2Directory));
+    QDir partition3(QString::fromStdString(partitions3Directory));
+    QDir parityDrive(QString::fromStdString(parityPartitionsDirectory));
+    QDir dictionaries("../src/RAID5/Drives/dictionaries/");
+
+    partition1.remove(QString::fromStdString(fileId + ".txt"));
+    partition2.remove(QString::fromStdString(fileId + ".txt"));
+    partition3.remove(QString::fromStdString(fileId + ".txt"));
+    parityDrive.remove(QString::fromStdString(fileId + ".txt"));
+    dictionaries.remove(QString::fromStdString(fileId + ".xml"));
+}

@@ -63,10 +63,10 @@ private:
     mongocxx::collection usersCollection = db["Users"];
 
     string currentUsername;
+    string currentAlbumName;
     QMap<string, QVector<string>> currentUserMap;
 
     string currentImageId;
-    string currentAlbumName;
     string currentImageAuthor;
     string currentImageName;
     string currentImageCreationDate;
@@ -80,7 +80,7 @@ protected:
 
     void createCollection(string collectionName);
 
-    void querryUserInformation(string username);
+    void querryUserInformation();
 
 public:
     void sendImageMetadata(string imageId, string albumName, string author, string imageName,
@@ -161,8 +161,32 @@ public:
      */
     QImage loadImage(string id);
 
+    /**
+     * @fn void deleteImageMetadata(string imageId)
+     * @brief
+     * @param imageId
+     * @author <a href="https://github.com/danyazunigab">Daniel A. Zuniga Barahona</a>
+     */
     void deleteImageMetadata(string imageId);
 
+    /**
+     * @fn void deleteAlbum(string albumName)
+     * @brief
+     * @param albumName
+     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
+     */
+    void deleteAlbum(string albumName);
+
+    /**
+     * @fn void updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor, string imageDate)
+     * @brief
+     * @param imageId
+     * @param imageName
+     * @param imageDesc
+     * @param imageAuthor
+     * @param imageDate
+     * @author <a href="https://github.com/danyazunigab">Daniel A. Zuniga Barahona</a>
+     */
     void updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor, string imageDate);
 };
 

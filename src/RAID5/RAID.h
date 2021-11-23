@@ -82,6 +82,14 @@ public:
      */
     string loadData(string fileName);
 
+    /**
+     * @fn void deleteData(string fileId)
+     * @brief
+     * @param fileId
+     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
+     */
+    void deleteData(string fileId);
+
 };
 
 #endif //P3_TECPHOTOS_RAID_H
