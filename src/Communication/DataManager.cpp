@@ -256,6 +256,27 @@ QImage DataManager::loadImage(string id) {
     return image;
 }
 
+QImage DataManager::loadImage(int indexChange) {
+    switch (indexChange) {
+        case -1:
+            if(currentAlbumIndex != 0){
+                currentAlbumIndex += indexChange;
+            }
+            break;
+        case 1:
+            if(currentAlbumIndex != currentUserMap.value(currentAlbumName).size()-1){
+                currentAlbumIndex += indexChange;
+            }
+            break;
+        default:
+            cout << "Illegal movement." << endl << endl;
+    }
+
+    QVector<string> albumElements = currentUserMap.value(this->currentAlbumName);
+
+    return loadImage(albumElements[currentAlbumIndex]);
+}
+
 void DataManager::saveXML(int id, QMap<char, string> dictionary, int ceros) {
     QFile dictionaryFile(dictionaryPath + QString::fromStdString(to_string(id)) + ".xml");
     dictionaryFile.open(QIODevice::WriteOnly);
@@ -380,4 +401,9 @@ void DataManager::updateImageMetadata(string imageId, string imageName, string i
     } else {
         cerr << "ERROR - COULD NOT UPDATE THE IMAGE." << endl << endl;
     }
+}
+
+void DataManager::openAlbum(string album) {
+    this->currentAlbumName = album;
+    this->currentAlbumIndex = 0;
 }

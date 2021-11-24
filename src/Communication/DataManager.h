@@ -64,6 +64,7 @@ private:
 
     string currentUsername; /**< . */
     string currentAlbumName; /**< . */
+    int currentAlbumIndex; /**< . */
     QMap <string, QVector<string>> currentUserMap; /**< . */
 
     string currentImageId; /**< . */
@@ -238,6 +239,8 @@ public:
      */
     QImage loadImage(string id);
 
+    QImage loadImage(int indexChange);
+
     /**
      * @fn void deleteImageMetadata(string imageId)
      * @brief
@@ -272,6 +275,8 @@ public:
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
     void printInfo();
+
+    void openAlbum(string album);
 };
 
 #endif //P3_TECPHOTOS_DATAMANAGER_H
