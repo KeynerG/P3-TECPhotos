@@ -26,7 +26,7 @@ QString TECPhotos::converterStdStringToString(const std::string &String) {
     return qString;
 }
 
-// --- Log In Screen ---
+// --- Log In Screen (ScreenView 0) ---
 void TECPhotos::on_accessButton_clicked() {
     if (!ui->usernameLLineEdit->text().isEmpty() && !ui->passwordLLineEdit->text().isEmpty()) {
         if (DataManager::getInstance()->login(converterQStringToStdString(ui->usernameLLineEdit->text()), converterQStringToStdString(ui->passwordLLineEdit->text()))) {
@@ -46,10 +46,12 @@ void TECPhotos::on_accessButton_clicked() {
 }
 
 void TECPhotos::on_signUpButton_clicked() {
+    ui->usernameSULineEdit->setText("");
+    ui->passwordSULineEdit->setText("");
     ui->ScreenView->setCurrentIndex(1);
 }
 
-// --- Sign Up Screen ---
+// --- Sign Up Screen (ScreenView 1) ---
 void TECPhotos::on_createButton_clicked() {
     if (!ui->usernameSULineEdit->text().isEmpty() && !ui->passwordSULineEdit->text().isEmpty()) {
         if (DataManager::getInstance()->signUp(converterQStringToStdString(ui->usernameSULineEdit->text()), converterQStringToStdString(ui->passwordSULineEdit->text()))) {
@@ -69,5 +71,13 @@ void TECPhotos::on_createButton_clicked() {
 }
 
 void TECPhotos::on_loginButton_clicked() {
+    ui->usernameLLineEdit->setText("");
+    ui->passwordLLineEdit->setText("");
     ui->ScreenView->setCurrentIndex(0);
+}
+
+// --- Album Screen (ScreenView 2) ---
+
+void TECPhotos::on_logOutButton_clicked() {
+
 }

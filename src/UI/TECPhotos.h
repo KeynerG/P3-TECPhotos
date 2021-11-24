@@ -78,6 +78,13 @@ private slots:
      */
     void on_loginButton_clicked();
 
+    /**
+     * @fn void on_logOutButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_logOutButton_clicked();
+
 private:
     Ui::TECPhotos *ui; /**< TECPhotos class interface. */
     QMessageBox *qMessageBox; /**< QMessageBox object reference. */

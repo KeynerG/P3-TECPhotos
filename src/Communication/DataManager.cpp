@@ -9,6 +9,22 @@ DataManager *DataManager::getInstance() {
     return instance;
 }
 
+const string &DataManager::getCurrentUsername() const {
+    return currentUsername;
+}
+
+void DataManager::setCurrentUsername(const string &newCurrentUsername) {
+    currentUsername = newCurrentUsername;
+}
+
+const QMap<string, QVector<string>> &DataManager::getCurrentUserMap() const {
+    return currentUserMap;
+}
+
+void DataManager::setCurrentUserMap(const QMap<string, QVector<string>> &newCurrentUserMap) {
+    currentUserMap = newCurrentUserMap;
+}
+
 void DataManager::createCollection(string collectionName) {
     db.create_collection(collectionName);
 }
@@ -18,9 +34,9 @@ void DataManager::connectToDB() {
     mongocxx::cursor cursor = connectivityAuthentication.find(make_document(kvp("connection", "true")));
     for (auto &&doc: cursor) {
         bsoncxx::document::element connectionResult = doc["connection"];
-        if(connectionResult.get_utf8().value.to_string() == "true"){
+        if (connectionResult.get_utf8().value.to_string() == "true") {
             cout << "DATABASE LOG - SUCCESSFULLY CONNECTED TO DATABASE." << endl << endl;
-        }else{
+        } else {
             cerr << "ERROR - COULDN'T CONNECT TO DATABASE." << endl << endl;
         }
     }
@@ -28,7 +44,7 @@ void DataManager::connectToDB() {
 
 bool DataManager::login(string username, string password) {
     this->currentUsername = "";
-    bool successful;
+    bool successful = false;
     mongocxx::cursor cursor = usersCollection.find(make_document(kvp("username", username), kvp("password", password)));
     for (auto &&doc: cursor) {
         bsoncxx::document::element usernameBD = doc["username"];
@@ -78,11 +94,11 @@ void DataManager::querryUserInformation() {
         bsoncxx::document::element imageId = doc["imageId"];
         if (!currentUserMap.contains(albumName.get_utf8().value.to_string())) {
             currentUserMap.insert(albumName.get_utf8().value.to_string(), QVector<string>());
-            QVector<string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
+            QVector <string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
             v.append(imageId.get_utf8().value.to_string());
             currentUserMap[albumName.get_utf8().value.to_string()] = v;
         } else {
-            QVector<string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
+            QVector <string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
             v.append(imageId.get_utf8().value.to_string());
             currentUserMap[albumName.get_utf8().value.to_string()] = v;
         }
@@ -162,11 +178,11 @@ void DataManager::printInfo() {
     cout << "imageHeightY: " << currentImageHeightY << endl;
     cout << "imageDescription: " << currentImageDescription << endl;
     cout << "Albums: [";
-    QMapIterator<string, QVector<string>> j(currentUserMap);
+    QMapIterator <string, QVector<string>> j(currentUserMap);
     while (j.hasNext()) {
         j.next();
         cout << j.key() << ": ";
-        QVector<string> v = j.value();
+        QVector <string> v = j.value();
         for (int i = 0; i < v.size(); ++i) {
             cout << v[i] << ", ";
         }
@@ -180,7 +196,7 @@ void DataManager::saveImage(QImage &image, string imageName, string imageAlbumNa
     int extraCeros = 0;
     int imageId = 0;
     // Create a QList of the image
-    QList<QRgb> pixelsList;
+    QList <QRgb> pixelsList;
     for (int y = 0; y < image.height(); ++y) {
         QRgb *line = reinterpret_cast<QRgb *>(image.scanLine(y));
         for (int x = 0; x < image.width(); ++x) {
@@ -196,7 +212,7 @@ void DataManager::saveImage(QImage &image, string imageName, string imageAlbumNa
             pixelsListString += ",";
     }
     // compressing the image data
-    pair<string, QMap<char, string>> compressResult = huffman.compress(pixelsListString.toStdString());
+    pair <string, QMap<char, string>> compressResult = huffman.compress(pixelsListString.toStdString());
     // Checking if the code generated is module of 3 before sending to the raid
     while ((compressResult.first.length() % 3) != 0) {
         compressResult.first.push_back('0');
@@ -213,7 +229,7 @@ void DataManager::saveImage(QImage &image, string imageName, string imageAlbumNa
 
 QImage DataManager::loadImage(string id) {
     QImage image(QString::fromStdString(id));
-    QList<QRgb> imageQList;
+    QList <QRgb> imageQList;
 
     pair<QMap<char, string>, int> xmlData = loadXML(id);
     string raidData = raid.loadData(id);
@@ -326,11 +342,11 @@ void DataManager::deleteImageMetadata(string imageId) {
 
 void DataManager::deleteAlbum(string albumName) {
     querryUserInformation();
-    QMapIterator<string, QVector<string>> j(currentUserMap);
+    QMapIterator <string, QVector<string>> j(currentUserMap);
     while (j.hasNext()) {
         j.next();
         if (j.key() == albumName) {
-            QVector<string> v = j.value();
+            QVector <string> v = j.value();
             for (int i = 0; i < v.size(); ++i) {
                 deleteImageMetadata(v[i]);
             }

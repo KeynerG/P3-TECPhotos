@@ -60,11 +60,11 @@ private:
 
     mongocxx::collection imagesCollection = db["Images"]; /**< . */
     mongocxx::collection usersCollection = db["Users"]; /**< . */
-    mongocxx::collection connectivityAuthentication =  db["Connection"]; /**< . */
+    mongocxx::collection connectivityAuthentication = db["Connection"]; /**< . */
 
     string currentUsername; /**< . */
     string currentAlbumName; /**< . */
-    QMap<string, QVector<string>> currentUserMap; /**< . */
+    QMap <string, QVector<string>> currentUserMap; /**< . */
 
     string currentImageId; /**< . */
     string currentImageAuthor; /**< . */
@@ -162,6 +162,43 @@ public:
      */
     void operator=(const DataManager &) = delete;
 
+    /**
+     * @fn const string &getCurrentUsername() const
+     * @brief
+     * @return string
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const string &getCurrentUsername() const;
+
+    /**
+     * @fn void setCurrentUsername(const string &newCurrentUsername)
+     * @brief
+     * @param newCurrentUsername
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentUsername(const string &newCurrentUsername);
+
+    /**
+     * @fn const QMap<string, QVector<string>> &getCurrentUserMap() const
+     * @brief
+     * @return QMap<string, QVector<string>>
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const QMap <string, QVector<string>> &getCurrentUserMap() const;
+
+    /**
+     * @fn void setCurrentUserMap(const QMap<string, QVector<string>> &newCurrentUserMap)
+     * @brief
+     * @param newCurrentUserMap
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentUserMap(const QMap <string, QVector<string>> &newCurrentUserMap);
+
+    /**
+     * @fn void connectToDB()
+     * @brief
+     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
+     */
     void connectToDB();
 
     /**
@@ -182,20 +219,20 @@ public:
      */
     bool signUp(string username, string password);
 
-     /**
-      * @fn void saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor, string imageSize, string imageWidthX, string imageHeightY, string imageDate)
-      * @brief
-      * @param image
-      * @param imageName
-      * @param imageAlbumName
-      * @param imageDescription
-      * @param imageAuthor
-      * @param imageSize
-      * @param imageWidthX
-      * @param imageHeightY
-      * @param imageDate
-      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
-      */
+    /**
+     * @fn void saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor, string imageSize, string imageWidthX, string imageHeightY, string imageDate)
+     * @brief
+     * @param image
+     * @param imageName
+     * @param imageAlbumName
+     * @param imageDescription
+     * @param imageAuthor
+     * @param imageSize
+     * @param imageWidthX
+     * @param imageHeightY
+     * @param imageDate
+     * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
+     */
     void saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
                    string imageSize, string imageWidthX, string imageHeightY, string imageDate);
 
