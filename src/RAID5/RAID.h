@@ -9,7 +9,7 @@ using namespace std;
 
 /**
  * @class RAID
- * @brief
+ * @brief Class for the RAID-partitioning and save process.
  * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
  */
 class RAID {
@@ -26,7 +26,7 @@ public:
 
     /**
      * @fn bool checkFileExistance(int partition, string fileName)
-     * @brief
+     * @brief Function that verifies if an specific file partition exists or not.
      * @param partition
      * @param fileName
      * @return boolean
@@ -36,7 +36,7 @@ public:
 
     /**
      * @fn void generateParityPartition(string fileName)
-     * @brief
+     * @brief Function that generates the parity partition by XOR methodology.
      * @param fileName
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
@@ -44,21 +44,21 @@ public:
 
     /**
      * @fn void checkPartitionsIntegrity()
-     * @brief
+     * @brief Function that verifies if there is any problem with any of the existent partitions.
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
     void checkPartitionsIntegrity();
 
     /**
      * @fn void checkDirectoriesIntegrity()
-     * @brief
+     * @brief Function that certifies if the important directories already exist.
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
     void checkDirectoriesIntegrity();
 
     /**
      * @fn void restoreFilePartition(string fileName)
-     * @brief
+     * @brief Function that rebuilds a lost partition of an specific file.
      * @param fileName
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
@@ -66,7 +66,7 @@ public:
 
     /**
      * @fn void saveData(string data)
-     * @brief
+     * @brief Function that saves a binary-data into the different RAID partition drives.
      * @param data
      * @return int
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
@@ -75,7 +75,7 @@ public:
 
     /**
      * @fn string loadData(string &fileName)
-     * @brief
+     * @brief Function that loads and specific file from the RAID partition drives.
      * @param fileName
      * @return string
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
@@ -84,7 +84,7 @@ public:
 
     /**
      * @fn void deleteData(string &fileId)
-     * @brief
+     * @brief Function that deletes a file from all the partition drives.
      * @param fileId
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
