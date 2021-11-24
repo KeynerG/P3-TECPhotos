@@ -13,26 +13,44 @@ void DataManager::createCollection(string collectionName) {
     db.create_collection(collectionName);
 }
 
-void DataManager::login(string username, string password) {
+void DataManager::connectToDB() {
+    cout << "CONNECTING TO DATABASE..." << endl << endl;
+    mongocxx::cursor cursor = connectivityAuthentication.find(make_document(kvp("connection", "true")));
+    for (auto &&doc: cursor) {
+        bsoncxx::document::element connectionResult = doc["connection"];
+        if(connectionResult.get_utf8().value.to_string() == "true"){
+            cout << "DATABASE LOG - SUCCESSFULLY CONNECTED TO DATABASE." << endl << endl;
+        }else{
+            cerr << "ERROR - COULDN'T CONNECT TO DATABASE." << endl << endl;
+        }
+    }
+}
+
+bool DataManager::login(string username, string password) {
+    this->currentUsername = "";
+    bool successful;
     mongocxx::cursor cursor = usersCollection.find(make_document(kvp("username", username), kvp("password", password)));
     for (auto &&doc: cursor) {
         bsoncxx::document::element usernameBD = doc["username"];
         this->currentUsername = usernameBD.get_utf8().value.to_string();
         querryUserInformation();
         cout << "DATABASE LOG - " << this->currentUsername << " LOGGED IN." << endl << endl;
+        successful = true;
     }
     if (this->currentUsername.empty()) {
         cerr << "ERROR - INVALID USERNAME OR PASSWORD." << endl << endl;
+        successful = false;
     }
+    return successful;
 }
 
-void DataManager::signUp(string username, string password) {
+bool DataManager::signUp(string username, string password) {
     bool exists = false;
+    bool successful = false;
     mongocxx::cursor cursor = usersCollection.find(make_document(kvp("username", username)));
     for (auto &&doc: cursor) {
         exists = true;
     }
-
     if (!exists) {
         auto builder = bsoncxx::builder::stream::document{};
         bsoncxx::document::value doc_value = builder
@@ -44,10 +62,12 @@ void DataManager::signUp(string username, string password) {
 
         usersCollection.insert_one(document);
         this->currentUsername = username;
+        successful = true;
         cout << "DATABASE LOG - " << this->currentUsername << " SIGNED UP." << endl << endl;
     } else {
         cerr << "ERROR - UNAVAILABLE USERNAME" << endl << endl;
     }
+    return successful;
 }
 
 void DataManager::querryUserInformation() {
