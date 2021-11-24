@@ -21,7 +21,7 @@
     <normaloff>:/icon/TECPhotos.png</normaloff>:/icon/TECPhotos.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QStackedWidget" name="stackedWidget">
+   <widget class="QStackedWidget" name="ScreenView">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -434,10 +434,10 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>473</x>
-        <y>455</y>
-        <width>58</width>
-        <height>15</height>
+        <x>470</x>
+        <y>453</y>
+        <width>71</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="palette">
