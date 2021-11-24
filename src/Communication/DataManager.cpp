@@ -17,11 +17,11 @@ void DataManager::setCurrentUsername(const string &newCurrentUsername) {
     currentUsername = newCurrentUsername;
 }
 
-const QMap<string, QVector<string>> &DataManager::getCurrentUserMap() const {
+QMap <string, QVector<string>> &DataManager::getCurrentUserMap() {
     return currentUserMap;
 }
 
-void DataManager::setCurrentUserMap(const QMap<string, QVector<string>> &newCurrentUserMap) {
+void DataManager::setCurrentUserMap(const QMap <string, QVector<string>> &newCurrentUserMap) {
     currentUserMap = newCurrentUserMap;
 }
 

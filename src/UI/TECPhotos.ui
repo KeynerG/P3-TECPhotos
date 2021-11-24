@@ -43,7 +43,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="LogInScreen">
      <widget class="QLabel" name="logInBackground">
@@ -5193,14 +5193,132 @@
       <property name="tabBarAutoHide">
        <bool>false</bool>
       </property>
-      <widget class="QWidget" name="addPhoto">
+      <widget class="QWidget" name="editAlbum">
        <attribute name="icon">
         <iconset resource="Resources/resources.qrc">
-         <normaloff>:/icon/addImage.png</normaloff>:/icon/addImage.png</iconset>
+         <normaloff>:/icon/addAlbum.png</normaloff>:/icon/addAlbum.png</iconset>
        </attribute>
        <attribute name="title">
-        <string/>
+        <string notr="true"/>
        </attribute>
+       <widget class="QLabel" name="editAlbumLabel">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>20</y>
+          <width>381</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="palette">
+         <palette>
+          <active>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="Text">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="128">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
+          <inactive>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="Text">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="128">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
+          <disabled>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>98</red>
+              <green>108</green>
+              <blue>118</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="Text">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>98</red>
+              <green>108</green>
+              <blue>118</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="128">
+              <red>252</red>
+              <green>252</green>
+              <blue>252</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
+         </palette>
+        </property>
+        <property name="font">
+         <font>
+          <family>Carlito</family>
+          <pointsize>35</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="text">
+         <string>EDIT ALBUM</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
        <widget class="QPushButton" name="uploadPhotoButton">
         <property name="enabled">
          <bool>true</bool>
@@ -5208,7 +5326,7 @@
         <property name="geometry">
          <rect>
           <x>250</x>
-          <y>190</y>
+          <y>240</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -5299,7 +5417,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>130</y>
+          <y>180</y>
           <width>291</width>
           <height>41</height>
          </rect>
@@ -5430,10 +5548,10 @@
          <bool>true</bool>
         </property>
         <property name="placeholderText">
-         <string notr="true">Browse your new photo</string>
+         <string notr="true">/home/TECPhotos/sample.png</string>
         </property>
         <property name="clearButtonEnabled">
-         <bool>true</bool>
+         <bool>false</bool>
         </property>
        </widget>
        <widget class="QPushButton" name="browseButton">
@@ -5443,7 +5561,7 @@
         <property name="geometry">
          <rect>
           <x>320</x>
-          <y>130</y>
+          <y>180</y>
           <width>40</width>
           <height>40</height>
          </rect>
@@ -5546,232 +5664,11 @@
          <bool>true</bool>
         </property>
        </widget>
-       <widget class="QLabel" name="addPhotoLabel">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>70</y>
-          <width>381</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="palette">
-         <palette>
-          <active>
-           <colorrole role="WindowText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>10</red>
-              <green>29</green>
-              <blue>43</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Text">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>10</red>
-              <green>29</green>
-              <blue>43</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="128">
-              <red>10</red>
-              <green>29</green>
-              <blue>43</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
-          <inactive>
-           <colorrole role="WindowText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>10</red>
-              <green>29</green>
-              <blue>43</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Text">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>10</red>
-              <green>29</green>
-              <blue>43</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="128">
-              <red>10</red>
-              <green>29</green>
-              <blue>43</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
-          <disabled>
-           <colorrole role="WindowText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>98</red>
-              <green>108</green>
-              <blue>118</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="Text">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>98</red>
-              <green>108</green>
-              <blue>118</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="PlaceholderText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="128">
-              <red>252</red>
-              <green>252</green>
-              <blue>252</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
-         </palette>
-        </property>
-        <property name="font">
-         <font>
-          <family>Carlito</family>
-          <pointsize>35</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="lineWidth">
-         <number>0</number>
-        </property>
-        <property name="text">
-         <string>NEW PHOTO</string>
-        </property>
-        <property name="alignment">
-         <set>Qt::AlignCenter</set>
-        </property>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="addAlbum">
-       <attribute name="icon">
-        <iconset resource="Resources/resources.qrc">
-         <normaloff>:/icon/addAlbum.png</normaloff>:/icon/addAlbum.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string notr="true"/>
-       </attribute>
-       <widget class="QPushButton" name="createAlbumButton">
-        <property name="enabled">
-         <bool>true</bool>
-        </property>
-        <property name="geometry">
-         <rect>
-          <x>250</x>
-          <y>190</y>
-          <width>111</width>
-          <height>31</height>
-         </rect>
-        </property>
-        <property name="palette">
-         <palette>
-          <active>
-           <colorrole role="Button">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>10</red>
-              <green>29</green>
-              <blue>43</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="ButtonText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>0</red>
-              <green>154</green>
-              <blue>254</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </active>
-          <inactive>
-           <colorrole role="Button">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>10</red>
-              <green>29</green>
-              <blue>43</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="ButtonText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>252</red>
-              <green>252</green>
-              <blue>252</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </inactive>
-          <disabled>
-           <colorrole role="Button">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>97</red>
-              <green>112</green>
-              <blue>122</blue>
-             </color>
-            </brush>
-           </colorrole>
-           <colorrole role="ButtonText">
-            <brush brushstyle="SolidPattern">
-             <color alpha="255">
-              <red>98</red>
-              <green>108</green>
-              <blue>118</blue>
-             </color>
-            </brush>
-           </colorrole>
-          </disabled>
-         </palette>
-        </property>
-        <property name="font">
-         <font>
-          <family>Carlito</family>
-          <pointsize>15</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="text">
-         <string>CREATE</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="albumNameLineEdit">
+       <widget class="QComboBox" name="editAlbumSelectorComboBox">
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>130</y>
+          <y>100</y>
           <width>341</width>
           <height>41</height>
          </rect>
@@ -5779,64 +5676,109 @@
         <property name="palette">
          <palette>
           <active>
-           <colorrole role="Text">
+           <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>0</red>
-              <green>154</green>
-              <blue>254</blue>
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
              </color>
             </brush>
            </colorrole>
-           <colorrole role="Base">
+           <colorrole role="Text">
             <brush brushstyle="SolidPattern">
-             <color alpha="0">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="BrightText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="ButtonText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
             <brush brushstyle="SolidPattern">
              <color alpha="128">
-              <red>13</red>
-              <green>18</green>
-              <blue>22</blue>
+              <red>61</red>
+              <green>174</green>
+              <blue>233</blue>
              </color>
             </brush>
            </colorrole>
           </active>
           <inactive>
-           <colorrole role="Text">
+           <colorrole role="WindowText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>0</red>
-              <green>154</green>
-              <blue>254</blue>
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
              </color>
             </brush>
            </colorrole>
-           <colorrole role="Base">
+           <colorrole role="Text">
             <brush brushstyle="SolidPattern">
-             <color alpha="0">
-              <red>0</red>
-              <green>0</green>
-              <blue>0</blue>
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="BrightText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="ButtonText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
              </color>
             </brush>
            </colorrole>
            <colorrole role="PlaceholderText">
             <brush brushstyle="SolidPattern">
              <color alpha="128">
-              <red>13</red>
-              <green>18</green>
-              <blue>22</blue>
+              <red>61</red>
+              <green>174</green>
+              <blue>233</blue>
              </color>
             </brush>
            </colorrole>
           </inactive>
           <disabled>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>98</red>
+              <green>108</green>
+              <blue>118</blue>
+             </color>
+            </brush>
+           </colorrole>
            <colorrole role="Text">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
@@ -5846,12 +5788,21 @@
              </color>
             </brush>
            </colorrole>
-           <colorrole role="Base">
+           <colorrole role="BrightText">
             <brush brushstyle="SolidPattern">
              <color alpha="255">
-              <red>49</red>
-              <green>54</green>
-              <blue>59</blue>
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="ButtonText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>98</red>
+              <green>108</green>
+              <blue>118</blue>
              </color>
             </brush>
            </colorrole>
@@ -5873,48 +5824,40 @@
           <pointsize>12</pointsize>
           <weight>75</weight>
           <bold>true</bold>
-          <stylestrategy>PreferDefault</stylestrategy>
-          <kerning>false</kerning>
          </font>
         </property>
-        <property name="focusPolicy">
-         <enum>Qt::ClickFocus</enum>
+        <property name="cursor">
+         <cursorShape>PointingHandCursor</cursorShape>
         </property>
-        <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+        <property name="editable">
+         <bool>true</bool>
         </property>
-        <property name="autoFillBackground">
-         <bool>false</bool>
-        </property>
-        <property name="text">
+        <property name="currentText">
          <string/>
         </property>
-        <property name="maxLength">
-         <number>999999999</number>
+        <property name="maxVisibleItems">
+         <number>1000000000</number>
+        </property>
+        <property name="insertPolicy">
+         <enum>QComboBox::InsertAlphabetically</enum>
+        </property>
+        <property name="sizeAdjustPolicy">
+         <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
+        </property>
+        <property name="placeholderText">
+         <string>Add or select your album</string>
         </property>
         <property name="frame">
          <bool>true</bool>
         </property>
-        <property name="alignment">
-         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-        </property>
-        <property name="readOnly">
-         <bool>false</bool>
-        </property>
-        <property name="placeholderText">
-         <string notr="true">Type your new album name</string>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
        </widget>
-       <widget class="QLabel" name="addAlbumLabel">
+       <widget class="QLabel" name="browseAlbumLabel">
         <property name="geometry">
          <rect>
-          <x>0</x>
-          <y>70</y>
-          <width>381</width>
-          <height>51</height>
+          <x>20</x>
+          <y>80</y>
+          <width>171</width>
+          <height>20</height>
          </rect>
         </property>
         <property name="palette">
@@ -6011,7 +5954,7 @@
         <property name="font">
          <font>
           <family>Carlito</family>
-          <pointsize>35</pointsize>
+          <pointsize>10</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -6020,10 +5963,128 @@
          <number>0</number>
         </property>
         <property name="text">
-         <string>NEW ALBUM</string>
+         <string>ADD OR SELECT YOUR ALBUM</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="browsePhotoAlbumLabel">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>160</y>
+          <width>161</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="palette">
+         <palette>
+          <active>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="Text">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="128">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
+          <inactive>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="Text">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="128">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
+          <disabled>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>98</red>
+              <green>108</green>
+              <blue>118</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="Text">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>98</red>
+              <green>108</green>
+              <blue>118</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="128">
+              <red>252</red>
+              <green>252</green>
+              <blue>252</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
+         </palette>
+        </property>
+        <property name="font">
+         <font>
+          <family>Carlito</family>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="text">
+         <string>BROWSE YOUR NEW PHOTO</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </widget>
@@ -6042,7 +6103,7 @@
         <property name="geometry">
          <rect>
           <x>250</x>
-          <y>190</y>
+          <y>210</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -6133,7 +6194,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>130</y>
+          <y>140</y>
           <width>341</width>
           <height>41</height>
          </rect>
@@ -6307,17 +6368,17 @@
          <enum>QComboBox::AdjustToMinimumContentsLengthWithIcon</enum>
         </property>
         <property name="placeholderText">
-         <string>Select your album</string>
+         <string>...</string>
         </property>
         <property name="frame">
-         <bool>false</bool>
+         <bool>true</bool>
         </property>
        </widget>
        <widget class="QLabel" name="deleteAlbumLabel">
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>70</y>
+          <y>50</y>
           <width>381</width>
           <height>51</height>
          </rect>
@@ -6426,6 +6487,124 @@
         </property>
         <property name="text">
          <string>REMOVE ALBUM</string>
+        </property>
+        <property name="alignment">
+         <set>Qt::AlignCenter</set>
+        </property>
+       </widget>
+       <widget class="QLabel" name="selectAlbumLabel">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>120</y>
+          <width>121</width>
+          <height>20</height>
+         </rect>
+        </property>
+        <property name="palette">
+         <palette>
+          <active>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="Text">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="128">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </active>
+          <inactive>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="Text">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="128">
+              <red>10</red>
+              <green>29</green>
+              <blue>43</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </inactive>
+          <disabled>
+           <colorrole role="WindowText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>98</red>
+              <green>108</green>
+              <blue>118</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="Text">
+            <brush brushstyle="SolidPattern">
+             <color alpha="255">
+              <red>98</red>
+              <green>108</green>
+              <blue>118</blue>
+             </color>
+            </brush>
+           </colorrole>
+           <colorrole role="PlaceholderText">
+            <brush brushstyle="SolidPattern">
+             <color alpha="128">
+              <red>252</red>
+              <green>252</green>
+              <blue>252</blue>
+             </color>
+            </brush>
+           </colorrole>
+          </disabled>
+         </palette>
+        </property>
+        <property name="font">
+         <font>
+          <family>Carlito</family>
+          <pointsize>10</pointsize>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="text">
+         <string>SELECT YOUR ALBUM</string>
         </property>
         <property name="alignment">
          <set>Qt::AlignCenter</set>

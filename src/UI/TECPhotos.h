@@ -3,6 +3,7 @@
 
 #include "../Communication/DataManager.h"
 
+#include <QFileDialog>
 #include <QMainWindow>
 #include <QMessageBox>
 
@@ -47,7 +48,14 @@ public:
      * @return
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
-    QString converterStdStringToString(const std::string &String);
+    QString converterStdStringToQString(const std::string &String);
+
+    /**
+     * @fn void getUserAlbums()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void getUserAlbums();
 
 private slots:
     /**
@@ -85,9 +93,38 @@ private slots:
      */
     void on_logOutButton_clicked();
 
+    /**
+     * @fn void on_editAlbumButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_editAlbumButton_clicked();
+
+    /**
+     * @fn void on_galleryAOButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_galleryAOButton_clicked();
+
+    /**
+     * @fn void on_browseButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_browseButton_clicked();
+
+    /**
+     * @fn void on_uploadPhotoButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_uploadPhotoButton_clicked();
+
 private:
     Ui::TECPhotos *ui; /**< TECPhotos class interface. */
     QMessageBox *qMessageBox; /**< QMessageBox object reference. */
+    QStringList albumsList; /**< List with the names of the albums of the current user. */
 };
 
 #endif // P3_TECPHOTOS_TECPHOTOS_H

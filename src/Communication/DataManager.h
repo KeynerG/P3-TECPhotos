@@ -119,13 +119,6 @@ protected:
     void querryImageMetadata(string imageId);
 
     /**
-     * @fn void printInfo()
-     * @brief
-     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
-     */
-    void printInfo();
-
-    /**
      * @fn void saveXML(int id, QMap<char, string> dictionary, int ceros);
      * @brief
      * @param id
@@ -184,7 +177,7 @@ public:
      * @return QMap<string, QVector<string>>
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
-    const QMap <string, QVector<string>> &getCurrentUserMap() const;
+    QMap <string, QVector<string>> &getCurrentUserMap();
 
     /**
      * @fn void setCurrentUserMap(const QMap<string, QVector<string>> &newCurrentUserMap)
@@ -272,6 +265,13 @@ public:
      * @author <a href="https://github.com/danyazunigab">Daniel A. Zúñiga Barahona</a>
      */
     void updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor, string imageDate);
+
+    /**
+     * @fn void printInfo()
+     * @brief
+     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
+     */
+    void printInfo();
 };
 
 #endif //P3_TECPHOTOS_DATAMANAGER_H
