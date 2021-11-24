@@ -121,6 +121,8 @@ private slots:
      */
     void on_uploadPhotoButton_clicked();
 
+    void on_saveButton_clicked();
+
 private:
     Ui::TECPhotos *ui; /**< TECPhotos class interface. */
     QMessageBox *qMessageBox; /**< QMessageBox object reference. */

@@ -154,7 +154,7 @@ void TECPhotos::on_uploadPhotoButton_clicked() {
                              Qt::TransformationMode::SmoothTransformation)));
         ui->albumNameNPLineEdit->setText(ui->editAlbumSelectorComboBox->currentText());
         ui->photoSizeNPLineEdit->setText(
-                converterStdStringToQString(std::to_string(image.sizeInBytes() / 1000)) + " kB");
+                converterStdStringToQString(std::to_string(image.sizeInBytes())) + " B");
         ui->photoWidthNPLineEdit->setText(converterStdStringToQString(std::to_string(image.width())));
         ui->photoHeightNPLineEdit->setText(converterStdStringToQString(std::to_string(image.height())));
         // Switch to New Photo Screen
@@ -167,5 +167,15 @@ void TECPhotos::on_uploadPhotoButton_clicked() {
         } else if (ui->photoPathLineEdit->text().isEmpty()) {
             displayMessage("Warning", "Please select the photo you want to upload.");
         }
+    }
+}
+void TECPhotos::on_saveButton_clicked() {
+    if (!ui->photoNameNPLineEdit->text().isEmpty()) {
+        DataManager::getInstance()->saveImage(QImage(ui->photoPathLineEdit->text()), converterQStringToStdString(ui->photoNameNPLineEdit->text()),
+                                              converterQStringToStdString(ui->albumNameNPLineEdit->text()), converterQStringToStdString(ui->photoDescriptionNPLineEdit->text()),
+                                              converterQStringToStdString(ui->photoAuthorNPLineEdit->text()), converterQStringToStdString(ui->photoSizeNPLineEdit->text()),
+                                              converterQStringToStdString(ui->photoWidthNPLineEdit->text()), converterQStringToStdString(ui->photoHeightNPLineEdit->text()), "");
+    } else {
+        displayMessage("Warning", "Please enter the photo name.");
     }
 }

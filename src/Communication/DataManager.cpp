@@ -191,7 +191,7 @@ void DataManager::printInfo() {
     cout << "]." << endl;
 }
 
-void DataManager::saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
+void DataManager::saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
                             string imageSize, string imageWidthX, string imageHeightY, string imageDate) {
     int extraCeros = 0;
     int imageId = 0;

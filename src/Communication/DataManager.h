@@ -226,7 +226,7 @@ public:
      * @param imageDate
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
-    void saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
+    void saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
                    string imageSize, string imageWidthX, string imageHeightY, string imageDate);
 
     /**
