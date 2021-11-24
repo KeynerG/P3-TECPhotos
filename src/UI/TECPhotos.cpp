@@ -67,3 +67,7 @@ void TECPhotos::on_createButton_clicked() {
         }
     }
 }
+
+void TECPhotos::on_loginButton_clicked() {
+    ui->ScreenView->setCurrentIndex(0);
+}

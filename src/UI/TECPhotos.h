@@ -71,6 +71,11 @@ private slots:
      */
     void on_createButton_clicked();
 
+    /**
+     * @fn void on_loginButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
     void on_loginButton_clicked();
 
 private:
