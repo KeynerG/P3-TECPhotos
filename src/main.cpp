@@ -1,4 +1,5 @@
 #include "UI/TECPhotos.h"
+#include "Communication/DataManager.h"
 
 #include <QApplication>
 
@@ -14,6 +15,7 @@
  * @author <a href="https://github.com/danyazunigab">Daniel A. Zúñiga Barahona</a>
  */
 int main(int argc, char *argv[]) {
+    DataManager::getInstance()->connectToDB();
     QApplication application(argc, argv);
     TECPhotos tecPhotos;
     tecPhotos.show();

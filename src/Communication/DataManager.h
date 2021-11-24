@@ -60,6 +60,7 @@ private:
 
     mongocxx::collection imagesCollection = db["Images"]; /**< . */
     mongocxx::collection usersCollection = db["Users"]; /**< . */
+    mongocxx::collection connectivityAuthentication =  db["Connection"]; /**< . */
 
     string currentUsername; /**< . */
     string currentAlbumName; /**< . */
@@ -161,6 +162,8 @@ public:
      */
     void operator=(const DataManager &) = delete;
 
+    void connectToDB();
+
     /**
      * @fn void login(string username, string password)
      * @brief
@@ -168,7 +171,7 @@ public:
      * @param password
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
-    void login(string username, string password);
+    bool login(string username, string password);
 
     /**
      * @fn void signUp(string username, string password)
@@ -177,7 +180,7 @@ public:
      * @param password
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
-    void signUp(string username, string password);
+    bool signUp(string username, string password);
 
      /**
       * @fn void saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor, string imageSize, string imageWidthX, string imageHeightY, string imageDate)

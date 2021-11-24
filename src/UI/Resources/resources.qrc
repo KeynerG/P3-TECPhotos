@@ -25,5 +25,7 @@
         <file>icon/backOn.png</file>
         <file>icon/metadataOff.png</file>
         <file>icon/metadataOn.png</file>
+        <file>icon/exitOff.png</file>
+        <file>icon/exitOn.png</file>
     </qresource>
 </RCC>
