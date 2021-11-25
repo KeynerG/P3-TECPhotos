@@ -4,6 +4,11 @@
 TECPhotos::TECPhotos(QWidget *parent) : QMainWindow(parent), ui(new Ui::TECPhotos) {
     ui->setupUi(this);
     ui->ScreenView->setCurrentIndex(0);
+
+    QMovie *loadingIcon = new QMovie(":/icon/loading.gif");
+    ui->loadingIconLabel->setMovie(loadingIcon);
+    ui->decompressingIconLabel->setMovie(loadingIcon);
+    loadingIcon->start();
 }
 
 TECPhotos::~TECPhotos() {
@@ -210,10 +215,6 @@ void TECPhotos::on_saveButton_clicked() {
         // timer 1 sec
         QTime dieTime = QTime::currentTime().addMSecs(1000);
         while (QTime::currentTime() < dieTime) { QCoreApplication::processEvents(QEventLoop::AllEvents, 100); }
-        // loading animation
-        QMovie *loadingIcon = new QMovie(":/icon/loading.gif");
-        ui->loadingIconLabel->setMovie(loadingIcon);
-        loadingIcon->start();
         // image Processing
         if (DataManager::getInstance()->saveImage(QImage(ui->photoPathLineEdit->text()),
                                                   converterQStringToStdString(ui->photoNameNPLineEdit->text()),
@@ -241,6 +242,8 @@ void TECPhotos::on_saveButton_clicked() {
 
 void TECPhotos::on_galleryPButton_clicked() {
     getUserAlbums();
+    ui->albumNameLabel->clear();
+    ui->photoNameLabel->clear();
     // display current user albums
     // switch to Album Screen
     ui->ScreenView->setCurrentIndex(2);
@@ -265,18 +268,63 @@ void TECPhotos::on_propertiesButton_clicked() {
     ui->photoWidthILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageWidthX()));
     ui->photoHeightILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageHeightY()));
     ui->photoDateIEdit->setDate(QDate::fromString(converterStdStringToQString(DataManager::getInstance()->getCurrentImageCreationDate())));
+    // switch to Photo Information Screen
+    ui->ScreenView->setCurrentIndex(7);
 }
 
 void TECPhotos::on_deletePhotoButton_clicked() {
     ui->displayPhotoLabel->clear();
     DataManager::getInstance()->deleteImageMetadata();
+    if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 0) {
+        getUserAlbums();
+        ui->ScreenView->setCurrentIndex(2);
+    } else {
+        on_nextButton_clicked();
+    }
 }
 
 void TECPhotos::on_previousButton_clicked() {
-    ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(DataManager::getInstance()->loadImage(-1)).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+    ui->previousButton->setEnabled(false);
+    ui->nextButton->setEnabled(false);
+    ui->displayPhotoLabel->clear();
+    image = DataManager::getInstance()->loadImage(-1);
+    if (!image.isNull()) {
+        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+    }
+    ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
+    ui->previousButton->setEnabled(true);
+    ui->nextButton->setEnabled(true);
 }
 
 
 void TECPhotos::on_nextButton_clicked() {
-    ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(DataManager::getInstance()->loadImage(1)).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+    ui->previousButton->setEnabled(false);
+    ui->nextButton->setEnabled(false);
+    ui->displayPhotoLabel->clear();
+    image = DataManager::getInstance()->loadImage(1);
+    if (!image.isNull()) {
+        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+    }
+    ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
+    ui->previousButton->setEnabled(true);
+    ui->nextButton->setEnabled(true);
+}
+
+// --- Photo Information Screen (ScreenView 7) ---
+
+void TECPhotos::on_galleryIButton_clicked() {
+    ui->photoNameLabel->setText(ui->photoNameILineEdit->text());
+    ui->ScreenView->setCurrentIndex(6);
+}
+
+// ---------
+void TECPhotos::on_album00Button_7_clicked() {
+    DataManager::getInstance()->openAlbum("D");
+    image = DataManager::getInstance()->loadImage(0);
+    if (!image.isNull()) {
+        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+    }
+    ui->albumNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentAlbumName()));
+    ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
+    ui->ScreenView->setCurrentIndex(6);
 }

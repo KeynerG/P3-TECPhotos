@@ -174,10 +174,20 @@ private slots:
      */
     void on_nextButton_clicked();
 
+    /**
+     * @fn void on_galleryIButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_galleryIButton_clicked();
+
+    void on_album00Button_7_clicked();
+
 private:
     Ui::TECPhotos *ui; /**< TECPhotos class interface. */
     QMessageBox *qMessageBox; /**< QMessageBox object reference. */
     QStringList albumsList; /**< List with the names of the albums of the current user. */
+    QImage image; /**< */
 };
 
 #endif // P3_TECPHOTOS_TECPHOTOS_H

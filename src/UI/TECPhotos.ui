@@ -8275,6 +8275,9 @@
     </widget>
     <widget class="QWidget" name="PhotoScreen">
      <widget class="QLabel" name="photoBackground">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>0</x>
@@ -9259,7 +9262,7 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>380</x>
+        <x>382</x>
         <y>540</y>
         <width>40</width>
         <height>40</height>
@@ -9817,6 +9820,53 @@
        <bool>true</bool>
       </property>
      </widget>
+     <widget class="QLabel" name="decompressingIconLabel">
+      <property name="geometry">
+       <rect>
+        <x>352</x>
+        <y>280</y>
+        <width>100</width>
+        <height>100</height>
+       </rect>
+      </property>
+      <property name="minimumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>100</width>
+        <height>100</height>
+       </size>
+      </property>
+      <property name="lineWidth">
+       <number>0</number>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="Resources/resources.qrc">:/icon/loading.gif</pixmap>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <zorder>photoBackground</zorder>
+     <zorder>photoNameLabel</zorder>
+     <zorder>albumNameLabel</zorder>
+     <zorder>propertiesButton</zorder>
+     <zorder>galleryPButton</zorder>
+     <zorder>deletePhotoButton</zorder>
+     <zorder>nextButton</zorder>
+     <zorder>previousButton</zorder>
+     <zorder>decompressingIconLabel</zorder>
+     <zorder>displayPhotoLabel</zorder>
     </widget>
     <widget class="QWidget" name="PhotoInformationScreen">
      <widget class="QLabel" name="photoInformationBackground">

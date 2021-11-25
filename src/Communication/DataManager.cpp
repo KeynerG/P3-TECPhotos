@@ -344,7 +344,7 @@ QImage DataManager::loadImage(int indexChange) {
             }
             break;
         case 1:
-            if (currentAlbumIndex != currentUserMap.value(currentAlbumName).size() - 1) {
+            if (currentAlbumIndex != currentUserMap.value(currentAlbumName).size() - 1 && currentUserMap.value(currentAlbumName).size() != 1) {
                 currentAlbumIndex += indexChange;
             } else {
                 currentAlbumIndex = 0;
