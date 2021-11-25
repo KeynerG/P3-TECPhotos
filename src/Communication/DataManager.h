@@ -76,7 +76,7 @@ private:
     string currentImageHeightY; /**< . */
     string currentImageDescription; /**< . */
 
-protected:
+public:
     DataManager() = default; /**< DataManager class constructor. */
 
     /**
@@ -140,7 +140,6 @@ protected:
      */
     pair<QMap<char, string>, int> loadXML(string id);
 
-public:
     /**
      * @fn static DataManager *getInstance()
      * @brief
@@ -171,6 +170,134 @@ public:
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
     void setCurrentUsername(const string &newCurrentUsername);
+
+    /**
+     * @fn const string &getCurrentAlbumName() const
+     * @brief
+     * @return string
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const string &getCurrentAlbumName() const;
+
+    /**
+     * @fn void setCurrentAlbumName(const string &newCurrentAlbumName)
+     * @brief
+     * @param newCurrentAlbumName
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentAlbumName(const string &newCurrentAlbumName);
+
+    /**
+     * @fn const string &getCurrentImageAuthor() const
+     * @brief
+     * @return string
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const string &getCurrentImageAuthor() const;
+
+    /**
+     * @fn void setCurrentImageAuthor(const string &newCurrentImageAuthor)
+     * @brief
+     * @param newCurrentImageAuthor
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentImageAuthor(const string &newCurrentImageAuthor);
+
+    /**
+     * @fn const string &getCurrentImageName() const
+     * @brief
+     * @return string
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const string &getCurrentImageName() const;
+
+    /**
+     * @fn void setCurrentImageName(const string &newCurrentImageName)
+     * @brief
+     * @param newCurrentImageName
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentImageName(const string &newCurrentImageName);
+
+    /**
+     * @fn const string &getCurrentImageCreationDate() const
+     * @brief
+     * @return string
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const string &getCurrentImageCreationDate() const;
+
+    /**
+     * @fn void setCurrentImageCreationDate(const string &newCurrentImageCreationDate)
+     * @brief
+     * @param newCurrentImageCreationDate
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentImageCreationDate(const string &newCurrentImageCreationDate);
+
+    /**
+     * @fn const string &getCurrentImageSize() const
+     * @brief
+     * @return string
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const string &getCurrentImageSize() const;
+
+    /**
+     * @fn void setCurrentImageSize(const string &newCurrentImageSize)
+     * @brief
+     * @param newCurrentImageSize
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentImageSize(const string &newCurrentImageSize);
+
+    /**
+     * @fn const string &getCurrentImageWidthX() const
+     * @brief
+     * @return string
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const string &getCurrentImageWidthX() const;
+
+    /**
+     * @fn void setCurrentImageWidthX(const string &newCurrentImageWidthX)
+     * @brief
+     * @param newCurrentImageWidthX
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentImageWidthX(const string &newCurrentImageWidthX);
+
+    /**
+     * @fn const string &getCurrentImageHeightY() const
+     * @brief
+     * @return string
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const string &getCurrentImageHeightY() const;
+
+    /**
+     * @fn void setCurrentImageHeightY(const string &newCurrentImageHeightY)
+     * @brief
+     * @param newCurrentImageHeightY
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentImageHeightY(const string &newCurrentImageHeightY);
+
+    /**
+     * @fn const string &getCurrentImageDescription() const
+     * @brief
+     * @return string
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    const string &getCurrentImageDescription() const;
+
+    /**
+     * @fn void setCurrentImageDescription(const string &newCurrentImageDescription)
+     * @brief
+     * @param newCurrentImageDescription
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void setCurrentImageDescription(const string &newCurrentImageDescription);
 
     /**
      * @fn QMap<string, QVector<string>> &getCurrentUserMap()
@@ -247,6 +374,13 @@ public:
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
     QImage loadImage(int indexChange);
+
+    /**
+     * @fn void deleteImageMetadata()
+     * @brief
+     * @author <a href="https://github.com/danyazunigab">Daniel A. Zúñiga Barahona</a>
+     */
+    void deleteImageMetadata();
 
     /**
      * @fn void deleteImageMetadata(string imageId)

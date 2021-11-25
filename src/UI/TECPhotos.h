@@ -139,6 +139,41 @@ private slots:
      */
     void on_saveButton_clicked();
 
+    /**
+     * @fn void on_galleryPButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_galleryPButton_clicked();
+
+    /**
+     * @fn void on_propertiesButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_propertiesButton_clicked();
+
+    /**
+     * @fn void on_deletePhotoButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_deletePhotoButton_clicked();
+
+    /**
+     * @fn void on_previousButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_previousButton_clicked();
+
+    /**
+     * @fn void on_nextButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_nextButton_clicked();
+
 private:
     Ui::TECPhotos *ui; /**< TECPhotos class interface. */
     QMessageBox *qMessageBox; /**< QMessageBox object reference. */

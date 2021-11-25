@@ -138,8 +138,7 @@ void TECPhotos::on_browseButton_clicked() {
     ui->photoLabel->clear();
     QString imagePath = "";
     bool validImage = false;
-    imagePath = QFileDialog::getOpenFileName(this, "TECPhotos - Select your image", "",
-                                             "PNG (*.png);;JPG (*.jpg);;JPEG (*.jpeg)");
+    imagePath = QFileDialog::getOpenFileName(this, "TECPhotos - Select your image", "", "PNG (*.png);;JPG (*.jpg);;JPEG (*.jpeg)");
     if (QString::compare(imagePath, QString()) != 0) {
         QImage imageSelected;
         validImage = imageSelected.load(imagePath);
@@ -217,15 +216,17 @@ void TECPhotos::on_saveButton_clicked() {
         loadingIcon->start();
         // image Processing
         if (DataManager::getInstance()->saveImage(QImage(ui->photoPathLineEdit->text()),
-                                                              converterQStringToStdString(ui->photoNameNPLineEdit->text()),
-                                                              converterQStringToStdString(ui->albumNameNPLineEdit->text()),
-                                                              converterQStringToStdString(ui->photoDescriptionNPLineEdit->text()),
-                                                              converterQStringToStdString(ui->photoAuthorNPLineEdit->text()),
-                                                              converterQStringToStdString(ui->photoSizeNPLineEdit->text()),
-                                                              converterQStringToStdString(ui->photoWidthNPLineEdit->text()),
-                                                              converterQStringToStdString(ui->photoHeightNPLineEdit->text()),""))
+                                                  converterQStringToStdString(ui->photoNameNPLineEdit->text()),
+                                                  converterQStringToStdString(ui->albumNameNPLineEdit->text()),
+                                                  converterQStringToStdString(ui->photoDescriptionNPLineEdit->text()),
+                                                  converterQStringToStdString(ui->photoAuthorNPLineEdit->text()),
+                                                  converterQStringToStdString(ui->photoSizeNPLineEdit->text()),
+                                                  converterQStringToStdString(ui->photoWidthNPLineEdit->text()),
+                                                  converterQStringToStdString(ui->photoHeightNPLineEdit->text()),
+                                                  converterQStringToStdString(ui->photoDateNPEdit->date().toString("MM/dd/yyyy"))))
         {
             // switch to Album Screen
+            getUserAlbums();
             ui->ScreenView->setCurrentIndex(2);
         } else {
             displayMessage("Notification", "The image \"" + QString(ui->photoNameNPLineEdit->text() + "\" was not successfully upload."));
@@ -234,4 +235,48 @@ void TECPhotos::on_saveButton_clicked() {
         displayMessage("Warning", "Please enter the photo name.");
     }
     ui->saveButton->setEnabled(true);
+}
+
+// --- Photo Screen (ScreenView 6) ---
+
+void TECPhotos::on_galleryPButton_clicked() {
+    getUserAlbums();
+    // display current user albums
+    // switch to Album Screen
+    ui->ScreenView->setCurrentIndex(2);
+}
+
+void TECPhotos::on_propertiesButton_clicked() {
+    // clear screen widgets
+    ui->photoNameILineEdit->clear();
+    ui->albumNameILineEdit->clear();
+    ui->photoDescriptionILineEdit->clear();
+    ui->photoAuthorILineEdit->clear();
+    ui->photoSizeILineEdit->clear();
+    ui->photoWidthILineEdit->clear();
+    ui->photoHeightILineEdit->clear();
+    ui->photoDateIEdit->clear();
+    // setup screen widgets
+    ui->photoNameILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
+    ui->albumNameILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentAlbumName()));
+    ui->photoDescriptionILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageDescription()));
+    ui->photoAuthorILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageAuthor()));
+    ui->photoSizeILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageSize()));
+    ui->photoWidthILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageWidthX()));
+    ui->photoHeightILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageHeightY()));
+    ui->photoDateIEdit->setDate(QDate::fromString(converterStdStringToQString(DataManager::getInstance()->getCurrentImageCreationDate())));
+}
+
+void TECPhotos::on_deletePhotoButton_clicked() {
+    ui->displayPhotoLabel->clear();
+    DataManager::getInstance()->deleteImageMetadata();
+}
+
+void TECPhotos::on_previousButton_clicked() {
+    ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(DataManager::getInstance()->loadImage(-1)).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+}
+
+
+void TECPhotos::on_nextButton_clicked() {
+    ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(DataManager::getInstance()->loadImage(1)).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
 }

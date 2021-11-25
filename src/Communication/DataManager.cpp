@@ -25,6 +25,82 @@ void DataManager::setCurrentUserMap(const QMap <string, QVector<string>> &newCur
     currentUserMap = newCurrentUserMap;
 }
 
+const string &DataManager::getCurrentAlbumName() const {
+    return currentAlbumName;
+}
+
+void DataManager::setCurrentAlbumName(const string &newCurrentAlbumName) {
+    currentAlbumName = newCurrentAlbumName;
+}
+
+const string &DataManager::getCurrentImageAuthor() const
+{
+    return currentImageAuthor;
+}
+
+void DataManager::setCurrentImageAuthor(const string &newCurrentImageAuthor)
+{
+    currentImageAuthor = newCurrentImageAuthor;
+}
+
+const string &DataManager::getCurrentImageName() const {
+    return currentImageName;
+}
+
+void DataManager::setCurrentImageName(const string &newCurrentImageName) {
+    currentImageName = newCurrentImageName;
+}
+
+const string &DataManager::getCurrentImageCreationDate() const
+{
+    return currentImageCreationDate;
+}
+
+void DataManager::setCurrentImageCreationDate(const string &newCurrentImageCreationDate)
+{
+    currentImageCreationDate = newCurrentImageCreationDate;
+}
+
+const string &DataManager::getCurrentImageSize() const
+{
+    return currentImageSize;
+}
+
+void DataManager::setCurrentImageSize(const string &newCurrentImageSize)
+{
+    currentImageSize = newCurrentImageSize;
+}
+
+const string &DataManager::getCurrentImageWidthX() const
+{
+    return currentImageWidthX;
+}
+
+void DataManager::setCurrentImageWidthX(const string &newCurrentImageWidthX)
+{
+    currentImageWidthX = newCurrentImageWidthX;
+}
+
+const string &DataManager::getCurrentImageHeightY() const
+{
+    return currentImageHeightY;
+}
+
+void DataManager::setCurrentImageHeightY(const string &newCurrentImageHeightY)
+{
+    currentImageHeightY = newCurrentImageHeightY;
+}
+
+const string &DataManager::getCurrentImageDescription() const
+{
+    return currentImageDescription;
+}
+
+void DataManager::setCurrentImageDescription(const string &newCurrentImageDescription)
+{
+    currentImageDescription = newCurrentImageDescription;
+}
+
 void DataManager::createCollection(string collectionName) {
     db.create_collection(collectionName);
 }
@@ -261,21 +337,23 @@ QImage DataManager::loadImage(string id) {
 QImage DataManager::loadImage(int indexChange) {
     switch (indexChange) {
         case -1:
-            if(currentAlbumIndex != 0){
+            if (currentAlbumIndex != 0) {
                 currentAlbumIndex += indexChange;
+            } else {
+                currentAlbumIndex = currentUserMap.value(currentAlbumName).size() - 1;
             }
             break;
         case 1:
-            if(currentAlbumIndex != currentUserMap.value(currentAlbumName).size()-1){
+            if (currentAlbumIndex != currentUserMap.value(currentAlbumName).size() - 1) {
                 currentAlbumIndex += indexChange;
+            } else {
+                currentAlbumIndex = 0;
             }
             break;
         default:
-            cout << "Illegal movement." << endl << endl;
+            break;
     }
-
     QVector<string> albumElements = currentUserMap.value(this->currentAlbumName);
-
     return loadImage(albumElements[currentAlbumIndex]);
 }
 
@@ -339,6 +417,28 @@ pair<QMap<char, string>, int> DataManager::loadXML(string id) {
                  << " was not successfully read.";
     }
     return result;
+}
+
+void DataManager::deleteImageMetadata() {
+    bool exists = false;
+    bsoncxx::document::element albumName;
+    bsoncxx::document::element imageName;
+
+    mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("imageId", currentImageId)));
+    for (auto &&doc: cursor) {
+        albumName = doc["albumName"];
+        imageName = doc["imageName"];
+        exists = true;
+    }
+    if (exists) {
+        imagesCollection.delete_one(document{} << "imageId" << currentImageId << bsoncxx::builder::stream::finalize);
+        querryUserInformation();
+        raid.deleteData(currentImageId);
+        cout << "DATABASE LOG - IMAGE DELETED [ID: " << currentImageId << ", ALBUM: " << albumName.get_utf8().value.to_string()
+             << ", IMAGE NAME: " << imageName.get_utf8().value.to_string() << "]." << endl << endl;
+    } else {
+        cerr << "ERROR - COULD NOT DELETE THE IMAGE." << endl << endl;
+    }
 }
 
 void DataManager::deleteImageMetadata(string imageId) {
