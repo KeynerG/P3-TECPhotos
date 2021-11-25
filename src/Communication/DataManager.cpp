@@ -329,29 +329,37 @@ bool DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
     return imageSaved;
 }
 
-QImage DataManager::loadImage(string id) {
-    QImage image(QString::fromStdString(id));
-//    QList <QRgb> imageQList;
-//
-//    pair<QMap<char, string>, int> xmlData = loadXML(id);
-//    string raidData = raid.loadData(id);
-//    if (xmlData.second != 0) {
-//        for (int i = 0; i < xmlData.second; ++i) {
-//            raidData.pop_back();
-//        }
-//    }
-//    string imageQListString = huffman.decompress(raidData, xmlData.first);
-//
-//    QRgb pixel;
-//    stringstream ss(imageQListString);
-//    while (ss.good()) {
-//        string substr;
-//        getline(ss, substr, ',');
-//        pixel = stoi(substr);
-//        imageQList.append(pixel);
-//    }
-//
-//    //QList<QRgb> imageQList to QImage image
+QImage DataManager::loadImage(string id, int width, int height) {
+    QImage image(width,height,QImage::Format_ARGB32);
+    QList <QRgb> imageQList;
+
+    pair<QMap<char, string>, int> xmlData = loadXML(id);
+    string raidData = raid.loadData(id);
+    if (xmlData.second != 0) {
+        for (int i = 0; i < xmlData.second; ++i) {
+            raidData.pop_back();
+        }
+    }
+    string imageQListString = huffman.decompress(raidData, xmlData.first);
+
+    QRgb pixel;
+    stringstream ss(imageQListString);
+    while (ss.good()) {
+        string substr;
+        getline(ss, substr, ',');
+        pixel = stoi(substr);
+        imageQList.append(pixel);
+    }
+
+    //QList<QRgb> imageQList to QImage image
+    for (int y = 0; y < height; ++y) {
+        QRgb *line = reinterpret_cast<QRgb *>(image.scanLine(y));
+        for (int x = 0; x < width; ++x) {
+            QRgb &rgb = line[x];
+            rgb = imageQList.first();
+            imageQList.removeFirst();
+        }
+    }
 
     querryImageMetadata(id);
 
@@ -419,18 +427,29 @@ void DataManager::saveXML(int id, QMap<char, string> dictionary, int ceros) {
 
 pair<QMap<char, string>, int> DataManager::loadXML(string id) {
     pair<QMap<char, string>, int> result;
-    QFile dictionaryFile(dictionaryPath + QString::fromStdString(id) + ".xml");
     QMap<char, string> dictionary;
+    QString mapString;
+    QList<string> mapElements;
+    QList<string> keyValueElements;
+    QString cerosString;
+
+    // read the xml file
+    QFile dictionaryFile(dictionaryPath + QString::fromStdString(id) + ".xml");
     if (dictionaryFile.exists()) {
         dictionaryFile.open(QIODevice::ReadOnly);
         QXmlStreamReader xmlReader(&dictionaryFile);
         xmlReader.setDevice(&dictionaryFile);
         // reading from file
-        while (xmlReader.readNextStartElement()) {
-            if (xmlReader.name() == "Image_" + QString(QString::fromStdString(id))) {
-                // dictionary append
-            } else {
-                xmlReader.skipCurrentElement();
+        if(xmlReader.readNextStartElement()){
+            if(xmlReader.name() == "Image_" + QString(QString::fromStdString(id))){
+                while (xmlReader.readNextStartElement()) {
+                    if(xmlReader.name() == QString::fromStdString("Huffman_Tree")) {
+                        mapString = xmlReader.readElementText();
+                    }
+                    if(xmlReader.name() == QString::fromStdString("Extra_Ceros")) {
+                        cerosString = xmlReader.readElementText();
+                    }
+                }
             }
         }
         if (xmlReader.hasError()) {
@@ -440,6 +459,35 @@ pair<QMap<char, string>, int> DataManager::loadXML(string id) {
         qDebug() << "ERROR: The dictionary of image " << QString(QString::fromStdString(id))
                  << " was not successfully read.";
     }
+
+    // separate the pairs of key and value from the mapString
+    stringstream ss(mapString.toStdString());
+    while (ss.good()) {
+        string substr;
+        getline(ss, substr, ';');
+        keyValueElements.push_back(substr);
+    }
+
+    for (int i = 0; i < keyValueElements.size(); ++i) {
+        stringstream ss(keyValueElements[i]);
+        while (ss.good()) {
+            string substr;
+            getline(ss, substr, ':');
+            mapElements.push_back(substr);
+        }
+    }
+
+    for (int i = 0; i <mapElements.size(); i=i+2) {
+        if(mapElements[i]=="44"){
+            dictionary.insert(',',mapElements[i+1]);
+        }else{
+            dictionary.insert(mapElements[i][0],mapElements[i+1]);
+        }
+    }
+
+    result.first = dictionary;
+    result.second = stoi(cerosString.toStdString());
+
     return result;
 }
 
