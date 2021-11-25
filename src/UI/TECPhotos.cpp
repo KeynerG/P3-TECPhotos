@@ -278,8 +278,14 @@ void TECPhotos::on_deletePhotoButton_clicked() {
     if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 0) {
         getUserAlbums();
         ui->ScreenView->setCurrentIndex(2);
-    } else {
+    } else if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 1) {
         on_nextButton_clicked();
+        ui->nextButton->setEnabled(false);
+        ui->previousButton->setEnabled(false);
+    }else{
+        on_nextButton_clicked();
+        ui->nextButton->setEnabled(true);
+        ui->previousButton->setEnabled(true);
     }
 }
 
@@ -327,4 +333,13 @@ void TECPhotos::on_album00Button_7_clicked() {
     ui->albumNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentAlbumName()));
     ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
     ui->ScreenView->setCurrentIndex(6);
+
+    // Disables next and previous buttons when there's only one image on the album.
+    if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 1) {
+        ui->nextButton->setEnabled(false);
+        ui->previousButton->setEnabled(false);
+    }else{
+        ui->nextButton->setEnabled(true);
+        ui->previousButton->setEnabled(true);
+    }
 }
