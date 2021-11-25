@@ -288,30 +288,11 @@ int RAID::saveData(string data) {
     // Separates the data in 3 parts.
     string partition1, partition2, partition3;
 
-    while ((data.length() % 3) != 0) {
-        data.push_back('0');
-    }
-
     int charactersByPartition = data.length() / 3;
 
-    for (int i = 0; i < 3; ++i) {
-        for (int j = 0; j < charactersByPartition; ++j) {
-            switch (i) {
-                case 0:
-                    partition1.push_back(data.at(0));
-                    data.erase(0, 1);
-                    break;
-                case 1:
-                    partition2.push_back(data.at(0));
-                    data.erase(0, 1);
-                    break;
-                case 2:
-                    partition3.push_back(data.at(0));
-                    data.erase(0, 1);
-                    break;
-            }
-        }
-    }
+    partition1 = data.substr(0, charactersByPartition);
+    partition2 = data.substr(charactersByPartition, charactersByPartition);
+    partition3 = data.substr(charactersByPartition*2);
 
     // Determinate the name of the file to write
     int fileId = 0;

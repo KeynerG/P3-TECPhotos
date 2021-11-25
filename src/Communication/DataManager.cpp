@@ -307,27 +307,27 @@ bool DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
 
 QImage DataManager::loadImage(string id) {
     QImage image(QString::fromStdString(id));
-    QList <QRgb> imageQList;
-
-    pair<QMap<char, string>, int> xmlData = loadXML(id);
-    string raidData = raid.loadData(id);
-    if (xmlData.second != 0) {
-        for (int i = 0; i < xmlData.second; ++i) {
-            raidData.pop_back();
-        }
-    }
-    string imageQListString = huffman.decompress(raidData, xmlData.first);
-
-    QRgb pixel;
-    stringstream ss(imageQListString);
-    while (ss.good()) {
-        string substr;
-        getline(ss, substr, ',');
-        pixel = stoi(substr);
-        imageQList.append(pixel);
-    }
-
-    //QList<QRgb> imageQList to QImage image
+//    QList <QRgb> imageQList;
+//
+//    pair<QMap<char, string>, int> xmlData = loadXML(id);
+//    string raidData = raid.loadData(id);
+//    if (xmlData.second != 0) {
+//        for (int i = 0; i < xmlData.second; ++i) {
+//            raidData.pop_back();
+//        }
+//    }
+//    string imageQListString = huffman.decompress(raidData, xmlData.first);
+//
+//    QRgb pixel;
+//    stringstream ss(imageQListString);
+//    while (ss.good()) {
+//        string substr;
+//        getline(ss, substr, ',');
+//        pixel = stoi(substr);
+//        imageQList.append(pixel);
+//    }
+//
+//    //QList<QRgb> imageQList to QImage image
 
     querryImageMetadata(id);
 
