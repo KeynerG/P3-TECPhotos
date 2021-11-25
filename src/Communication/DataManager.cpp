@@ -105,6 +105,30 @@ void DataManager::createCollection(string collectionName) {
     db.create_collection(collectionName);
 }
 
+int DataManager::querryNextImageId() {
+    bool exists = true;
+    bsoncxx::document::element imageIdFounded;
+    string imageIdFoundedStr;
+    int possibleId;
+
+    while(exists){
+        possibleId = rand() % 1000000000;
+        imageIdFoundedStr.clear();
+
+        mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("imageId", to_string(possibleId))));
+        for (auto &&doc: cursor) {
+            imageIdFounded = doc["imageId"];
+            imageIdFoundedStr = imageIdFounded.get_utf8().value.to_string();
+        }
+
+        if(imageIdFoundedStr.empty()){
+            exists = false;
+        }
+    }
+
+    return possibleId;
+}
+
 void DataManager::connectToDB() {
     cout << "CONNECTING TO DATABASE..." << endl << endl;
     mongocxx::cursor cursor = connectivityAuthentication.find(make_document(kvp("connection", "true")));
@@ -270,7 +294,7 @@ bool DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
                             string imageSize, string imageWidthX, string imageHeightY, string imageDate) {
     bool imageSaved = false;
     int extraCeros = 0;
-    int imageId = 0;
+    int imageId = querryNextImageId();
     // Create a QList of the image
     QList <QRgb> pixelsList;
     for (int y = 0; y < image.height(); ++y) {
@@ -295,7 +319,7 @@ bool DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
         extraCeros++;
     }
     // Save the code in the raid
-    imageId = raid.saveData(compressResult.first);
+    raid.saveData(compressResult.first, imageId);
     // Save the dictionary of the image code in the Dictionary.xml
     saveXML(imageId, compressResult.second, extraCeros);
     // Send image metadata to database

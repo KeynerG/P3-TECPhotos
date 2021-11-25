@@ -279,7 +279,7 @@ void RAID::restoreFilePartition(string fileName) {
     }
 }
 
-int RAID::saveData(string data) {
+void RAID::saveData(string data, int imageId) {
     cout << "Data to save: " << data << "\n" << endl;
 
     checkDirectoriesIntegrity();
@@ -294,36 +294,34 @@ int RAID::saveData(string data) {
     partition2 = data.substr(charactersByPartition, charactersByPartition);
     partition3 = data.substr(charactersByPartition*2);
 
-    // Determinate the name of the file to write
-    int fileId = 0;
-    for (int i = 0;
-         checkFileExistance(1, to_string(fileId) + ".txt") or
-         checkFileExistance(2, to_string(fileId) + ".txt") or
-         checkFileExistance(3, to_string(fileId) + ".txt"); ++i) {
-        fileId = i;
-    }
+//    // Determinate the name of the file to write
+//    int fileId = 0;
+//    for (int i = 0;
+//         checkFileExistance(1, to_string(fileId) + ".txt") or
+//         checkFileExistance(2, to_string(fileId) + ".txt") or
+//         checkFileExistance(3, to_string(fileId) + ".txt"); ++i) {
+//        fileId = i;
+//    }
 
     // Writes the content of the .txt files.
     ofstream fileManager;
 
     // Write the content of the partition 1
-    fileManager.open(partitions1Directory + to_string(fileId) + ".txt");
+    fileManager.open(partitions1Directory + to_string(imageId) + ".txt");
     fileManager << partition1;
     fileManager.close();
 
     // Write the content of the partition 2
-    fileManager.open(partitions2Directory + to_string(fileId) + ".txt");
+    fileManager.open(partitions2Directory + to_string(imageId) + ".txt");
     fileManager << partition2;
     fileManager.close();
 
     // Write the content of the partition 3
-    fileManager.open(partitions3Directory + to_string(fileId) + ".txt");
+    fileManager.open(partitions3Directory + to_string(imageId) + ".txt");
     fileManager << partition3;
     fileManager.close();
 
-    generateParityPartition(to_string(fileId) + ".txt");
-
-    return fileId;
+    generateParityPartition(to_string(imageId) + ".txt");
 }
 
 string RAID::loadData(string &imageID) {

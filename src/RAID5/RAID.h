@@ -71,7 +71,7 @@ public:
      * @return int
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
-    int saveData(string data);
+    void saveData(string data, int imageId);
 
     /**
      * @fn string loadData(string &fileName)

@@ -88,6 +88,13 @@ public:
     void createCollection(string collectionName);
 
     /**
+     * @fn int querryNextImageId();
+     * @return
+     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
+     */
+    int querryNextImageId();
+
+    /**
      * @fn void querryUserInformation()
      * @brief Gets user information from the database.
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
