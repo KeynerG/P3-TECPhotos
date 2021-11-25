@@ -92,26 +92,6 @@ public:
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     static string decompress(string str, QMap<char, string> huffmanList);
-
-    /**
-     * @fn static bool isChar(vector<string> scripts, string key)
-     * @brief
-     * @param scripts
-     * @param key
-     * @return boolean
-     * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
-     */
-    static bool isChar(vector<string> scripts, string key);
-
-    /**
-     * @fn static int getKey(vector<string> scripts, string pos)
-     * @brief
-     * @param scripts
-     * @param pos
-     * @return integer
-     * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
-     */
-    static int getKey(vector<string> scripts, string pos);
 };
 
 #endif //P3_TECPHOTOS_HUFFMANCOMPRESSION_H

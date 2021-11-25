@@ -103,35 +103,19 @@ pair<string, QMap<char, string>> HuffmanCompression::compress(const string &text
 }
 
 string HuffmanCompression::decompress(string str, QMap<char, string> huffmanList) {
-    vector<char> characters;
-    vector<string> scripts;
-    string result, curr;
-    int max_chars = 0;
-    for (auto e: huffmanList.keys()) {
-        characters.push_back(e);
-        scripts.push_back(huffmanList.value(e));
-    }
-    while (max_chars < str.size()) {
-        curr.push_back(str[max_chars]);
-        if (isChar(scripts, curr)) {
-            result.push_back(characters[getKey(scripts, curr)]);
+    QList<char> characters = huffmanList.keys();
+    QList<string> scripts = huffmanList.values();
+    string result , curr;
+    int curr_char = 0;
+
+    while(curr_char < str.size())
+    {
+        curr.push_back(str[curr_char]);
+        if(scripts.contains(curr)){
+            result.push_back(characters[scripts.indexOf(curr)]);
             curr.clear();
         }
-        max_chars++;
+        curr_char++;
     }
     return result;
-}
-
-bool HuffmanCompression::isChar(vector<string> scripts, string key) {
-    for (int i = 0; i < scripts.size(); ++i) {
-        if (scripts[i] == key) { return true; }
-    }
-//    return false;
-}
-
-int HuffmanCompression::getKey(vector<string> scripts, string pos) {
-    for (int i = 0; i < scripts.size(); ++i) {
-        if (scripts[i] == pos) { return i; }
-    }
-//    return 0;
 }

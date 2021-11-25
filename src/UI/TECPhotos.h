@@ -6,6 +6,9 @@
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QMessageBox>
+#include <QPainter>
+#include <QTime>
+#include <thread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TECPhotos; }
@@ -24,6 +27,7 @@ public:
 
     ~TECPhotos(); /**< TECPhotos class destructor. */
 
+protected:
     /**
      * @fn void displayMessage(const QString& type, const QString &message)
      * @brief
@@ -31,6 +35,8 @@ public:
      * @param message
      */
     void displayMessage(const QString& type, const QString &message);
+
+    void displayLoadingIcon(bool &completed);
 
     /**
      * @fn std::string converterQStringToStdString(const QString &qString)
@@ -121,6 +127,18 @@ private slots:
      */
     void on_uploadPhotoButton_clicked();
 
+    /**
+     * @fn void on_deleteAlbumButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_deleteAlbumButton_clicked();
+
+    /**
+     * @fn void on_saveButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
     void on_saveButton_clicked();
 
 private:

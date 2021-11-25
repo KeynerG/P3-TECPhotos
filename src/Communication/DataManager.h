@@ -196,7 +196,7 @@ public:
     void connectToDB();
 
     /**
-     * @fn void login(string username, string password)
+     * @fn bool login(string username, string password)
      * @brief
      * @param username
      * @param password
@@ -205,7 +205,6 @@ public:
     bool login(string username, string password);
 
     /**
-     * @fn void signUp(string username, string password)
      * @brief
      * @param username
      * @param password
@@ -227,11 +226,11 @@ public:
      * @param imageDate
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
-    void saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
+    bool saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
                    string imageSize, string imageWidthX, string imageHeightY, string imageDate);
 
     /**
-     * @fn QImage loadImage(QString id)
+     * @fn QImage loadImage(string id)
      * @brief
      * @param id
      * @return QImage
@@ -239,6 +238,13 @@ public:
      */
     QImage loadImage(string id);
 
+    /**
+     * @fn QImage loadImage(int indexChange)
+     * @brief
+     * @param indexChange
+     * @return QImage
+     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
+     */
     QImage loadImage(int indexChange);
 
     /**
@@ -250,12 +256,12 @@ public:
     void deleteImageMetadata(string imageId);
 
     /**
-     * @fn void deleteAlbum(string albumName)
+     * @fn bool deleteAlbum(string albumName)
      * @brief
      * @param albumName
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
-    void deleteAlbum(string albumName);
+    bool deleteAlbum(string albumName);
 
     /**
      * @fn void updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor, string imageDate)
@@ -276,6 +282,12 @@ public:
      */
     void printInfo();
 
+    /**
+     * @fn void openAlbum(string album)
+     * @brief
+     * @param album
+     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
+     */
     void openAlbum(string album);
 };
 

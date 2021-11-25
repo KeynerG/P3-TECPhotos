@@ -107,8 +107,7 @@ void DataManager::querryUserInformation() {
     cout << "DATABASE LOG - LOADED " << this->currentUsername << "'S INFORMATION." << endl << endl;
 }
 
-void
-DataManager::sendImageMetadata(string imageId, string albumName, string author, string imageName, string creationDate,
+void DataManager::sendImageMetadata(string imageId, string albumName, string author, string imageName, string creationDate,
                                string size, string widthX, string heightY, string description) {
 
     auto builder = bsoncxx::builder::stream::document{};
@@ -191,8 +190,9 @@ void DataManager::printInfo() {
     cout << "]." << endl;
 }
 
-void DataManager::saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
+bool DataManager::saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
                             string imageSize, string imageWidthX, string imageHeightY, string imageDate) {
+    bool imageSaved = false;
     int extraCeros = 0;
     int imageId = 0;
     // Create a QList of the image
@@ -225,6 +225,8 @@ void DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
     // Send image metadata to database
     sendImageMetadata(to_string(imageId), imageAlbumName, imageAuthor, imageName, imageDate, imageSize, imageWidthX,
                       imageHeightY, imageDescription);
+    imageSaved = true;
+    return imageSaved;
 }
 
 QImage DataManager::loadImage(string id) {
@@ -361,7 +363,8 @@ void DataManager::deleteImageMetadata(string imageId) {
     }
 }
 
-void DataManager::deleteAlbum(string albumName) {
+bool DataManager::deleteAlbum(string albumName) {
+    bool successful = false;
     querryUserInformation();
     QMapIterator <string, QVector<string>> j(currentUserMap);
     while (j.hasNext()) {
@@ -371,10 +374,12 @@ void DataManager::deleteAlbum(string albumName) {
             for (int i = 0; i < v.size(); ++i) {
                 deleteImageMetadata(v[i]);
             }
+            successful = true;
             cout << "DATABASE LOG - ALBUM DELETED [ALBUM NAME: " << albumName << "]." << endl << endl;
         }
     }
     querryUserInformation();
+    return successful;
 }
 
 void DataManager::updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor,
