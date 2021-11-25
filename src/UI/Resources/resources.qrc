@@ -28,7 +28,6 @@
         <file>icon/exitOff.png</file>
         <file>icon/exitOn.png</file>
         <file>background/loadingBackground.png</file>
-        <file>icon/loading-1.png</file>
-        <file>icon/loading-0.png</file>
+        <file>icon/loading.gif</file>
     </qresource>
 </RCC>

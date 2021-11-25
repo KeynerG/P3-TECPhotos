@@ -8263,7 +8263,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/icon/loading-0.png</pixmap>
+       <pixmap resource="Resources/resources.qrc">:/icon/loading.gif</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>

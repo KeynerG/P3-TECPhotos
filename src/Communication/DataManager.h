@@ -173,7 +173,7 @@ public:
     void setCurrentUsername(const string &newCurrentUsername);
 
     /**
-     * @fn const QMap<string, QVector<string>> &getCurrentUserMap() const
+     * @fn QMap<string, QVector<string>> &getCurrentUserMap()
      * @brief
      * @return QMap<string, QVector<string>>
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
@@ -205,6 +205,7 @@ public:
     bool login(string username, string password);
 
     /**
+     * @fn bool signUp(string username, string password)
      * @brief
      * @param username
      * @param password
@@ -213,7 +214,7 @@ public:
     bool signUp(string username, string password);
 
     /**
-     * @fn void saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor, string imageSize, string imageWidthX, string imageHeightY, string imageDate)
+     * @fn bool saveImage(QImage &image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor, string imageSize, string imageWidthX, string imageHeightY, string imageDate)
      * @brief
      * @param image
      * @param imageName

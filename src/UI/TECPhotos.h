@@ -6,9 +6,9 @@
 #include <QFileDialog>
 #include <QMainWindow>
 #include <QMessageBox>
-#include <QPainter>
+#include <QMovie>
+#include <QPixmap>
 #include <QTime>
-#include <thread>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class TECPhotos; }
@@ -35,8 +35,6 @@ protected:
      * @param message
      */
     void displayMessage(const QString& type, const QString &message);
-
-    void displayLoadingIcon(bool &completed);
 
     /**
      * @fn std::string converterQStringToStdString(const QString &qString)

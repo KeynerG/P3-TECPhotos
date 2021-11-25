@@ -204,7 +204,6 @@ void TECPhotos::on_deleteAlbumButton_clicked() {
 // --- New Photo Screen (ScreenView 4) ---
 
 void TECPhotos::on_saveButton_clicked() {
-    ui->loadingIconLabel->setPixmap(QPixmap(":/icon/metadataOn.png"));
     ui->saveButton->setEnabled(false);
     if (!ui->photoNameNPLineEdit->text().isEmpty()) {
         // switch to Loading Screen
@@ -213,36 +212,9 @@ void TECPhotos::on_saveButton_clicked() {
         QTime dieTime = QTime::currentTime().addMSecs(1000);
         while (QTime::currentTime() < dieTime) { QCoreApplication::processEvents(QEventLoop::AllEvents, 100); }
         // loading animation
-        std::thread animation([this]() {
-            int degrees = 0;
-            while(true) {
-                if (degrees < 360) {
-                        QPixmap icon(":/icon/metadataOn.png");
-                        QPixmap rotatedIcon(icon.size());
-                        rotatedIcon.fill(QColor::fromRgb(0, 0, 0, 0));
-
-                        QPainter *painter = new QPainter(&rotatedIcon);
-
-                        QSize size = icon.size();
-                        painter->setRenderHint(QPainter::Antialiasing);
-                        painter->setRenderHint(QPainter::SmoothPixmapTransform);
-                        painter->translate(size.height() / 2, size.height() / 2);
-                        painter->rotate(degrees);
-                        painter->translate(-size.height() / 2, -size.height() / 2);
-                        painter->drawPixmap(0, 0, icon);
-                        painter->end();
-
-                        ui->loadingIconLabel->setPixmap(rotatedIcon);
-                        QTime dieTime = QTime::currentTime().addMSecs(10);
-                        while (QTime::currentTime() < dieTime) { QCoreApplication::processEvents(QEventLoop::AllEvents, 100); }
-                        degrees+=3;
-                } else {
-                    degrees = 0;
-                }
-            }
-        });
-        // run animation
-        animation.detach();
+        QMovie *loadingIcon = new QMovie(":/icon/loading.gif");
+        ui->loadingIconLabel->setMovie(loadingIcon);
+        loadingIcon->start();
         // image Processing
         if (DataManager::getInstance()->saveImage(QImage(ui->photoPathLineEdit->text()),
                                                               converterQStringToStdString(ui->photoNameNPLineEdit->text()),
