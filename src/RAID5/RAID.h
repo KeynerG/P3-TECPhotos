@@ -43,13 +43,6 @@ public:
     void generateParityPartition(string fileName);
 
     /**
-     * @fn void checkPartitionsIntegrity()
-     * @brief Function that verifies if there is any problem with any of the existent partitions.
-     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
-     */
-    void checkPartitionsIntegrity();
-
-    /**
      * @fn void checkDirectoriesIntegrity()
      * @brief Function that certifies if the important directories already exist.
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>

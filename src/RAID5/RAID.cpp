@@ -2,7 +2,6 @@
 
 RAID::RAID() {
     checkDirectoriesIntegrity();
-    checkPartitionsIntegrity();
 }
 
 bool RAID::checkFileExistance(int partition, string fileName) {
@@ -71,25 +70,6 @@ void RAID::generateParityPartition(string fileName) {
     fileManagerW.close();
 }
 
-void RAID::checkPartitionsIntegrity() {
-    int fileId = 0;
-    for (int i = 0;
-         checkFileExistance(1, to_string(fileId) + ".txt") or
-         checkFileExistance(2, to_string(fileId) + ".txt") or
-         checkFileExistance(3, to_string(fileId) + ".txt") or
-         checkFileExistance(4, to_string(fileId) + ".txt"); ++i) {
-
-        if (!checkFileExistance(1, to_string(fileId) + ".txt") or
-            !checkFileExistance(2, to_string(fileId) + ".txt") or
-            !checkFileExistance(3, to_string(fileId) + ".txt") or
-            !checkFileExistance(4, to_string(fileId) + ".txt")) {
-
-            restoreFilePartition(to_string(fileId) + ".txt");
-        }
-        fileId = i + 1;
-    }
-}
-
 void RAID::checkDirectoriesIntegrity() {
     QDir DrivesDirectory("../src/RAID5/Drives/");
 
@@ -101,49 +81,30 @@ void RAID::checkDirectoriesIntegrity() {
         DrivesDirectory.mkpath("parity-drive");
         DrivesDirectory.mkpath("dictionaries");
     } else {
-        int missingPartitions = 0;
 
         QDir disk1Directory(QString::fromStdString(partitions1Directory));
         if (!disk1Directory.exists()) {
             disk1Directory.mkpath(".");
-            missingPartitions++;
         }
 
         QDir disk2Directory(QString::fromStdString(partitions2Directory));
         if (!disk2Directory.exists()) {
             disk2Directory.mkpath(".");
-            missingPartitions++;
         }
 
         QDir disk3Directory(QString::fromStdString(partitions3Directory));
         if (!disk3Directory.exists()) {
             disk3Directory.mkpath(".");
-            missingPartitions++;
         }
 
         QDir diskParityDirectory(QString::fromStdString(parityPartitionsDirectory));
         if (!diskParityDirectory.exists()) {
             diskParityDirectory.mkpath(".");
-            missingPartitions++;
         }
 
         QDir dictionariesDirectory(QString::fromStdString(imagesDictionariesDirectory));
         if (!dictionariesDirectory.exists()) {
             dictionariesDirectory.mkpath(".");
-        }
-
-        switch (missingPartitions) {
-            case 0:
-                break;
-            case 1:
-                checkPartitionsIntegrity();
-                break;
-            default:
-                cerr << endl << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Error ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-                cerr << "There are more than one missing partition for all files. Nothing to do." << endl << endl;
-                cerr << "    Missing files partitions: " << to_string(missingPartitions) << ".";
-                cerr << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
-                break;
         }
     }
 }
@@ -283,7 +244,6 @@ void RAID::saveData(string data, int imageId) {
     cout << "Data to save: " << data << "\n" << endl;
 
     checkDirectoriesIntegrity();
-    checkPartitionsIntegrity();
 
     // Separates the data in 3 parts.
     string partition1, partition2, partition3;
@@ -359,7 +319,6 @@ string RAID::loadData(string &imageID) {
         return filecontent;
     } else {
         checkDirectoriesIntegrity();
-        checkPartitionsIntegrity();
 
         if (checkFileExistance(1, fileName) and
             checkFileExistance(2, fileName) and
@@ -391,7 +350,32 @@ string RAID::loadData(string &imageID) {
 
             return filecontent;
         } else {
-            return "";
+            restoreFilePartition(fileName);
+
+            ifstream fileManagerR;
+            fileManagerR.open(partitions1Directory + fileName);
+            string partition1Content((std::istreambuf_iterator<char>(fileManagerR)),
+                                     (std::istreambuf_iterator<char>()));
+            fileManagerR.close();
+
+            fileManagerR.open(partitions2Directory + fileName);
+            string partition2Content((std::istreambuf_iterator<char>(fileManagerR)),
+                                     (std::istreambuf_iterator<char>()));
+            fileManagerR.close();
+
+            fileManagerR.open(partitions3Directory + fileName);
+            string partition3Content((std::istreambuf_iterator<char>(fileManagerR)),
+                                     (std::istreambuf_iterator<char>()));
+            fileManagerR.close();
+
+            ofstream fileManagerW;
+
+            string filecontent;
+            filecontent += partition1Content + partition2Content + partition3Content;
+
+            cout << "Data to load: " << filecontent << "\n" << endl;
+
+            return filecontent;
         }
     }
 }
