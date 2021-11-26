@@ -267,15 +267,15 @@ void DataManager::querryImageMetadata(string imageId) {
 void DataManager::printInfo() {
     cout << "Info:" << endl << endl;
     cout << "Username: " << currentUsername << endl;
-    cout << "imageId: " << currentImageId << endl;
-    cout << "albumName: " << currentAlbumName << endl;
-    cout << "imageAuthor: " << currentImageAuthor << endl;
-    cout << "imageName: " << currentImageName << endl;
-    cout << "imageCreationDate: " << currentImageCreationDate << endl;
-    cout << "imageSize: " << currentImageSize << endl;
-    cout << "imageWidthX: " << currentImageWidthX << endl;
-    cout << "imageHeightY: " << currentImageHeightY << endl;
-    cout << "imageDescription: " << currentImageDescription << endl;
+    cout << "Image Id: " << currentImageId << endl;
+    cout << "Album: " << currentAlbumName << endl;
+    cout << "Author: " << currentImageAuthor << endl;
+    cout << "Name: " << currentImageName << endl;
+    cout << "Date: " << currentImageCreationDate << endl;
+    cout << "Size: " << currentImageSize << endl;
+    cout << "Width: " << currentImageWidthX << endl;
+    cout << "Height: " << currentImageHeightY << endl;
+    cout << "Description: " << currentImageDescription << endl;
     cout << "Albums: [";
     QMapIterator <string, QVector<string>> j(currentUserMap);
     while (j.hasNext()) {

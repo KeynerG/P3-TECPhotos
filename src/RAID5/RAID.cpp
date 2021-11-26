@@ -241,8 +241,6 @@ void RAID::restoreFilePartition(string fileName) {
 }
 
 void RAID::saveData(string data, int imageId) {
-    cout << "Data to save: " << data << "\n" << endl;
-
     checkDirectoriesIntegrity();
 
     // Separates the data in 3 parts.
@@ -282,6 +280,8 @@ void RAID::saveData(string data, int imageId) {
     fileManager.close();
 
     generateParityPartition(to_string(imageId) + ".txt");
+
+    cout << "RAID LOG - IMAGE " << imageId << " SAVED\n" << endl;
 }
 
 string RAID::loadData(string &imageID) {
@@ -314,7 +314,7 @@ string RAID::loadData(string &imageID) {
         string filecontent;
         filecontent += partition1Content + partition2Content + partition3Content;
 
-        cout << "Data to load: " << filecontent << "\n" << endl;
+        cout << "RAID LOG - IMAGE " << imageID << " LOADED\n" << endl;
 
         return filecontent;
     } else {
@@ -346,7 +346,7 @@ string RAID::loadData(string &imageID) {
             string filecontent;
             filecontent += partition1Content + partition2Content + partition3Content;
 
-            cout << "Data to load: " << filecontent << "\n" << endl;
+            cout << "RAID LOG - IMAGE " << imageID << " LOADED\n" << endl;
 
             return filecontent;
         } else {
@@ -373,7 +373,7 @@ string RAID::loadData(string &imageID) {
             string filecontent;
             filecontent += partition1Content + partition2Content + partition3Content;
 
-            cout << "Data to load: " << filecontent << "\n" << endl;
+            cout << "RAID LOG - IMAGE " << imageID << " LOADED\n" << endl;
 
             return filecontent;
         }

@@ -29,7 +29,6 @@ void HuffmanCompression::decode(HuffmanCompression::Node *root, int &index, stri
         return;
     }
     if (!root->left && !root->right) {
-        cout << root->character;
         return;
     }
     index++;
@@ -77,28 +76,25 @@ pair<string, QMap<char, string>> HuffmanCompression::compress(const string &text
     unordered_map<char, string> huffmanCode;
     encode(root, "", huffmanCode);
 
-    cout << "Huffman Codes are :\n" << '\n';
     QMap<char, string> huffmanResult;
     for (const auto &pair: huffmanCode) {
-        cout << pair.first << " " << pair.second << '\n';
         huffmanResult.insert(pair.first, pair.second);
     }
-    cout << "\nOriginal string was :\n" << text << '\n';
     string str;
     for (char character: text) {
         str += huffmanCode[character];
     }
-    cout << "\nEncoded string is :\n" << str << '\n';
 
 //    int index = -1;
-//    cout << "\nDecoded string is: \n";
 //    while (index < (int) str.size() - 2) {
 //        decode(root, index, str);
 //    }
     pair <string, QMap<char, string>> result;
     result.first = str;
     result.second = huffmanResult;
-    cout << endl;
+
+    cout << "HUFFMAN LOG - COMPRESSION SUCCESSFUL\n" << endl;
+
     return result;
 }
 
@@ -117,5 +113,8 @@ string HuffmanCompression::decompress(string str, QMap<char, string> huffmanList
         }
         curr_char++;
     }
+
+    cout << "HUFFMAN LOG - DEOMPRESSION SUCCESSFUL\n" << endl;
+
     return result;
 }
