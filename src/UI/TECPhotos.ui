@@ -447,9 +447,9 @@
       <property name="geometry">
        <rect>
         <x>473</x>
-        <y>455</y>
-        <width>58</width>
-        <height>15</height>
+        <y>453</y>
+        <width>60</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="palette">
@@ -942,10 +942,10 @@
       </property>
       <property name="geometry">
        <rect>
-        <x>487</x>
-        <y>455</y>
-        <width>45</width>
-        <height>15</height>
+        <x>482</x>
+        <y>453</y>
+        <width>60</width>
+        <height>20</height>
        </rect>
       </property>
       <property name="palette">
@@ -5205,9 +5205,9 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>20</y>
+          <y>30</y>
           <width>381</width>
-          <height>51</height>
+          <height>41</height>
          </rect>
         </property>
         <property name="palette">
@@ -5304,7 +5304,7 @@
         <property name="font">
          <font>
           <family>Carlito</family>
-          <pointsize>30</pointsize>
+          <pointsize>28</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -6378,7 +6378,7 @@
         <property name="geometry">
          <rect>
           <x>0</x>
-          <y>50</y>
+          <y>70</y>
           <width>381</width>
           <height>51</height>
          </rect>
@@ -6477,7 +6477,7 @@
         <property name="font">
          <font>
           <family>Carlito</family>
-          <pointsize>30</pointsize>
+          <pointsize>28</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -6497,7 +6497,7 @@
          <rect>
           <x>20</x>
           <y>120</y>
-          <width>121</width>
+          <width>341</width>
           <height>20</height>
          </rect>
         </property>
@@ -6595,7 +6595,7 @@
         <property name="font">
          <font>
           <family>Carlito</family>
-          <pointsize>10</pointsize>
+          <pointsize>9</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -6607,7 +6607,7 @@
          <string>SELECT YOUR ALBUM</string>
         </property>
         <property name="alignment">
-         <set>Qt::AlignCenter</set>
+         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
         </property>
        </widget>
       </widget>
@@ -8775,7 +8775,7 @@
       <property name="font">
        <font>
         <family>Carlito</family>
-        <pointsize>50</pointsize>
+        <pointsize>45</pointsize>
         <weight>75</weight>
         <bold>true</bold>
        </font>
