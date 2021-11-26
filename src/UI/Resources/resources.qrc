@@ -9,12 +9,9 @@
         <file>background/signUpBackground.jpg</file>
         <file>icon/TECPhotos.png</file>
         <file>icon/albumOn.png</file>
-        <file>icon/albumOff.png</file>
         <file>icon/addAlbum.png</file>
-        <file>icon/addImage.png</file>
         <file>icon/deleteAlbum.png</file>
         <file>icon/deleteImage.png</file>
-        <file>icon/editAlbum.png</file>
         <file>background/albumOptionsBackground.jpg</file>
         <file>icon/browseImage.png</file>
         <file>icon/nextOff.png</file>
@@ -29,5 +26,6 @@
         <file>icon/exitOn.png</file>
         <file>background/loadingBackground.png</file>
         <file>icon/loading.gif</file>
+        <file>icon/openAlbum.png</file>
     </qresource>
 </RCC>

@@ -61,6 +61,13 @@ protected:
      */
     void getUserAlbums();
 
+    /**
+     * @fn void update()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void update();
+
 private slots:
     /**
      * @fn void on_accessButton_clicked();
@@ -98,18 +105,19 @@ private slots:
     void on_logOutButton_clicked();
 
     /**
-     * @fn void on_editAlbumButton_clicked()
+     * @fn void on_optionsTab_currentChanged(int index)
      * @brief
+     * @param index
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
-    void on_editAlbumButton_clicked();
+    void on_optionsTab_currentChanged(int index);
 
     /**
-     * @fn void on_galleryAOButton_clicked()
+     * @fn void on_openAlbumButton_clicked()
      * @brief
      * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
      */
-    void on_galleryAOButton_clicked();
+    void on_openAlbumButton_clicked();
 
     /**
      * @fn void on_browseButton_clicked()
@@ -181,7 +189,19 @@ private slots:
      */
     void on_galleryIButton_clicked();
 
-    void on_album00Button_7_clicked();
+    /**
+     * @fn void on_editButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_editButton_clicked();
+
+    /**
+     * @fn void on_okButton_clicked()
+     * @brief
+     * @author <a href="https://github.com/valeriehernandez-7">Valerie M. Hernández Fernández</a>
+     */
+    void on_okButton_clicked();
 
 private:
     Ui::TECPhotos *ui; /**< TECPhotos class interface. */

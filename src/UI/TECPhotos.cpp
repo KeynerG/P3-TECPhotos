@@ -3,8 +3,12 @@
 
 TECPhotos::TECPhotos(QWidget *parent) : QMainWindow(parent), ui(new Ui::TECPhotos) {
     ui->setupUi(this);
+    // retrieve user information from database
+    update();
+    ui->optionsTab->setCurrentIndex(0);
+    // display Login Screen
     ui->ScreenView->setCurrentIndex(0);
-
+    // loading animation
     QMovie *loadingIcon = new QMovie(":/icon/loading.gif");
     ui->loadingIconLabel->setMovie(loadingIcon);
     ui->decompressingIconLabel->setMovie(loadingIcon);
@@ -12,6 +16,7 @@ TECPhotos::TECPhotos(QWidget *parent) : QMainWindow(parent), ui(new Ui::TECPhoto
 }
 
 TECPhotos::~TECPhotos() {
+    DataManager::getInstance()->disconnectDB();
     delete ui;
 }
 
@@ -39,6 +44,22 @@ void TECPhotos::getUserAlbums() {
         albumsIterator.next();
         albumsList.append(converterStdStringToQString(albumsIterator.key()));
     }
+}
+
+void TECPhotos::update() {
+    // open album tab option
+    ui->openAlbumSelectorComboBox->clear();
+    // edit album tab option
+    ui->editAlbumSelectorComboBox->setCurrentText("");
+    ui->editAlbumSelectorComboBox->clear();
+    ui->photoPathLineEdit->clear();
+    // delete album tab option
+    ui->deleteAlbumSelectorComboBox->clear();
+    // setup current user albums
+    getUserAlbums();
+    ui->openAlbumSelectorComboBox->addItems(albumsList);
+    ui->editAlbumSelectorComboBox->addItems(albumsList);
+    ui->deleteAlbumSelectorComboBox->addItems(albumsList);
 }
 
 // --- Log In Screen (ScreenView 0) ---
@@ -106,36 +127,43 @@ void TECPhotos::on_logOutButton_clicked() {
     std::cout << "DATABASE LOG - " << DataManager::getInstance()->getCurrentUsername() << " LOGGED OUT.\n" << std::endl;
     DataManager::getInstance()->setCurrentUsername("");
     DataManager::getInstance()->getCurrentUserMap().clear();
+    ui->optionsTab->setCurrentIndex(0);
     ui->usernameLLineEdit->clear();
     ui->passwordLLineEdit->clear();
     // switch to Login Screen
     ui->ScreenView->setCurrentIndex(0);
 }
 
-void TECPhotos::on_editAlbumButton_clicked() {
-    // edit Album tab option
-    ui->optionsTab->setCurrentIndex(0);
-    ui->editAlbumSelectorComboBox->clear();
-    ui->editAlbumSelectorComboBox->clear();
-    ui->photoPathLineEdit->clear();
-    // delete Album tab option
-    ui->albumSelectorComboBox->clear();
-    ui->albumSelectorComboBox->clear();
-    // setup current user albums
-    getUserAlbums();
-    ui->editAlbumSelectorComboBox->addItems(albumsList);
-    ui->albumSelectorComboBox->addItems(albumsList);
-    // switch to Album Options Screen
-    ui->ScreenView->setCurrentIndex(3);
+void TECPhotos::on_optionsTab_currentChanged(int index) {
+    update();
 }
 
-// --- Album Options Screen (ScreenView 3) ---
-
-void TECPhotos::on_galleryAOButton_clicked() {
-    getUserAlbums();
-    // display current user albums
-    // switch to Album Screen
-    ui->ScreenView->setCurrentIndex(2);
+void TECPhotos::on_openAlbumButton_clicked() {
+    ui->openAlbumButton->setEnabled(false);
+    if (!ui->openAlbumSelectorComboBox->currentText().isEmpty()) {
+        // retrieve album information from database
+        DataManager::getInstance()->openAlbum(converterQStringToStdString(ui->openAlbumSelectorComboBox->currentText()));
+        // setup screen widgets
+        image = DataManager::getInstance()->loadImage(0);
+        ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
+        ui->albumNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentAlbumName()));
+        if (!image.isNull()) {
+            ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->displayPhotoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+        }
+        // disables next and previous buttons when there's only one image on the album
+        if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 1) {
+            ui->nextButton->setEnabled(false);
+            ui->previousButton->setEnabled(false);
+        } else {
+            ui->nextButton->setEnabled(true);
+            ui->previousButton->setEnabled(true);
+        }
+        // switch to Photo Screen
+        ui->ScreenView->setCurrentIndex(5);
+    } else {
+        displayMessage("Warning", "Please select the album you want to open.");
+    }
+    ui->openAlbumButton->setEnabled(true);
 }
 
 void TECPhotos::on_browseButton_clicked() {
@@ -175,7 +203,7 @@ void TECPhotos::on_uploadPhotoButton_clicked() {
         ui->photoWidthNPLineEdit->setText(converterStdStringToQString(std::to_string(image.width())));
         ui->photoHeightNPLineEdit->setText(converterStdStringToQString(std::to_string(image.height())));
         // switch to New Photo Screen
-        ui->ScreenView->setCurrentIndex(4);
+        ui->ScreenView->setCurrentIndex(3);
     } else {
         if (ui->editAlbumSelectorComboBox->currentText().isEmpty() && ui->photoPathLineEdit->text().isEmpty()) {
             displayMessage("Warning", "Please select the album and the photo you want to update.");
@@ -190,14 +218,14 @@ void TECPhotos::on_uploadPhotoButton_clicked() {
 
 void TECPhotos::on_deleteAlbumButton_clicked() {
     ui->deleteAlbumButton->setEnabled(false);
-    if (!ui->albumSelectorComboBox->currentText().isEmpty()) {
-        if (DataManager::getInstance()->deleteAlbum(
-                converterQStringToStdString(ui->albumSelectorComboBox->currentText()))) {
-            displayMessage("Notification", QString(ui->albumSelectorComboBox->currentText() + " album successfully deleted."));
-            ui->editAlbumSelectorComboBox->removeItem(ui->albumSelectorComboBox->currentIndex());
-            ui->albumSelectorComboBox->removeItem(ui->albumSelectorComboBox->currentIndex());
+    if (!ui->deleteAlbumSelectorComboBox->currentText().isEmpty()) {
+        if (DataManager::getInstance()->deleteAlbum(converterQStringToStdString(ui->deleteAlbumSelectorComboBox->currentText()))) {
+            displayMessage("Notification", QString(ui->deleteAlbumSelectorComboBox->currentText() + " album successfully deleted."));
+            ui->openAlbumSelectorComboBox->removeItem(ui->deleteAlbumSelectorComboBox->currentIndex());
+            ui->editAlbumSelectorComboBox->removeItem(ui->deleteAlbumSelectorComboBox->currentIndex());
+            ui->deleteAlbumSelectorComboBox->removeItem(ui->deleteAlbumSelectorComboBox->currentIndex());
         } else {
-            displayMessage("Notification", QString(ui->albumSelectorComboBox->currentText() + " album deletion was not successful."));
+            displayMessage("Notification", QString(ui->deleteAlbumSelectorComboBox->currentText() + " album deletion was not successful."));
         }
     } else {
         displayMessage("Warning", "Please select the album you want to remove.");
@@ -205,13 +233,13 @@ void TECPhotos::on_deleteAlbumButton_clicked() {
     ui->deleteAlbumButton->setEnabled(true);
 }
 
-// --- New Photo Screen (ScreenView 4) ---
+// --- New Photo Screen (ScreenView 3) ---
 
 void TECPhotos::on_saveButton_clicked() {
     ui->saveButton->setEnabled(false);
     if (!ui->photoNameNPLineEdit->text().isEmpty()) {
         // switch to Loading Screen
-        ui->ScreenView->setCurrentIndex(5);
+        ui->ScreenView->setCurrentIndex(4);
         // timer 1 sec
         QTime dieTime = QTime::currentTime().addMSecs(1000);
         while (QTime::currentTime() < dieTime) { QCoreApplication::processEvents(QEventLoop::AllEvents, 100); }
@@ -227,7 +255,8 @@ void TECPhotos::on_saveButton_clicked() {
                                                   converterQStringToStdString(ui->photoDateNPEdit->date().toString("MM/dd/yyyy"))))
         {
             // switch to Album Screen
-            getUserAlbums();
+            update();
+            ui->optionsTab->setCurrentIndex(0);
             ui->ScreenView->setCurrentIndex(2);
         } else {
             displayMessage("Notification", "The image \"" + QString(ui->photoNameNPLineEdit->text() + "\" was not successfully upload."));
@@ -238,14 +267,14 @@ void TECPhotos::on_saveButton_clicked() {
     ui->saveButton->setEnabled(true);
 }
 
-// --- Photo Screen (ScreenView 6) ---
+// --- Photo Screen (ScreenView 5) ---
 
 void TECPhotos::on_galleryPButton_clicked() {
-    getUserAlbums();
     ui->albumNameLabel->clear();
     ui->photoNameLabel->clear();
-    // display current user albums
+    update();
     // switch to Album Screen
+    ui->optionsTab->setCurrentIndex(0);
     ui->ScreenView->setCurrentIndex(2);
 }
 
@@ -269,14 +298,15 @@ void TECPhotos::on_propertiesButton_clicked() {
     ui->photoHeightILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageHeightY()));
     ui->photoDateIEdit->setDate(QDate::fromString(converterStdStringToQString(DataManager::getInstance()->getCurrentImageCreationDate()), "MM/dd/yyyy"));
     // switch to Photo Information Screen
-    ui->ScreenView->setCurrentIndex(7);
+    ui->ScreenView->setCurrentIndex(6);
 }
 
 void TECPhotos::on_deletePhotoButton_clicked() {
     ui->displayPhotoLabel->clear();
     DataManager::getInstance()->deleteImageMetadata();
     if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 0) {
-        getUserAlbums();
+        update();
+        // switch to Albums Screen
         ui->ScreenView->setCurrentIndex(2);
     } else if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 1) {
         on_nextButton_clicked();
@@ -302,7 +332,6 @@ void TECPhotos::on_previousButton_clicked() {
     ui->nextButton->setEnabled(true);
 }
 
-
 void TECPhotos::on_nextButton_clicked() {
     ui->previousButton->setEnabled(false);
     ui->nextButton->setEnabled(false);
@@ -316,30 +345,20 @@ void TECPhotos::on_nextButton_clicked() {
     ui->nextButton->setEnabled(true);
 }
 
-// --- Photo Information Screen (ScreenView 7) ---
+// --- Photo Information Screen (ScreenView 6) ---
 
 void TECPhotos::on_galleryIButton_clicked() {
+    // setup screen widgets
     ui->photoNameLabel->setText(ui->photoNameILineEdit->text());
-    ui->ScreenView->setCurrentIndex(6);
+    ui->albumNameLabel->setText(ui->albumNameILineEdit->text());
+    // switch to Photo Screen
+    ui->ScreenView->setCurrentIndex(5);
 }
 
-// ---------
-void TECPhotos::on_album00Button_7_clicked() {
-    DataManager::getInstance()->openAlbum("D");
-    image = DataManager::getInstance()->loadImage(0);
-    if (!image.isNull()) {
-        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->displayPhotoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
-    }
-    ui->albumNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentAlbumName()));
-    ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
-    ui->ScreenView->setCurrentIndex(6);
+void TECPhotos::on_editButton_clicked() {
 
-    // Disables next and previous buttons when there's only one image on the album.
-    if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 1) {
-        ui->nextButton->setEnabled(false);
-        ui->previousButton->setEnabled(false);
-    } else {
-        ui->nextButton->setEnabled(true);
-        ui->previousButton->setEnabled(true);
-    }
+}
+
+void TECPhotos::on_okButton_clicked() {
+
 }
