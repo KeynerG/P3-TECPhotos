@@ -29,7 +29,7 @@
    <string>TECPhotos</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="Resources/resources.qrc">
+   <iconset>
     <normaloff>:/icon/TECPhotos.png</normaloff>:/icon/TECPhotos.png</iconset>
   </property>
   <widget class="QWidget" name="centralwidget">
@@ -62,7 +62,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/background/loginBackground.jpg</pixmap>
+       <pixmap>:/background/loginBackground.jpg</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -558,7 +558,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/background/signUpBackground.jpg</pixmap>
+       <pixmap>:/background/signUpBackground.jpg</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1142,7 +1142,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/background/albumsBackground.jpg</pixmap>
+       <pixmap>:/background/albumsBackground.jpg</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -1337,7 +1337,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/albumOff.png</normaloff>
         <activeoff>:/icon/albumOn.png</activeoff>
         <selectedoff>:/icon/albumOn.png</selectedoff>:/icon/albumOff.png</iconset>
@@ -1449,7 +1449,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/albumOff.png</normaloff>
         <activeoff>:/icon/albumOn.png</activeoff>
         <selectedoff>:/icon/albumOn.png</selectedoff>:/icon/albumOff.png</iconset>
@@ -1561,7 +1561,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/albumOff.png</normaloff>
         <activeoff>:/icon/albumOn.png</activeoff>
         <selectedoff>:/icon/albumOn.png</selectedoff>:/icon/albumOff.png</iconset>
@@ -1673,7 +1673,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/albumOff.png</normaloff>
         <activeoff>:/icon/albumOn.png</activeoff>
         <selectedoff>:/icon/albumOn.png</selectedoff>:/icon/albumOff.png</iconset>
@@ -1785,7 +1785,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/albumOff.png</normaloff>
         <activeoff>:/icon/albumOn.png</activeoff>
         <selectedoff>:/icon/albumOn.png</selectedoff>:/icon/albumOff.png</iconset>
@@ -4711,7 +4711,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/editAlbum.png</normaloff>:/icon/editAlbum.png</iconset>
       </property>
       <property name="iconSize">
@@ -4821,7 +4821,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/albumOff.png</normaloff>
         <activeoff>:/icon/albumOn.png</activeoff>
         <selectedoff>:/icon/albumOn.png</selectedoff>:/icon/albumOff.png</iconset>
@@ -4933,7 +4933,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/exitOff.png</normaloff>
         <activeoff>:/icon/exitOn.png</activeoff>
         <activeon>:/icon/exitOn.png</activeon>
@@ -4968,7 +4968,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/background/albumOptionsBackground.jpg</pixmap>
+       <pixmap>:/background/albumOptionsBackground.jpg</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -5195,7 +5195,7 @@
       </property>
       <widget class="QWidget" name="editAlbum">
        <attribute name="icon">
-        <iconset resource="Resources/resources.qrc">
+        <iconset>
          <normaloff>:/icon/addAlbum.png</normaloff>:/icon/addAlbum.png</iconset>
        </attribute>
        <attribute name="title">
@@ -5651,7 +5651,7 @@
          <string notr="true"/>
         </property>
         <property name="icon">
-         <iconset resource="Resources/resources.qrc">
+         <iconset>
           <normaloff>:/icon/browseImage.png</normaloff>:/icon/browseImage.png</iconset>
         </property>
         <property name="iconSize">
@@ -6090,7 +6090,7 @@
       </widget>
       <widget class="QWidget" name="deleteAlbum">
        <attribute name="icon">
-        <iconset resource="Resources/resources.qrc">
+        <iconset>
          <normaloff>:/icon/deleteAlbum.png</normaloff>:/icon/deleteAlbum.png</iconset>
        </attribute>
        <attribute name="title">
@@ -6709,7 +6709,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/backOff.png</normaloff>
         <activeoff>:/icon/backOn.png</activeoff>
         <selectedoff>:/icon/backOn.png</selectedoff>:/icon/backOff.png</iconset>
@@ -6742,7 +6742,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/background/newPhotoBackground.jpg</pixmap>
+       <pixmap>:/background/newPhotoBackground.jpg</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -8226,7 +8226,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/background/loadingBackground.png</pixmap>
+       <pixmap>:/background/loadingBackground.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -8263,7 +8263,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/icon/loading.gif</pixmap>
+       <pixmap>:/icon/loading.gif</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -8293,7 +8293,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/background/photoBackground.png</pixmap>
+       <pixmap>:/background/photoBackground.png</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -8308,7 +8308,7 @@
         <x>70</x>
         <y>130</y>
         <width>661</width>
-        <height>401</height>
+        <height>381</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -9353,7 +9353,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/metadataOff.png</normaloff>
         <activeoff>:/icon/metadataOn.png</activeoff>
         <selectedoff>:/icon/metadataOn.png</selectedoff>:/icon/metadataOff.png</iconset>
@@ -9465,7 +9465,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/backOff.png</normaloff>
         <activeoff>:/icon/backOn.png</activeoff>
         <selectedoff>:/icon/backOn.png</selectedoff>:/icon/backOff.png</iconset>
@@ -9577,7 +9577,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/deleteImage.png</normaloff>:/icon/deleteImage.png</iconset>
       </property>
       <property name="iconSize">
@@ -9597,7 +9597,7 @@
       <property name="geometry">
        <rect>
         <x>740</x>
-        <y>310</y>
+        <y>300</y>
         <width>40</width>
         <height>40</height>
        </rect>
@@ -9690,7 +9690,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/nextOff.png</normaloff>
         <activeoff>:/icon/nextOn.png</activeoff>
         <selectedoff>:/icon/nextOn.png</selectedoff>:/icon/nextOff.png</iconset>
@@ -9712,7 +9712,7 @@
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>310</y>
+        <y>300</y>
         <width>40</width>
         <height>40</height>
        </rect>
@@ -9805,7 +9805,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/previousOff.png</normaloff>
         <activeoff>:/icon/previousOn.png</activeoff>
         <selectedoff>:/icon/previousOn.png</selectedoff>:/icon/previousOff.png</iconset>
@@ -9848,7 +9848,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/icon/loading.gif</pixmap>
+       <pixmap>:/icon/loading.gif</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -9885,7 +9885,7 @@
        <string/>
       </property>
       <property name="pixmap">
-       <pixmap resource="Resources/resources.qrc">:/background/imageInformationBackground.jpg</pixmap>
+       <pixmap>:/background/imageInformationBackground.jpg</pixmap>
       </property>
       <property name="scaledContents">
        <bool>true</bool>
@@ -11535,7 +11535,7 @@
        <string notr="true"/>
       </property>
       <property name="icon">
-       <iconset resource="Resources/resources.qrc">
+       <iconset>
         <normaloff>:/icon/backOff.png</normaloff>
         <activeoff>:/icon/backOn.png</activeoff>
         <selectedoff>:/icon/backOn.png</selectedoff>:/icon/backOff.png</iconset>
@@ -11554,8 +11554,6 @@
    </widget>
   </widget>
  </widget>
- <resources>
-  <include location="Resources/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

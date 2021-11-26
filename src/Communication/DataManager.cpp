@@ -329,11 +329,18 @@ bool DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
     return imageSaved;
 }
 
-QImage DataManager::loadImage(string id, int width, int height) {
-    QImage image(width,height,QImage::Format_ARGB32);
+QImage DataManager::loadImage(string id) {
+    querryImageMetadata(id);
+
+    int width = stoi(this->currentImageWidthX);
+    int height = stoi(this->currentImageHeightY);
+
+    QImage image(width, height, QImage::Format_ARGB32);
     QList <QRgb> imageQList;
 
     pair<QMap<char, string>, int> xmlData = loadXML(id);
+
+
     string raidData = raid.loadData(id);
     if (xmlData.second != 0) {
         for (int i = 0; i < xmlData.second; ++i) {
@@ -342,26 +349,24 @@ QImage DataManager::loadImage(string id, int width, int height) {
     }
     string imageQListString = huffman.decompress(raidData, xmlData.first);
 
-    QRgb pixel;
     stringstream ss(imageQListString);
+    long int pixelColor;
     while (ss.good()) {
         string substr;
         getline(ss, substr, ',');
-        pixel = stoi(substr);
-        imageQList.append(pixel);
+
+        pixelColor = stol(substr);
+
+        imageQList.append(pixelColor);
     }
 
     //QList<QRgb> imageQList to QImage image
     for (int y = 0; y < height; ++y) {
-        QRgb *line = reinterpret_cast<QRgb *>(image.scanLine(y));
         for (int x = 0; x < width; ++x) {
-            QRgb &rgb = line[x];
-            rgb = imageQList.first();
+            image.setPixel(x, y, imageQList.first());
             imageQList.removeFirst();
         }
     }
-
-    querryImageMetadata(id);
 
     return image;
 }
