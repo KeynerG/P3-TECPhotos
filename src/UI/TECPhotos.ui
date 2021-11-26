@@ -43,7 +43,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>3</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="LogInScreen">
      <widget class="QLabel" name="logInBackground">
@@ -5304,7 +5304,7 @@
         <property name="font">
          <font>
           <family>Carlito</family>
-          <pointsize>35</pointsize>
+          <pointsize>30</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -5856,7 +5856,7 @@
          <rect>
           <x>20</x>
           <y>80</y>
-          <width>171</width>
+          <width>341</width>
           <height>20</height>
          </rect>
         </property>
@@ -5954,7 +5954,7 @@
         <property name="font">
          <font>
           <family>Carlito</family>
-          <pointsize>10</pointsize>
+          <pointsize>9</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -5974,7 +5974,7 @@
          <rect>
           <x>20</x>
           <y>160</y>
-          <width>161</width>
+          <width>291</width>
           <height>20</height>
          </rect>
         </property>
@@ -6072,7 +6072,7 @@
         <property name="font">
          <font>
           <family>Carlito</family>
-          <pointsize>10</pointsize>
+          <pointsize>9</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -6477,7 +6477,7 @@
         <property name="font">
          <font>
           <family>Carlito</family>
-          <pointsize>35</pointsize>
+          <pointsize>30</pointsize>
           <weight>75</weight>
           <bold>true</bold>
          </font>
@@ -8306,9 +8306,9 @@
       <property name="geometry">
        <rect>
         <x>70</x>
-        <y>130</y>
+        <y>140</y>
         <width>661</width>
-        <height>381</height>
+        <height>361</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -10409,6 +10409,9 @@
       </property>
      </widget>
      <widget class="QLineEdit" name="albumNameILineEdit">
+      <property name="enabled">
+       <bool>true</bool>
+      </property>
       <property name="geometry">
        <rect>
         <x>309</x>

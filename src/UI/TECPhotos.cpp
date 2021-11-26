@@ -267,7 +267,7 @@ void TECPhotos::on_propertiesButton_clicked() {
     ui->photoSizeILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageSize()));
     ui->photoWidthILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageWidthX()));
     ui->photoHeightILineEdit->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageHeightY()));
-    ui->photoDateIEdit->setDate(QDate::fromString(converterStdStringToQString(DataManager::getInstance()->getCurrentImageCreationDate())));
+    ui->photoDateIEdit->setDate(QDate::fromString(converterStdStringToQString(DataManager::getInstance()->getCurrentImageCreationDate()), "MM/dd/yyyy"));
     // switch to Photo Information Screen
     ui->ScreenView->setCurrentIndex(7);
 }
@@ -338,7 +338,7 @@ void TECPhotos::on_album00Button_7_clicked() {
     if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 1) {
         ui->nextButton->setEnabled(false);
         ui->previousButton->setEnabled(false);
-    }else{
+    } else {
         ui->nextButton->setEnabled(true);
         ui->previousButton->setEnabled(true);
     }
