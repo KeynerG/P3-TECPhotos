@@ -359,6 +359,11 @@ QImage DataManager::loadImage(string id) {
             }
         }
     } else {
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                image.setPixel(x, y, 000000);
+            }
+        }
         cerr << "RAID LOG - UNABLE TO LOAD IMAGE " << id << "." << endl << endl;
     }
 
