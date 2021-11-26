@@ -295,7 +295,7 @@ void TECPhotos::on_previousButton_clicked() {
     ui->displayPhotoLabel->clear();
     image = DataManager::getInstance()->loadImage(-1);
     if (!image.isNull()) {
-        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->displayPhotoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
     }
     ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
     ui->previousButton->setEnabled(true);
@@ -309,7 +309,7 @@ void TECPhotos::on_nextButton_clicked() {
     ui->displayPhotoLabel->clear();
     image = DataManager::getInstance()->loadImage(1);
     if (!image.isNull()) {
-        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->displayPhotoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
     }
     ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
     ui->previousButton->setEnabled(true);
@@ -328,7 +328,7 @@ void TECPhotos::on_album00Button_7_clicked() {
     DataManager::getInstance()->openAlbum("D");
     image = DataManager::getInstance()->loadImage(0);
     if (!image.isNull()) {
-        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+        ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->displayPhotoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
     }
     ui->albumNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentAlbumName()));
     ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));

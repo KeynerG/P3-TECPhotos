@@ -371,7 +371,7 @@ public:
      * @return QImage
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
-    QImage loadImage(string id, int width, int height);
+    QImage loadImage(string id);
 
     /**
      * @fn QImage loadImage(int indexChange)
