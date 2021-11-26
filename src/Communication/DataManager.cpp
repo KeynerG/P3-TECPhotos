@@ -137,7 +137,7 @@ void DataManager::connectToDB() {
         if (connectionResult.get_utf8().value.to_string() == "true") {
             cout << "DATABASE LOG - SUCCESSFULLY CONNECTED TO DATABASE." << endl << endl;
         } else {
-            cerr << "ERROR - COULDN'T CONNECT TO DATABASE." << endl << endl;
+            cerr << "DATABASE LOG - ERROR: UNABLE TO CONNECT TO DATABASE." << endl << endl;
         }
     }
 }
@@ -154,7 +154,7 @@ bool DataManager::login(string username, string password) {
         successful = true;
     }
     if (this->currentUsername.empty()) {
-        cerr << "ERROR - INVALID USERNAME OR PASSWORD." << endl << endl;
+        cerr << "DATABASE LOG - ERROR: INVALID USERNAME OR PASSWORD." << endl << endl;
         successful = false;
     }
     return successful;
@@ -181,7 +181,7 @@ bool DataManager::signUp(string username, string password) {
         successful = true;
         cout << "DATABASE LOG - " << this->currentUsername << " SIGNED UP." << endl << endl;
     } else {
-        cerr << "ERROR - UNAVAILABLE USERNAME" << endl << endl;
+        cerr << "DATABASE LOG - ERROR: UNAVAILABLE USERNAME" << endl << endl;
     }
     return successful;
 }
@@ -228,8 +228,7 @@ void DataManager::sendImageMetadata(string imageId, string albumName, string aut
 
     imagesCollection.insert_one(document);
     querryUserInformation();
-    cout << "DATABASE LOG - IMAGE SAVED [ID: " << imageId << ", ALBUM: " << albumName << ", IMAGE NAME: " << imageName
-         << "]." << endl << endl;
+    cout << "DATABASE LOG - IMAGE " << imageId << " SAVED." << endl << endl;
 }
 
 void DataManager::querryImageMetadata(string imageId) {
@@ -258,8 +257,7 @@ void DataManager::querryImageMetadata(string imageId) {
             this->currentImageWidthX = widthX.get_utf8().value.to_string();
             this->currentImageHeightY = heightY.get_utf8().value.to_string();
             this->currentImageDescription = description.get_utf8().value.to_string();
-            cout << "DATABASE LOG - IMAGE LOADED [ID: " << this->currentImageId << ", ALBUM: " << this->currentAlbumName
-                 << ", IMAGE NAME: " << this->currentImageName << "]." << endl << endl;
+            cout << "DATABASE LOG - IMAGE " << this->currentImageId << " LOADED." << endl << endl;
         }
     }
 }
@@ -511,10 +509,9 @@ void DataManager::deleteImageMetadata() {
         imagesCollection.delete_one(document{} << "imageId" << currentImageId << bsoncxx::builder::stream::finalize);
         querryUserInformation();
         raid.deleteData(currentImageId);
-        cout << "DATABASE LOG - IMAGE DELETED [ID: " << currentImageId << ", ALBUM: " << albumName.get_utf8().value.to_string()
-             << ", IMAGE NAME: " << imageName.get_utf8().value.to_string() << "]." << endl << endl;
+        cout << "DATABASE LOG - IMAGE " << currentImageId << " DELETED." << endl << endl;
     } else {
-        cerr << "ERROR - COULD NOT DELETE THE IMAGE." << endl << endl;
+        cerr << "DATABASE LOG - ERROR: UNABLE TO DELETE IMAGE " << currentImageId << "." << endl << endl;
     }
 }
 
@@ -533,10 +530,9 @@ void DataManager::deleteImageMetadata(string imageId) {
         imagesCollection.delete_one(document{} << "imageId" << imageId << bsoncxx::builder::stream::finalize);
         querryUserInformation();
         raid.deleteData(imageId);
-        cout << "DATABASE LOG - IMAGE DELETED [ID: " << imageId << ", ALBUM: " << albumName.get_utf8().value.to_string()
-             << ", IMAGE NAME: " << imageName.get_utf8().value.to_string() << "]." << endl << endl;
+        cout << "DATABASE LOG - IMAGE " << imageId << " DELETED." << endl << endl;
     } else {
-        cerr << "ERROR - COULD NOT DELETE THE IMAGE." << endl << endl;
+        cerr << "DATABASE LOG - ERROR: UNABLE TO DELETE IMAGE " << imageId << "." << endl << endl;
     }
 }
 
@@ -552,7 +548,7 @@ bool DataManager::deleteAlbum(string albumName) {
                 deleteImageMetadata(v[i]);
             }
             successful = true;
-            cout << "DATABASE LOG - ALBUM DELETED [ALBUM NAME: " << albumName << "]." << endl << endl;
+            cout << "DATABASE LOG - ALBUM " << albumName << " DELETED." << endl << endl;
         }
     }
     querryUserInformation();
@@ -577,11 +573,10 @@ void DataManager::updateImageMetadata(string imageName, string imageDesc, string
                                                "author" << imageAuthor <<
                                                "creationDate" << imageDate
                                                << bsoncxx::builder::stream::close_document << finalize);
-        cout << "DATABASE LOG - IMAGE UPDATED [ID: " << currentImageId << ", ALBUM: " << albumName.get_utf8().value.to_string()
-             << ", IMAGE NAME: " << imageName << "]." << endl << endl;
+        cout << "DATABASE LOG - IMAGE " << currentImageId << " UPDATED." << endl << endl;
 
     } else {
-        cerr << "ERROR - COULD NOT UPDATE THE IMAGE." << endl << endl;
+        cerr << "DATABASE LOG - ERROR: UNABLE TO UPDATE IMAGE " << currentImageId << "." << endl << endl;
     }
 }
 

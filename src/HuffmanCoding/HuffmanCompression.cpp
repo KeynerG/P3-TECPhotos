@@ -93,7 +93,7 @@ pair<string, QMap<char, string>> HuffmanCompression::compress(const string &text
     result.first = str;
     result.second = huffmanResult;
 
-    cout << "HUFFMAN LOG - COMPRESSION SUCCESSFUL\n" << endl;
+    cout << "HUFFMAN LOG - COMPRESSION SUCCESSFUL.\n" << endl;
 
     return result;
 }
@@ -114,7 +114,7 @@ string HuffmanCompression::decompress(string str, QMap<char, string> huffmanList
         curr_char++;
     }
 
-    cout << "HUFFMAN LOG - DEOMPRESSION SUCCESSFUL\n" << endl;
+    cout << "HUFFMAN LOG - DECOMPRESSION SUCCESSFUL.\n" << endl;
 
     return result;
 }

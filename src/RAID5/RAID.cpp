@@ -80,31 +80,37 @@ void RAID::checkDirectoriesIntegrity() {
         DrivesDirectory.mkpath("drive-3");
         DrivesDirectory.mkpath("parity-drive");
         DrivesDirectory.mkpath("dictionaries");
+        cout << "RAID LOG - ALL DRIVES DIRECTORIES RESTORED.\n" << endl;
     } else {
 
-        QDir disk1Directory(QString::fromStdString(partitions1Directory));
-        if (!disk1Directory.exists()) {
-            disk1Directory.mkpath(".");
+        QDir drive1Directory(QString::fromStdString(partitions1Directory));
+        if (!drive1Directory.exists()) {
+            drive1Directory.mkpath(".");
+            cout << "RAID LOG - DRIVE-1 DIRECTORY RESTORED.\n" << endl;
         }
 
-        QDir disk2Directory(QString::fromStdString(partitions2Directory));
-        if (!disk2Directory.exists()) {
-            disk2Directory.mkpath(".");
+        QDir drive2Directory(QString::fromStdString(partitions2Directory));
+        if (!drive2Directory.exists()) {
+            drive2Directory.mkpath(".");
+            cout << "RAID LOG - DRIVE-2 DIRECTORY RESTORED.\n" << endl;
         }
 
-        QDir disk3Directory(QString::fromStdString(partitions3Directory));
-        if (!disk3Directory.exists()) {
-            disk3Directory.mkpath(".");
+        QDir drive3Directory(QString::fromStdString(partitions3Directory));
+        if (!drive3Directory.exists()) {
+            drive3Directory.mkpath(".");
+            cout << "RAID LOG - DRIVE-3 DIRECTORY RESTORED.\n" << endl;
         }
 
-        QDir diskParityDirectory(QString::fromStdString(parityPartitionsDirectory));
-        if (!diskParityDirectory.exists()) {
-            diskParityDirectory.mkpath(".");
+        QDir parityDriveDirectory(QString::fromStdString(parityPartitionsDirectory));
+        if (!parityDriveDirectory.exists()) {
+            parityDriveDirectory.mkpath(".");
+            cout << "RAID LOG - PARITY-DRIVE DIRECTORY RESTORED.\n" << endl;
         }
 
         QDir dictionariesDirectory(QString::fromStdString(imagesDictionariesDirectory));
         if (!dictionariesDirectory.exists()) {
             dictionariesDirectory.mkpath(".");
+            cout << "HUFFMAN LOG - DICTIONARIES DIRECTORY RESTORED.\n" << endl;
         }
     }
 }
@@ -232,11 +238,12 @@ void RAID::restoreFilePartition(string fileName) {
                 break;
             }
         }
+        for (int i = 0; i < 4; ++i) {
+            fileName.pop_back();
+        }
+        cout << "RAID LOG - PARTITION RESTORED FOR " << fileName << " IMAGE.\n" << endl;
     } else {
-        cerr << endl << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ Error ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl;
-        cerr << "There are more than one missing partition for the file: " << fileName << "." << endl << endl;
-        cerr << "    Missing file partitions: " << to_string(missingFiles) << ".";
-        cerr << endl << "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~" << endl << endl;
+        cout << "RAID LOG - ERROR: MISSING FILE PARTITIONS FOR  " << fileName << " IMAGE.\n" << endl;
     }
 }
 
@@ -281,12 +288,14 @@ void RAID::saveData(string data, int imageId) {
 
     generateParityPartition(to_string(imageId) + ".txt");
 
-    cout << "RAID LOG - IMAGE " << imageId << " SAVED\n" << endl;
+    cout << "RAID LOG - IMAGE " << imageId << " SAVED.\n" << endl;
 }
 
 string RAID::loadData(string &imageID) {
 
     string fileName = imageID + ".txt";
+
+    string filecontent;
 
     if (checkFileExistance(1, fileName) and
         checkFileExistance(2, fileName) and
@@ -311,12 +320,8 @@ string RAID::loadData(string &imageID) {
 
         ofstream fileManagerW;
 
-        string filecontent;
+
         filecontent += partition1Content + partition2Content + partition3Content;
-
-        cout << "RAID LOG - IMAGE " << imageID << " LOADED\n" << endl;
-
-        return filecontent;
     } else {
         checkDirectoriesIntegrity();
 
@@ -343,12 +348,7 @@ string RAID::loadData(string &imageID) {
 
             ofstream fileManagerW;
 
-            string filecontent;
             filecontent += partition1Content + partition2Content + partition3Content;
-
-            cout << "RAID LOG - IMAGE " << imageID << " LOADED\n" << endl;
-
-            return filecontent;
         } else {
             restoreFilePartition(fileName);
 
@@ -370,14 +370,15 @@ string RAID::loadData(string &imageID) {
 
             ofstream fileManagerW;
 
-            string filecontent;
             filecontent += partition1Content + partition2Content + partition3Content;
 
-            cout << "RAID LOG - IMAGE " << imageID << " LOADED\n" << endl;
 
-            return filecontent;
         }
     }
+
+    cout << "RAID LOG - IMAGE " << imageID << " LOADED.\n" << endl;
+
+    return filecontent;
 }
 
 void RAID::deleteData(string &fileId) {
@@ -392,4 +393,6 @@ void RAID::deleteData(string &fileId) {
 
     QDir dictionaries(QString::fromStdString(imagesDictionariesDirectory));
     dictionaries.remove(QString::fromStdString(fileId + ".xml"));
+
+    cout << "RAID LOG - IMAGE " << fileId << " DELETED.\n" << endl;
 }
