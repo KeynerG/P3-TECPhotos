@@ -41,6 +41,7 @@ void HuffmanCompression::decode(HuffmanCompression::Node *root, int &index, stri
 }
 
 pair<string, QMap<char, string>> HuffmanCompression::compress(const string &text) {
+    cout << "HUFFMAN LOG - COMPRESSING IMAGE...\n" << endl;
     // count frequency of appearance of each character and store it in a map
     unordered_map<char, int> freq;
     for (char character: text) {
@@ -93,12 +94,13 @@ pair<string, QMap<char, string>> HuffmanCompression::compress(const string &text
     result.first = str;
     result.second = huffmanResult;
 
-    cout << "HUFFMAN LOG - COMPRESSION SUCCESSFUL\n" << endl;
+    cout << "HUFFMAN LOG - COMPRESSION SUCCESSFUL.\n" << endl;
 
     return result;
 }
 
 string HuffmanCompression::decompress(string str, QMap<char, string> huffmanList) {
+    cout << "HUFFMAN LOG - DECOMPRESSING IMAGE...\n" << endl;
     QList<char> characters = huffmanList.keys();
     QList<string> scripts = huffmanList.values();
     string result , curr;
@@ -114,7 +116,7 @@ string HuffmanCompression::decompress(string str, QMap<char, string> huffmanList
         curr_char++;
     }
 
-    cout << "HUFFMAN LOG - DEOMPRESSION SUCCESSFUL\n" << endl;
+    cout << "HUFFMAN LOG - DECOMPRESSION SUCCESSFUL.\n" << endl;
 
     return result;
 }
