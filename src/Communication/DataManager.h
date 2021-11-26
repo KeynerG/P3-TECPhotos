@@ -339,13 +339,6 @@ public:
     bool login(string username, string password);
 
     /**
-     * @fn void disconnectDB()
-     * @brief
-     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
-     */
-    void disconnectDB();
-
-    /**
      * @fn bool signUp(string username, string password)
      * @brief Creates a new user in the database.
      * @param username

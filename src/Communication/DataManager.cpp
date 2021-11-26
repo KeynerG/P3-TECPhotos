@@ -148,10 +148,6 @@ bool DataManager::login(string username, string password) {
     return successful;
 }
 
-void DataManager::disconnectDB() {
-
-}
-
 bool DataManager::signUp(string username, string password) {
     bool exists = false;
     bool successful = false;

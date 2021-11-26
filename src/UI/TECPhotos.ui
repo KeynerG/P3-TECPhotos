@@ -43,7 +43,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>6</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="LogInScreen">
      <widget class="QLabel" name="logInBackground">
@@ -1484,11 +1484,8 @@
       <widget class="QWidget" name="openAlbum">
        <attribute name="icon">
         <iconset resource="Resources/resources.qrc">
-         <normaloff>:/icon/openAlbum.png</normaloff>
-         <activeoff>:/icon/openAlbum.png</activeoff>
-         <activeon>:/icon/albumOn.png</activeon>
-         <selectedoff>:/icon/openAlbum.png</selectedoff>
-         <selectedon>:/icon/albumOn.png</selectedon>:/icon/openAlbum.png</iconset>
+         <normaloff>:/icon/openAlbumOff.png</normaloff>
+         <normalon>:/icon/openAlbumOn.png</normalon>:/icon/openAlbumOff.png</iconset>
        </attribute>
        <attribute name="title">
         <string/>
@@ -2011,9 +2008,8 @@
       <widget class="QWidget" name="editAlbum">
        <attribute name="icon">
         <iconset resource="Resources/resources.qrc">
-         <normaloff>:/icon/addAlbum.png</normaloff>
-         <activeon>:/icon/albumOn.png</activeon>
-         <selectedon>:/icon/albumOn.png</selectedon>:/icon/addAlbum.png</iconset>
+         <normaloff>:/icon/addAlbumOff.png</normaloff>
+         <normalon>:/icon/addAlbumOn.png</normalon>:/icon/addAlbumOff.png</iconset>
        </attribute>
        <attribute name="title">
         <string notr="true"/>
@@ -2908,9 +2904,8 @@
       <widget class="QWidget" name="deleteAlbum">
        <attribute name="icon">
         <iconset resource="Resources/resources.qrc">
-         <normaloff>:/icon/deleteAlbum.png</normaloff>
-         <activeon>:/icon/albumOn.png</activeon>
-         <selectedon>:/icon/albumOn.png</selectedon>:/icon/deleteAlbum.png</iconset>
+         <normaloff>:/icon/deleteAlbumOff.png</normaloff>
+         <normalon>:/icon/deleteAlbumOn.png</normalon>:/icon/deleteAlbumOff.png</iconset>
        </attribute>
        <attribute name="title">
         <string/>

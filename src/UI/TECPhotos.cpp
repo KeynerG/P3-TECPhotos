@@ -16,7 +16,6 @@ TECPhotos::TECPhotos(QWidget *parent) : QMainWindow(parent), ui(new Ui::TECPhoto
 }
 
 TECPhotos::~TECPhotos() {
-    DataManager::getInstance()->disconnectDB();
     delete ui;
 }
 

@@ -1,31 +1,33 @@
 <RCC>
     <qresource prefix="/">
+        <file>background/albumOptionsBackground.jpg</file>
         <file>background/albumsBackground.jpg</file>
         <file>background/imageInformationBackground.jpg</file>
+        <file>background/loadingBackground.png</file>
         <file>background/loginBackground.jpg</file>
         <file>background/newPhotoBackground.jpg</file>
         <file>background/photoBackground.png</file>
-        <file>background/welcomeBackground.png</file>
         <file>background/signUpBackground.jpg</file>
-        <file>icon/TECPhotos.png</file>
-        <file>icon/albumOn.png</file>
-        <file>icon/addAlbum.png</file>
-        <file>icon/deleteAlbum.png</file>
-        <file>icon/deleteImage.png</file>
-        <file>background/albumOptionsBackground.jpg</file>
-        <file>icon/browseImage.png</file>
-        <file>icon/nextOff.png</file>
-        <file>icon/nextOn.png</file>
-        <file>icon/previousOff.png</file>
-        <file>icon/previousOn.png</file>
+        <file>background/welcomeBackground.png</file>
+        <file>icon/addAlbumOff.png</file>
+        <file>icon/addAlbumOn.png</file>
         <file>icon/backOff.png</file>
         <file>icon/backOn.png</file>
-        <file>icon/metadataOff.png</file>
-        <file>icon/metadataOn.png</file>
+        <file>icon/browseImage.png</file>
+        <file>icon/deleteAlbumOff.png</file>
+        <file>icon/deleteAlbumOn.png</file>
+        <file>icon/deleteImage.png</file>
         <file>icon/exitOff.png</file>
         <file>icon/exitOn.png</file>
-        <file>background/loadingBackground.png</file>
         <file>icon/loading.gif</file>
-        <file>icon/openAlbum.png</file>
+        <file>icon/metadataOff.png</file>
+        <file>icon/metadataOn.png</file>
+        <file>icon/nextOff.png</file>
+        <file>icon/nextOn.png</file>
+        <file>icon/openAlbumOff.png</file>
+        <file>icon/openAlbumOn.png</file>
+        <file>icon/previousOff.png</file>
+        <file>icon/previousOn.png</file>
+        <file>icon/TECPhotos.png</file>
     </qresource>
 </RCC>
