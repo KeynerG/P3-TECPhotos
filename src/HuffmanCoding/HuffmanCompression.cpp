@@ -103,13 +103,12 @@ string HuffmanCompression::decompress(string str, QMap<char, string> huffmanList
     cout << "HUFFMAN LOG - DECOMPRESSING IMAGE...\n" << endl;
     QList<char> characters = huffmanList.keys();
     QList<string> scripts = huffmanList.values();
-    string result , curr;
+    string result, curr;
     int curr_char = 0;
 
-    while(curr_char < str.size())
-    {
+    while (curr_char < str.size()) {
         curr.push_back(str[curr_char]);
-        if(scripts.contains(curr)){
+        if (scripts.contains(curr)) {
             result.push_back(characters[scripts.indexOf(curr)]);
             curr.clear();
         }

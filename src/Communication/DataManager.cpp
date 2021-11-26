@@ -17,11 +17,11 @@ void DataManager::setCurrentUsername(const string &newCurrentUsername) {
     currentUsername = newCurrentUsername;
 }
 
-QMap <string, QVector<string>> &DataManager::getCurrentUserMap() {
+QMap<string, QVector<string>> &DataManager::getCurrentUserMap() {
     return currentUserMap;
 }
 
-void DataManager::setCurrentUserMap(const QMap <string, QVector<string>> &newCurrentUserMap) {
+void DataManager::setCurrentUserMap(const QMap<string, QVector<string>> &newCurrentUserMap) {
     currentUserMap = newCurrentUserMap;
 }
 
@@ -33,13 +33,11 @@ void DataManager::setCurrentAlbumName(const string &newCurrentAlbumName) {
     currentAlbumName = newCurrentAlbumName;
 }
 
-const string &DataManager::getCurrentImageAuthor() const
-{
+const string &DataManager::getCurrentImageAuthor() const {
     return currentImageAuthor;
 }
 
-void DataManager::setCurrentImageAuthor(const string &newCurrentImageAuthor)
-{
+void DataManager::setCurrentImageAuthor(const string &newCurrentImageAuthor) {
     currentImageAuthor = newCurrentImageAuthor;
 }
 
@@ -51,53 +49,43 @@ void DataManager::setCurrentImageName(const string &newCurrentImageName) {
     currentImageName = newCurrentImageName;
 }
 
-const string &DataManager::getCurrentImageCreationDate() const
-{
+const string &DataManager::getCurrentImageCreationDate() const {
     return currentImageCreationDate;
 }
 
-void DataManager::setCurrentImageCreationDate(const string &newCurrentImageCreationDate)
-{
+void DataManager::setCurrentImageCreationDate(const string &newCurrentImageCreationDate) {
     currentImageCreationDate = newCurrentImageCreationDate;
 }
 
-const string &DataManager::getCurrentImageSize() const
-{
+const string &DataManager::getCurrentImageSize() const {
     return currentImageSize;
 }
 
-void DataManager::setCurrentImageSize(const string &newCurrentImageSize)
-{
+void DataManager::setCurrentImageSize(const string &newCurrentImageSize) {
     currentImageSize = newCurrentImageSize;
 }
 
-const string &DataManager::getCurrentImageWidthX() const
-{
+const string &DataManager::getCurrentImageWidthX() const {
     return currentImageWidthX;
 }
 
-void DataManager::setCurrentImageWidthX(const string &newCurrentImageWidthX)
-{
+void DataManager::setCurrentImageWidthX(const string &newCurrentImageWidthX) {
     currentImageWidthX = newCurrentImageWidthX;
 }
 
-const string &DataManager::getCurrentImageHeightY() const
-{
+const string &DataManager::getCurrentImageHeightY() const {
     return currentImageHeightY;
 }
 
-void DataManager::setCurrentImageHeightY(const string &newCurrentImageHeightY)
-{
+void DataManager::setCurrentImageHeightY(const string &newCurrentImageHeightY) {
     currentImageHeightY = newCurrentImageHeightY;
 }
 
-const string &DataManager::getCurrentImageDescription() const
-{
+const string &DataManager::getCurrentImageDescription() const {
     return currentImageDescription;
 }
 
-void DataManager::setCurrentImageDescription(const string &newCurrentImageDescription)
-{
+void DataManager::setCurrentImageDescription(const string &newCurrentImageDescription) {
     currentImageDescription = newCurrentImageDescription;
 }
 
@@ -111,7 +99,7 @@ int DataManager::querryNextImageId() {
     string imageIdFoundedStr;
     int possibleId;
 
-    while(exists){
+    while (exists) {
         possibleId = rand() % 1000000000;
         imageIdFoundedStr.clear();
 
@@ -121,7 +109,7 @@ int DataManager::querryNextImageId() {
             imageIdFoundedStr = imageIdFounded.get_utf8().value.to_string();
         }
 
-        if(imageIdFoundedStr.empty()){
+        if (imageIdFoundedStr.empty()) {
             exists = false;
         }
     }
@@ -194,11 +182,11 @@ void DataManager::querryUserInformation() {
         bsoncxx::document::element imageId = doc["imageId"];
         if (!currentUserMap.contains(albumName.get_utf8().value.to_string())) {
             currentUserMap.insert(albumName.get_utf8().value.to_string(), QVector<string>());
-            QVector <string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
+            QVector<string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
             v.append(imageId.get_utf8().value.to_string());
             currentUserMap[albumName.get_utf8().value.to_string()] = v;
         } else {
-            QVector <string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
+            QVector<string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
             v.append(imageId.get_utf8().value.to_string());
             currentUserMap[albumName.get_utf8().value.to_string()] = v;
         }
@@ -207,7 +195,8 @@ void DataManager::querryUserInformation() {
     cout << "DATABASE LOG - LOADED " << this->currentUsername << "'S INFORMATION." << endl << endl;
 }
 
-void DataManager::sendImageMetadata(string imageId, string albumName, string author, string imageName, string creationDate,
+void
+DataManager::sendImageMetadata(string imageId, string albumName, string author, string imageName, string creationDate,
                                string size, string widthX, string heightY, string description) {
 
     auto builder = bsoncxx::builder::stream::document{};
@@ -246,7 +235,7 @@ void DataManager::querryImageMetadata(string imageId) {
         if (albumName.type() != bsoncxx::type::k_utf8 or author.type() != bsoncxx::type::k_utf8 or
             imageName.type() != bsoncxx::type::k_utf8 or creationDate.type() != bsoncxx::type::k_utf8 or
             size.type() != bsoncxx::type::k_utf8 or description.type() != bsoncxx::type::k_utf8) {
-            cerr << "ERROR: LOST IMAGE METADATA." << endl << endl;
+            cerr << "DATABASE LOG - ERROR: LOST IMAGE METADATA." << endl << endl;
         } else {
             this->currentImageId = imageId;
             this->currentAlbumName = albumName.get_utf8().value.to_string();
@@ -275,11 +264,11 @@ void DataManager::printInfo() {
     cout << "Height: " << currentImageHeightY << endl;
     cout << "Description: " << currentImageDescription << endl;
     cout << "Albums: [";
-    QMapIterator <string, QVector<string>> j(currentUserMap);
+    QMapIterator<string, QVector<string>> j(currentUserMap);
     while (j.hasNext()) {
         j.next();
         cout << j.key() << ": ";
-        QVector <string> v = j.value();
+        QVector<string> v = j.value();
         for (int i = 0; i < v.size(); ++i) {
             cout << v[i] << ", ";
         }
@@ -288,13 +277,14 @@ void DataManager::printInfo() {
     cout << "]." << endl;
 }
 
-bool DataManager::saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
+bool DataManager::saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription,
+                            string imageAuthor,
                             string imageSize, string imageWidthX, string imageHeightY, string imageDate) {
     bool imageSaved = false;
     int extraCeros = 0;
     int imageId = querryNextImageId();
     // Create a QList of the image
-    QList <QRgb> pixelsList;
+    QList<QRgb> pixelsList;
     for (int y = 0; y < image.height(); ++y) {
         QRgb *line = reinterpret_cast<QRgb *>(image.scanLine(y));
         for (int x = 0; x < image.width(); ++x) {
@@ -310,7 +300,7 @@ bool DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
             pixelsListString += ",";
     }
     // compressing the image data
-    pair <string, QMap<char, string>> compressResult = huffman.compress(pixelsListString.toStdString());
+    pair<string, QMap<char, string>> compressResult = huffman.compress(pixelsListString.toStdString());
     // Checking if the code generated is module of 3 before sending to the raid
     while ((compressResult.first.length() % 3) != 0) {
         compressResult.first.push_back('0');
@@ -334,36 +324,42 @@ QImage DataManager::loadImage(string id) {
     int height = stoi(this->currentImageHeightY);
 
     QImage image(width, height, QImage::Format_ARGB32);
-    QList <QRgb> imageQList;
 
-    pair<QMap<char, string>, int> xmlData = loadXML(id);
+    if (raid.checkFileExistance(1, id + ".txt") or raid.checkFileExistance(2, id + ".txt") or
+        raid.checkFileExistance(3, id + ".txt") or raid.checkFileExistance(4, id + ".txt")) {
+        QList<QRgb> imageQList;
+
+        pair<QMap<char, string>, int> xmlData = loadXML(id);
 
 
-    string raidData = raid.loadData(id);
-    if (xmlData.second != 0) {
-        for (int i = 0; i < xmlData.second; ++i) {
-            raidData.pop_back();
+        string raidData = raid.loadData(id);
+        if (xmlData.second != 0) {
+            for (int i = 0; i < xmlData.second; ++i) {
+                raidData.pop_back();
+            }
         }
-    }
-    string imageQListString = huffman.decompress(raidData, xmlData.first);
+        string imageQListString = huffman.decompress(raidData, xmlData.first);
 
-    stringstream ss(imageQListString);
-    long int pixelColor;
-    while (ss.good()) {
-        string substr;
-        getline(ss, substr, ',');
+        stringstream ss(imageQListString);
+        long int pixelColor;
+        while (ss.good()) {
+            string substr;
+            getline(ss, substr, ',');
 
-        pixelColor = stol(substr);
+            pixelColor = stol(substr);
 
-        imageQList.append(pixelColor);
-    }
-
-    //QList<QRgb> imageQList to QImage image
-    for (int y = 0; y < height; ++y) {
-        for (int x = 0; x < width; ++x) {
-            image.setPixel(x, y, imageQList.first());
-            imageQList.removeFirst();
+            imageQList.append(pixelColor);
         }
+
+        //QList<QRgb> imageQList to QImage image
+        for (int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                image.setPixel(x, y, imageQList.first());
+                imageQList.removeFirst();
+            }
+        }
+    } else {
+        cerr << "RAID LOG - UNABLE TO LOAD IMAGE " << id << "." << endl << endl;
     }
 
     return image;
@@ -379,7 +375,8 @@ QImage DataManager::loadImage(int indexChange) {
             }
             break;
         case 1:
-            if (currentAlbumIndex != currentUserMap.value(currentAlbumName).size() - 1 && currentUserMap.value(currentAlbumName).size() != 1) {
+            if (currentAlbumIndex != currentUserMap.value(currentAlbumName).size() - 1 &&
+                currentUserMap.value(currentAlbumName).size() != 1) {
                 currentAlbumIndex += indexChange;
             } else {
                 currentAlbumIndex = 0;
@@ -443,13 +440,13 @@ pair<QMap<char, string>, int> DataManager::loadXML(string id) {
         QXmlStreamReader xmlReader(&dictionaryFile);
         xmlReader.setDevice(&dictionaryFile);
         // reading from file
-        if(xmlReader.readNextStartElement()){
-            if(xmlReader.name() == "Image_" + QString(QString::fromStdString(id))){
+        if (xmlReader.readNextStartElement()) {
+            if (xmlReader.name() == "Image_" + QString(QString::fromStdString(id))) {
                 while (xmlReader.readNextStartElement()) {
-                    if(xmlReader.name() == QString::fromStdString("Huffman_Tree")) {
+                    if (xmlReader.name() == QString::fromStdString("Huffman_Tree")) {
                         mapString = xmlReader.readElementText();
                     }
-                    if(xmlReader.name() == QString::fromStdString("Extra_Ceros")) {
+                    if (xmlReader.name() == QString::fromStdString("Extra_Ceros")) {
                         cerosString = xmlReader.readElementText();
                     }
                 }
@@ -480,11 +477,11 @@ pair<QMap<char, string>, int> DataManager::loadXML(string id) {
         }
     }
 
-    for (int i = 0; i <mapElements.size(); i=i+2) {
-        if(mapElements[i]=="44"){
-            dictionary.insert(',',mapElements[i+1]);
-        }else{
-            dictionary.insert(mapElements[i][0],mapElements[i+1]);
+    for (int i = 0; i < mapElements.size(); i = i + 2) {
+        if (mapElements[i] == "44") {
+            dictionary.insert(',', mapElements[i + 1]);
+        } else {
+            dictionary.insert(mapElements[i][0], mapElements[i + 1]);
         }
     }
 
@@ -539,11 +536,11 @@ void DataManager::deleteImageMetadata(string imageId) {
 bool DataManager::deleteAlbum(string albumName) {
     bool successful = false;
     querryUserInformation();
-    QMapIterator <string, QVector<string>> j(currentUserMap);
+    QMapIterator<string, QVector<string>> j(currentUserMap);
     while (j.hasNext()) {
         j.next();
         if (j.key() == albumName) {
-            QVector <string> v = j.value();
+            QVector<string> v = j.value();
             for (int i = 0; i < v.size(); ++i) {
                 deleteImageMetadata(v[i]);
             }
