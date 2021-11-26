@@ -415,7 +415,7 @@ public:
      * @param imageDate
      * @author <a href="https://github.com/danyazunigab">Daniel A. Zúñiga Barahona</a>
      */
-    void updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor, string imageDate);
+    void updateImageMetadata(string imageName, string imageDesc, string imageAuthor, string imageDate);
 
     /**
      * @fn void printInfo()

@@ -559,25 +559,25 @@ bool DataManager::deleteAlbum(string albumName) {
     return successful;
 }
 
-void DataManager::updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor,
+void DataManager::updateImageMetadata(string imageName, string imageDesc, string imageAuthor,
                                       string imageDate) {
     bool exists = false;
     bsoncxx::document::element albumName;
 
-    mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("imageId", imageId)));
+    mongocxx::cursor cursor = imagesCollection.find(make_document(kvp("imageId", currentImageId)));
     for (auto &&doc: cursor) {
         albumName = doc["albumName"];
         exists = true;
     }
     if (exists) {
-        imagesCollection.update_one(document{} << "imageId" << imageId << bsoncxx::builder::stream::finalize,
+        imagesCollection.update_one(document{} << "imageId" << currentImageId << bsoncxx::builder::stream::finalize,
                                     document{} << "$set" << bsoncxx::builder::stream::open_document <<
                                                "imageName" << imageName <<
                                                "imageDescription" << imageDesc <<
-                                               "imageAuthor" << imageAuthor <<
-                                               "imageCreationDate" << imageDate
+                                               "author" << imageAuthor <<
+                                               "creationDate" << imageDate
                                                << bsoncxx::builder::stream::close_document << finalize);
-        cout << "DATABASE LOG - IMAGE UPDATED [ID: " << imageId << ", ALBUM: " << albumName.get_utf8().value.to_string()
+        cout << "DATABASE LOG - IMAGE UPDATED [ID: " << currentImageId << ", ALBUM: " << albumName.get_utf8().value.to_string()
              << ", IMAGE NAME: " << imageName << "]." << endl << endl;
 
     } else {
