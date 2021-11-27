@@ -1,7 +1,7 @@
 # Proyecto - TECPhotos
 
 ### DEMO
-![DEMO](https://i.pinimg.com/originals/97/50/f3/9750f39fe5f96acfce1bdf187ff0cac1.gif)
+![DEMO](https://github.com/KeynerG/P3-TECPhotos/blob/main/docs/TECPhotos-DEMO.gif)
 
 ### Institución
 [Instituto Tecnológico de Costa Rica](https://www.tec.ac.cr/)
