@@ -234,6 +234,7 @@ void TECPhotos::on_deleteAlbumButton_clicked() {
             ui->openAlbumSelectorComboBox->removeItem(ui->deleteAlbumSelectorComboBox->currentIndex());
             ui->editAlbumSelectorComboBox->removeItem(ui->deleteAlbumSelectorComboBox->currentIndex());
             ui->deleteAlbumSelectorComboBox->removeItem(ui->deleteAlbumSelectorComboBox->currentIndex());
+            ui->deleteAlbumSelectorComboBox->setCurrentText("");
         } else {
             displayMessage("Notification", QString(ui->deleteAlbumSelectorComboBox->currentText() + " album deletion was not successful."));
         }
@@ -369,8 +370,8 @@ void TECPhotos::on_nextButton_clicked() {
 
 void TECPhotos::on_galleryIButton_clicked() {
     // setup screen widgets
-    ui->photoNameLabel->setText(ui->photoNameILineEdit->text());
-    ui->albumNameLabel->setText(ui->albumNameILineEdit->text());
+    ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
+    ui->albumNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentAlbumName()));
     // switch to Photo Screen
     if (ui->editButton->isEnabled() && !ui->okButton->isEnabled()) {
         ui->ScreenView->setCurrentIndex(5);
@@ -409,8 +410,10 @@ void TECPhotos::on_okButton_clicked() {
             ui->editButton->setEnabled(true);
         } else {
             displayMessage("Notification", "The image \"" + QString(ui->photoNameNPLineEdit->text() + "\" was not successfully update."));
+            ui->okButton->setEnabled(true);
         }
     } else {
         displayMessage("Warning", "Please enter the photo name.");
+        ui->okButton->setEnabled(true);
     }
 }

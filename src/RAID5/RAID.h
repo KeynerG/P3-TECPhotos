@@ -58,9 +58,10 @@ public:
     void restoreFilePartition(string fileName);
 
     /**
-     * @fn int saveData(string data)
+     * @fn void saveData(string data, int imageId)
      * @brief Function that saves a binary-data into the different RAID partition drives.
      * @param data
+     * @param imageId
      * @return int
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */

@@ -251,32 +251,6 @@ void DataManager::querryImageMetadata(string imageId) {
     }
 }
 
-void DataManager::printInfo() {
-    cout << "Info:" << endl << endl;
-    cout << "Username: " << currentUsername << endl;
-    cout << "Image Id: " << currentImageId << endl;
-    cout << "Album: " << currentAlbumName << endl;
-    cout << "Author: " << currentImageAuthor << endl;
-    cout << "Name: " << currentImageName << endl;
-    cout << "Date: " << currentImageCreationDate << endl;
-    cout << "Size: " << currentImageSize << endl;
-    cout << "Width: " << currentImageWidthX << endl;
-    cout << "Height: " << currentImageHeightY << endl;
-    cout << "Description: " << currentImageDescription << endl;
-    cout << "Albums: [";
-    QMapIterator <string, QVector<string>> j(currentUserMap);
-    while (j.hasNext()) {
-        j.next();
-        cout << j.key() << ": ";
-        QVector <string> v = j.value();
-        for (int i = 0; i < v.size(); ++i) {
-            cout << v[i] << ", ";
-        }
-        cout << " - ";
-    }
-    cout << "]." << endl;
-}
-
 bool DataManager::saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription,
                             string imageAuthor,
                             string imageSize, string imageWidthX, string imageHeightY, string imageDate) {
@@ -584,6 +558,10 @@ bool DataManager::updateImageMetadata(string imageName, string imageDesc, string
                                                "creationDate" << imageDate
                                                << bsoncxx::builder::stream::close_document << finalize);
         successful = true;
+        this->currentImageName = imageName;
+        this-> currentImageDescription = imageDesc;
+        this->currentImageAuthor = imageAuthor;
+        this->currentImageCreationDate = imageDate;
         cout << "DATABASE LOG - IMAGE " << currentImageId << " UPDATED." << endl << endl;
     } else {
         successful = false;

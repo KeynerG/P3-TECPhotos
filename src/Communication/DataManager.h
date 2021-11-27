@@ -88,8 +88,9 @@ public:
     void createCollection(string collectionName);
 
     /**
-     * @fn int querryNextImageId();
-     * @return
+     * @fn int querryNextImageId()
+     * #@brief Function to determinate the next image id.
+     * @return int
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
     int querryNextImageId();
@@ -157,7 +158,6 @@ public:
 
     /**
      * @fn void operator=(const DataManager &) = delete
-     * @brief
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
     void operator=(const DataManager &) = delete;
@@ -334,6 +334,7 @@ public:
      * @brief Checks that the username and password entered corresponds to the ones in the database.
      * @param username
      * @param password
+     * @return bool
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
     bool login(string username, string password);
@@ -343,6 +344,7 @@ public:
      * @brief Creates a new user in the database.
      * @param username
      * @param password
+     * @return bool
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
     bool signUp(string username, string password);
@@ -359,6 +361,7 @@ public:
      * @param imageWidthX
      * @param imageHeightY
      * @param imageDate
+     * @return bool
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
     bool saveImage(QImage image, string imageName, string imageAlbumName, string imageDescription, string imageAuthor,
@@ -402,6 +405,7 @@ public:
      * @fn bool deleteAlbum(string albumName)
      * @brief Deletes an album.
      * @param albumName
+     * @return bool
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
     bool deleteAlbum(string albumName);
@@ -414,16 +418,10 @@ public:
      * @param imageDesc
      * @param imageAuthor
      * @param imageDate
+     * @return bool
      * @author <a href="https://github.com/danyazunigab">Daniel A. Zúñiga Barahona</a>
      */
     bool updateImageMetadata(string imageName, string imageDesc, string imageAuthor, string imageDate);
-
-    /**
-     * @fn void printInfo()
-     * @brief Console log for the current image's info.
-     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
-     */
-    void printInfo();
 
     /**
      * @fn void openAlbum(string album)
