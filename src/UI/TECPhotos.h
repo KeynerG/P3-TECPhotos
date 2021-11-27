@@ -7,6 +7,7 @@
 #include <QMainWindow>
 #include <QMessageBox>
 #include <QMovie>
+#include <QPair>
 #include <QPixmap>
 #include <QTime>
 
@@ -34,7 +35,7 @@ protected:
      * @param type
      * @param message
      */
-    void displayMessage(const QString& type, const QString &message);
+    void displayMessage(const QString &type, const QString &message);
 
     /**
      * @fn std::string converterQStringToStdString(const QString &qString)
@@ -207,7 +208,8 @@ private:
     Ui::TECPhotos *ui; /**< TECPhotos class interface. */
     QMessageBox *qMessageBox; /**< QMessageBox object reference. */
     QStringList albumsList; /**< List with the names of the albums of the current user. */
-    QImage image; /**< */
+    QPair<QImage, bool> imageObj; /**< QPair<QImage, bool> with QImage as image to display and bool as existance of the files on disk. */
+    QImage image; /**< Image displayed. */
 };
 
 #endif // P3_TECPHOTOS_TECPHOTOS_H

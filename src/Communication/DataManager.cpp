@@ -17,11 +17,11 @@ void DataManager::setCurrentUsername(const string &newCurrentUsername) {
     currentUsername = newCurrentUsername;
 }
 
-QMap<string, QVector<string>> &DataManager::getCurrentUserMap() {
+QMap <string, QVector<string>> &DataManager::getCurrentUserMap() {
     return currentUserMap;
 }
 
-void DataManager::setCurrentUserMap(const QMap<string, QVector<string>> &newCurrentUserMap) {
+void DataManager::setCurrentUserMap(const QMap <string, QVector<string>> &newCurrentUserMap) {
     currentUserMap = newCurrentUserMap;
 }
 
@@ -118,7 +118,7 @@ int DataManager::querryNextImageId() {
 }
 
 void DataManager::connectToDB() {
-    cout << "CONNECTING TO DATABASE..." << endl << endl;
+    cout << "DATABASE LOG - CONNECTING TO DATABASE..." << endl << endl;
     mongocxx::cursor cursor = connectivityAuthentication.find(make_document(kvp("connection", "true")));
     for (auto &&doc: cursor) {
         bsoncxx::document::element connectionResult = doc["connection"];
@@ -182,11 +182,11 @@ void DataManager::querryUserInformation() {
         bsoncxx::document::element imageId = doc["imageId"];
         if (!currentUserMap.contains(albumName.get_utf8().value.to_string())) {
             currentUserMap.insert(albumName.get_utf8().value.to_string(), QVector<string>());
-            QVector<string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
+            QVector <string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
             v.append(imageId.get_utf8().value.to_string());
             currentUserMap[albumName.get_utf8().value.to_string()] = v;
         } else {
-            QVector<string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
+            QVector <string> v = currentUserMap.value(albumName.get_utf8().value.to_string());
             v.append(imageId.get_utf8().value.to_string());
             currentUserMap[albumName.get_utf8().value.to_string()] = v;
         }
@@ -264,11 +264,11 @@ void DataManager::printInfo() {
     cout << "Height: " << currentImageHeightY << endl;
     cout << "Description: " << currentImageDescription << endl;
     cout << "Albums: [";
-    QMapIterator<string, QVector<string>> j(currentUserMap);
+    QMapIterator <string, QVector<string>> j(currentUserMap);
     while (j.hasNext()) {
         j.next();
         cout << j.key() << ": ";
-        QVector<string> v = j.value();
+        QVector <string> v = j.value();
         for (int i = 0; i < v.size(); ++i) {
             cout << v[i] << ", ";
         }
@@ -284,7 +284,7 @@ bool DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
     int extraCeros = 0;
     int imageId = querryNextImageId();
     // Create a QList of the image
-    QList<QRgb> pixelsList;
+    QList <QRgb> pixelsList;
     for (int y = 0; y < image.height(); ++y) {
         QRgb *line = reinterpret_cast<QRgb *>(image.scanLine(y));
         for (int x = 0; x < image.width(); ++x) {
@@ -300,7 +300,7 @@ bool DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
             pixelsListString += ",";
     }
     // compressing the image data
-    pair<string, QMap<char, string>> compressResult = huffman.compress(pixelsListString.toStdString());
+    pair <string, QMap<char, string>> compressResult = huffman.compress(pixelsListString.toStdString());
     // Checking if the code generated is module of 3 before sending to the raid
     while ((compressResult.first.length() % 3) != 0) {
         compressResult.first.push_back('0');
@@ -317,8 +317,11 @@ bool DataManager::saveImage(QImage image, string imageName, string imageAlbumNam
     return imageSaved;
 }
 
-QImage DataManager::loadImage(string id) {
+QPair<QImage, bool> DataManager::loadImage(string id) {
     querryImageMetadata(id);
+
+    QPair<QImage, bool> imageObj;
+    bool exists = false;
 
     int width = stoi(this->currentImageWidthX);
     int height = stoi(this->currentImageHeightY);
@@ -327,7 +330,7 @@ QImage DataManager::loadImage(string id) {
 
     if (raid.checkFileExistance(1, id + ".txt") or raid.checkFileExistance(2, id + ".txt") or
         raid.checkFileExistance(3, id + ".txt") or raid.checkFileExistance(4, id + ".txt")) {
-        QList<QRgb> imageQList;
+        QList <QRgb> imageQList;
 
         pair<QMap<char, string>, int> xmlData = loadXML(id);
 
@@ -358,19 +361,24 @@ QImage DataManager::loadImage(string id) {
                 imageQList.removeFirst();
             }
         }
+        exists = true;
     } else {
         for (int y = 0; y < height; ++y) {
             for (int x = 0; x < width; ++x) {
                 image.setPixel(x, y, 000000);
             }
         }
+        exists = false;
         cerr << "RAID LOG - UNABLE TO LOAD IMAGE " << id << "." << endl << endl;
     }
 
-    return image;
+    imageObj.first = image;
+    imageObj.second = exists;
+
+    return imageObj;
 }
 
-QImage DataManager::loadImage(int indexChange) {
+QPair<QImage, bool> DataManager::loadImage(int indexChange) {
     switch (indexChange) {
         case -1:
             if (currentAlbumIndex != 0) {
@@ -390,7 +398,7 @@ QImage DataManager::loadImage(int indexChange) {
         default:
             break;
     }
-    QVector<string> albumElements = currentUserMap.value(this->currentAlbumName);
+    QVector <string> albumElements = currentUserMap.value(this->currentAlbumName);
     return loadImage(albumElements[currentAlbumIndex]);
 }
 
@@ -434,8 +442,8 @@ pair<QMap<char, string>, int> DataManager::loadXML(string id) {
     pair<QMap<char, string>, int> result;
     QMap<char, string> dictionary;
     QString mapString;
-    QList<string> mapElements;
-    QList<string> keyValueElements;
+    QList <string> mapElements;
+    QList <string> keyValueElements;
     QString cerosString;
 
     // read the xml file
@@ -541,11 +549,11 @@ void DataManager::deleteImageMetadata(string imageId) {
 bool DataManager::deleteAlbum(string albumName) {
     bool successful = false;
     querryUserInformation();
-    QMapIterator<string, QVector<string>> j(currentUserMap);
+    QMapIterator <string, QVector<string>> j(currentUserMap);
     while (j.hasNext()) {
         j.next();
         if (j.key() == albumName) {
-            QVector<string> v = j.value();
+            QVector <string> v = j.value();
             for (int i = 0; i < v.size(); ++i) {
                 deleteImageMetadata(v[i]);
             }
@@ -557,8 +565,8 @@ bool DataManager::deleteAlbum(string albumName) {
     return successful;
 }
 
-void DataManager::updateImageMetadata(string imageName, string imageDesc, string imageAuthor,
-                                      string imageDate) {
+bool DataManager::updateImageMetadata(string imageName, string imageDesc, string imageAuthor, string imageDate) {
+    bool successful = false;
     bool exists = false;
     bsoncxx::document::element albumName;
 
@@ -571,15 +579,17 @@ void DataManager::updateImageMetadata(string imageName, string imageDesc, string
         imagesCollection.update_one(document{} << "imageId" << currentImageId << bsoncxx::builder::stream::finalize,
                                     document{} << "$set" << bsoncxx::builder::stream::open_document <<
                                                "imageName" << imageName <<
-                                               "imageDescription" << imageDesc <<
+                                               "description" << imageDesc <<
                                                "author" << imageAuthor <<
                                                "creationDate" << imageDate
                                                << bsoncxx::builder::stream::close_document << finalize);
+        successful = true;
         cout << "DATABASE LOG - IMAGE " << currentImageId << " UPDATED." << endl << endl;
-
     } else {
+        successful = false;
         cerr << "DATABASE LOG - ERROR: UNABLE TO UPDATE IMAGE " << currentImageId << "." << endl << endl;
     }
+    return successful;
 }
 
 void DataManager::openAlbum(string album) {

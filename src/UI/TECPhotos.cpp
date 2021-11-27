@@ -3,14 +3,14 @@
 
 TECPhotos::TECPhotos(QWidget *parent) : QMainWindow(parent), ui(new Ui::TECPhotos) {
     ui->setupUi(this);
-    // retrieve user information from database
-    update();
+    // setup widgets screen
     ui->optionsTab->setCurrentIndex(0);
     // display Login Screen
     ui->ScreenView->setCurrentIndex(0);
     // loading animation
     QMovie *loadingIcon = new QMovie(":/icon/loading.gif");
     ui->loadingIconLabel->setMovie(loadingIcon);
+    ui->decompressingIconLabel->setVisible(true);
     ui->decompressingIconLabel->setMovie(loadingIcon);
     loadingIcon->start();
 }
@@ -67,6 +67,8 @@ void TECPhotos::on_accessButton_clicked() {
     ui->accessButton->setEnabled(false);
     if (!ui->usernameLLineEdit->text().isEmpty() && !ui->passwordLLineEdit->text().isEmpty()) {
         if (DataManager::getInstance()->login(converterQStringToStdString(ui->usernameLLineEdit->text()), converterQStringToStdString(ui->passwordLLineEdit->text()))) {
+            // retrieve user information from database
+            update();
             // switch to Album Screen
             ui->ScreenView->setCurrentIndex(2);
         } else {
@@ -97,6 +99,9 @@ void TECPhotos::on_createButton_clicked() {
     ui->createButton->setEnabled(false);
     if (!ui->usernameSULineEdit->text().isEmpty() && !ui->passwordSULineEdit->text().isEmpty()) {
         if (DataManager::getInstance()->signUp(converterQStringToStdString(ui->usernameSULineEdit->text()), converterQStringToStdString(ui->passwordSULineEdit->text()))) {
+            // retrieve user information from database
+            update();
+            // switch to Album Screen
             ui->ScreenView->setCurrentIndex(2);
         } else {
             displayMessage("Warning", "This username is not available.");
@@ -138,16 +143,21 @@ void TECPhotos::on_optionsTab_currentChanged(int index) {
 }
 
 void TECPhotos::on_openAlbumButton_clicked() {
+    ui->decompressingIconLabel->setVisible(true);
     ui->openAlbumButton->setEnabled(false);
     if (!ui->openAlbumSelectorComboBox->currentText().isEmpty()) {
         // retrieve album information from database
         DataManager::getInstance()->openAlbum(converterQStringToStdString(ui->openAlbumSelectorComboBox->currentText()));
         // setup screen widgets
-        image = DataManager::getInstance()->loadImage(0);
+        imageObj = DataManager::getInstance()->loadImage(0);
+        image = imageObj.first;
         ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
         ui->albumNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentAlbumName()));
-        if (!image.isNull()) {
+        if (!imageObj.first.isNull()) {
             ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->displayPhotoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+            if (imageObj.second) {
+                ui->decompressingIconLabel->setVisible(false);
+            }
         }
         // disables next and previous buttons when there's only one image on the album
         if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 1) {
@@ -194,6 +204,7 @@ void TECPhotos::on_uploadPhotoButton_clicked() {
         ui->photoWidthNPLineEdit->clear();
         ui->photoHeightNPLineEdit->clear();
         ui->photoDateNPEdit->clear();
+        ui->photoDateNPEdit->setDate(QDate::fromString("01/01/2022", "MM/dd/yyyy"));
         // setup screen widgets
         QImage image(ui->photoPathLineEdit->text());
         ui->photoLabel->setPixmap(QPixmap::fromImage(image.scaled(ui->photoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
@@ -311,7 +322,7 @@ void TECPhotos::on_deletePhotoButton_clicked() {
         on_nextButton_clicked();
         ui->nextButton->setEnabled(false);
         ui->previousButton->setEnabled(false);
-    }else{
+    } else {
         on_nextButton_clicked();
         ui->nextButton->setEnabled(true);
         ui->previousButton->setEnabled(true);
@@ -319,12 +330,17 @@ void TECPhotos::on_deletePhotoButton_clicked() {
 }
 
 void TECPhotos::on_previousButton_clicked() {
+    ui->decompressingIconLabel->setVisible(true);
     ui->previousButton->setEnabled(false);
     ui->nextButton->setEnabled(false);
     ui->displayPhotoLabel->clear();
-    image = DataManager::getInstance()->loadImage(-1);
-    if (!image.isNull()) {
+    imageObj = DataManager::getInstance()->loadImage(-1);
+    image = imageObj.first;
+    if (!imageObj.first.isNull()) {
         ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->displayPhotoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+        if (imageObj.second) {
+            ui->decompressingIconLabel->setVisible(false);
+        }
     }
     ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
     ui->previousButton->setEnabled(true);
@@ -332,12 +348,17 @@ void TECPhotos::on_previousButton_clicked() {
 }
 
 void TECPhotos::on_nextButton_clicked() {
+    ui->decompressingIconLabel->setVisible(true);
     ui->previousButton->setEnabled(false);
     ui->nextButton->setEnabled(false);
     ui->displayPhotoLabel->clear();
-    image = DataManager::getInstance()->loadImage(1);
-    if (!image.isNull()) {
+    imageObj = DataManager::getInstance()->loadImage(1);
+    image = imageObj.first;
+    if (!imageObj.first.isNull()) {
         ui->displayPhotoLabel->setPixmap(QPixmap(QPixmap::fromImage(image).scaled(ui->displayPhotoLabel->size(), Qt::AspectRatioMode::KeepAspectRatio, Qt::TransformationMode::SmoothTransformation)));
+        if (imageObj.second) {
+            ui->decompressingIconLabel->setVisible(false);
+        }
     }
     ui->photoNameLabel->setText(converterStdStringToQString(DataManager::getInstance()->getCurrentImageName()));
     ui->previousButton->setEnabled(true);
@@ -351,13 +372,45 @@ void TECPhotos::on_galleryIButton_clicked() {
     ui->photoNameLabel->setText(ui->photoNameILineEdit->text());
     ui->albumNameLabel->setText(ui->albumNameILineEdit->text());
     // switch to Photo Screen
-    ui->ScreenView->setCurrentIndex(5);
+    if (ui->editButton->isEnabled() && !ui->okButton->isEnabled()) {
+        ui->ScreenView->setCurrentIndex(5);
+    } else {
+        displayMessage("Warning", "Please press OK before continue.");
+    }
 }
 
 void TECPhotos::on_editButton_clicked() {
-
+    // disable edit button
+    ui->editButton->setEnabled(false);
+    // enable name, description, author, date to update
+    ui->photoNameILineEdit->setReadOnly(false);
+    ui->photoDescriptionILineEdit->setReadOnly(false);
+    ui->photoAuthorILineEdit->setReadOnly(false);
+    ui->photoDateIEdit->setEnabled(true);
+    // enable ok button
+    ui->okButton->setEnabled(true);
 }
 
 void TECPhotos::on_okButton_clicked() {
-
+    // disable ok button
+    ui->okButton->setEnabled(false);
+    // update image information
+    if (!ui->photoNameILineEdit->text().isEmpty()) {
+        if (DataManager::getInstance()->updateImageMetadata(converterQStringToStdString(ui->photoNameILineEdit->text()),
+                                                            converterQStringToStdString(ui->photoDescriptionILineEdit->text()),
+                                                            converterQStringToStdString(ui->photoAuthorILineEdit->text()),
+                                                            converterQStringToStdString(ui->photoDateIEdit->date().toString("MM/dd/yyyy")))) {
+            // disable name, description, author, date
+            ui->photoNameILineEdit->setReadOnly(true);
+            ui->photoDescriptionILineEdit->setReadOnly(true);
+            ui->photoAuthorILineEdit->setReadOnly(true);
+            ui->photoDateIEdit->setEnabled(false);
+            // enable edit button
+            ui->editButton->setEnabled(true);
+        } else {
+            displayMessage("Notification", "The image \"" + QString(ui->photoNameNPLineEdit->text() + "\" was not successfully update."));
+        }
+    } else {
+        displayMessage("Warning", "Please enter the photo name.");
+    }
 }

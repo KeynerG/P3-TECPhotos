@@ -56,7 +56,7 @@ private:
     mongocxx::instance inst{}; /**< . */
     mongocxx::uri uri = mongocxx::uri{"mongodb+srv://admin:0000@tecphotos.2uv6a.mongodb.net/TECPhotos?retryWrites=true&w=majority"}; /**< . */
     mongocxx::client conn{uri}; /**< . */
-    mongocxx::database db = conn["test"]; /**< . */
+    mongocxx::database db = conn["TECPhotos"]; /**< . */
 
     mongocxx::collection imagesCollection = db["Images"]; /**< . */
     mongocxx::collection usersCollection = db["Users"]; /**< . */
@@ -365,22 +365,23 @@ public:
                    string imageSize, string imageWidthX, string imageHeightY, string imageDate);
 
     /**
-     * @fn QImage loadImage(string id)
+     * @fn QPair<QImage, bool> loadImage(string id)
      * @brief Loads an image.
      * @param id
-     * @return QImage
+     * @return QPair<QImage, bool>
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
-     */
-    QImage loadImage(string id);
-
-    /**
-     * @fn QImage loadImage(int indexChange)
-     * @brief Loads an image.
-     * @param indexChange
-     * @return QImage
      * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
      */
-    QImage loadImage(int indexChange);
+    QPair<QImage, bool> loadImage(string id);
+
+    /**
+     * @fn QPair<QImage, bool> loadImage(int indexChange)
+     * @brief Loads an image.
+     * @param indexChange
+     * @return QPair<QImage, bool>
+     * @author <a href="https://github.com/JoseAndres216">Jose A. Rodríguez Rojas</a>
+     */
+    QPair<QImage, bool> loadImage(int indexChange);
 
     /**
      * @fn void deleteImageMetadata()
@@ -406,7 +407,7 @@ public:
     bool deleteAlbum(string albumName);
 
     /**
-     * @fn void updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor, string imageDate)
+     * @fn bool updateImageMetadata(string imageId, string imageName, string imageDesc, string imageAuthor, string imageDate)
      * @brief Updates the metadata in the database.
      * @param imageId
      * @param imageName
@@ -415,7 +416,7 @@ public:
      * @param imageDate
      * @author <a href="https://github.com/danyazunigab">Daniel A. Zúñiga Barahona</a>
      */
-    void updateImageMetadata(string imageName, string imageDesc, string imageAuthor, string imageDate);
+    bool updateImageMetadata(string imageName, string imageDesc, string imageAuthor, string imageDate);
 
     /**
      * @fn void printInfo()

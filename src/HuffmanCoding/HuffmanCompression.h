@@ -81,7 +81,7 @@ public:
      * @return pair
      * @author <a href="https://github.com/KeynerG">Keyner S. Gómez Pana</a>
      */
-    static pair<string, QMap<char, string>> compress(const string &text);
+    static pair <string, QMap<char, string>> compress(const string &text);
 
     /**
      * @fn static string decompress(string str, QMap<char, string> huffmanList)

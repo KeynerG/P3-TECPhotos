@@ -40,7 +40,7 @@ void HuffmanCompression::decode(HuffmanCompression::Node *root, int &index, stri
     }
 }
 
-pair<string, QMap<char, string>> HuffmanCompression::compress(const string &text) {
+pair <string, QMap<char, string>> HuffmanCompression::compress(const string &text) {
     cout << "HUFFMAN LOG - COMPRESSING IMAGE...\n" << endl;
     // count frequency of appearance of each character and store it in a map
     unordered_map<char, int> freq;
@@ -49,7 +49,7 @@ pair<string, QMap<char, string>> HuffmanCompression::compress(const string &text
     }
 
     // Create a priority queue to store live nodes of Huffman tree;
-    priority_queue<Node *, vector<Node *>, comparison> pq;
+    priority_queue < Node * , vector < Node * >, comparison > pq;
 
     // Create a leaf node for each character and add it to the priority queue.
     for (auto pair: freq) {
@@ -102,7 +102,7 @@ pair<string, QMap<char, string>> HuffmanCompression::compress(const string &text
 string HuffmanCompression::decompress(string str, QMap<char, string> huffmanList) {
     cout << "HUFFMAN LOG - DECOMPRESSING IMAGE...\n" << endl;
     QList<char> characters = huffmanList.keys();
-    QList<string> scripts = huffmanList.values();
+    QList <string> scripts = huffmanList.values();
     string result, curr;
     int curr_char = 0;
 
