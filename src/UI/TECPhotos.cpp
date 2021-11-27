@@ -319,11 +319,11 @@ void TECPhotos::on_deletePhotoButton_clicked() {
         // switch to Albums Screen
         ui->ScreenView->setCurrentIndex(2);
     } else if (DataManager::getInstance()->getCurrentUserMap().value(converterQStringToStdString(ui->albumNameLabel->text())).size() == 1) {
-        on_nextButton_clicked();
+        on_previousButton_clicked();
         ui->nextButton->setEnabled(false);
         ui->previousButton->setEnabled(false);
     } else {
-        on_nextButton_clicked();
+        on_previousButton_clicked();
         ui->nextButton->setEnabled(true);
         ui->previousButton->setEnabled(true);
     }
